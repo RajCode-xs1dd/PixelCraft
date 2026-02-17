@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+  <title>Image Resizer & Compressor – Resize & Optimize Images Online</title>
+
+  <meta name="description"
+    content="Image Resizer & Compressor — resize, compress, crop, and optimize images online. Fast, free, no account needed. Built with JavaScript by RajCode.">
+  <meta name="keywords"
+    content="image resizer, image compressor, crop image, optimize image, online image tool, bulk resize, rajcode">
+  <meta name="author" content="RajCode-xs1dd">
+
+  <!-- Theme Color (Mobile browser UI) -->
+  <meta name="theme-color" content="#f4f4f4">
+
+  <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
+  <meta property="og:title" content="Image Resizer & Compressor">
+  <meta property="og:description"
+    content="Resize, compress, crop, and optimize images online instantly. Fast, free, no sign-up required.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rajcode-xs1dd.github.io/image-compress-tool/">
+  <meta property="og:image" content="https://rajcode-xs1dd.github.io/image-compress-tool/preview.png">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Image Resizer & Compressor">
+  <meta name="twitter:description"
+    content="Resize, compress, crop, and optimize images online instantly.">
+  <meta name="twitter:image" content="https://rajcode-xs1dd.github.io/image-compress-tool/preview.png">
+
+  <!-- Mobile Web App -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Image Resizer">
+
+  <!-- Favicon (optional but recommended) -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" href="/favicon.ico">
+<link rel="manifest" href="/site.webmanifest">
+
+<link rel="canonical" href="https://rajcode-xs1dd.github.io/image-compress-tool/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css"/>
+  <style>
+    body { background: #f4f4f4; }
+    #dropzone { border: 2px dashed #888; border-radius: 8px; padding: 2em; text-align: center; color: #888; margin-bottom: 1em; }
+    .img-thumb { max-width: 100px; max-height: 100px; margin: 0.5em; border-radius: 6px; border: 1px solid #ccc; cursor: zoom-in; }
+    .img-row { display: flex; align-items: center; gap: 1em; flex-wrap: wrap; }
+    .theme-dark { background: #222 !important; color: #fff !important; }
+    .theme-dark input, .theme-dark select { background: #333 !important; color: #fff !important; }
+    .theme-dark .modal-content { background: #333 !important; color: #fff !important; }
+    #cropModal .modal-dialog { max-width: 90vw; }
+    #cropImage { max-width: 100%; max-height: 60vh; }
+    .filter-controls label { margin-right: 1em; }
+    .recent-thumb { max-width: 60px; max-height: 60px; margin: 0.2em; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; }
+    .img-info-preview { margin-top: 0.5em; font-size: 0.95em; color: #444; }
+    .img-actions { margin-top: 0.5em; }
+    .img-preview-box { margin-top: 0.5em; }
+    .compress-again-btn { margin-top: 0.5em; }
+    .recent-delete-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: #f33;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 2;
+      line-height: 16px;
+      padding: 0;
+    }
+    .recent-thumb-wrapper {
+      display: inline-block;
+      position: relative;
+      margin: 0.2em;
+    }
+    /* Responsive: stack buttons vertically on mobile */
+    @media (max-width: 600px) {
+      .img-row { flex-direction: column; align-items: flex-start; }
+      .my-3 > .btn, .my-3 > .form-select { display: block; width: 100%; margin-bottom: 0.5em; }
+      .img-actions > .btn { display: block; width: 100%; margin-bottom: 0.3em; }
+    }
+  </style>
+</head>
+<body>
+<div class="container my-4" id="app">
+  <h2 class="text-center mb-4">Image Resizer & Compressor</h2>
+  <div id="dropzone" class="mb-3" aria-label="Image dropzone">
+    Drag & drop images here or <input type="file" id="fileInput" multiple accept="image/*" style="display:inline-block;width:auto;" aria-label="Select images">
+  </div>
+  <div class="mb-2">
+    <button class="btn btn-danger btn-sm" id="deleteAllBtn" aria-label="Delete all images">Delete All Images</button>
+    <button class="btn btn-secondary btn-sm" id="clearHistoryBtn" aria-label="Delete all history">Delete All History</button>
+  </div>
+  <div id="imgList"></div>
+  <div class="row g-2 align-items-end">
+    <div class="col">
+      <label>Width: <input type="number" id="widthInput" class="form-control" min="1" style="width:90px;display:inline-block;" aria-label="Width">
+        <select id="widthUnit" class="form-select" style="width:60px;display:inline-block;" aria-label="Width unit">
+          <option value="px">px</option><option value="cm">cm</option>
+        </select>
+      </label>
+    </div>
+    <div class="col">
+      <label>Height: <input type="number" id="heightInput" class="form-control" min="1" style="width:90px;display:inline-block;" aria-label="Height">
+        <select id="heightUnit" class="form-select" style="width:60px;display:inline-block;" aria-label="Height unit">
+          <option value="px">px</option><option value="cm">cm</option>
+        </select>
+      </label>
+    </div>
+    <div class="col">
+      <label>DPI: <input type="number" id="dpiInput" class="form-control" min="1" value="96" style="width:70px;display:inline-block;" aria-label="DPI"></label>
+    </div>
+    <div class="col">
+      <label>Target Size (KB): <input type="number" id="targetSizeInput" class="form-control" min="1" style="width:90px;display:inline-block;" aria-label="Target size"></label>
+    </div>
+    <div class="col">
+      <label>Rename: <input type="text" id="renameInput" class="form-control" placeholder="Optional" style="width:120px;display:inline-block;" aria-label="Rename"></label>
+    </div>
+    <div class="col">
+      <label>Format:
+        <select id="formatSelect" class="form-select" style="width:100px;display:inline-block;" aria-label="Image format">
+          <option value="png">PNG</option>
+          <option value="jpeg">JPEG</option>
+          <option value="jpg">JPG</option>
+          <option value="webp">WEBP</option>
+          <option value="gif">GIF</option>
+          <option value="bmp">BMP</option>
+          <option value="tiff">TIFF</option>
+        </select>
+      </label>
+    </div>
+  </div>
+  <div class="my-3 filter-controls">
+    <label>Brightness: <input type="range" id="brightnessInput" min="0" max="2" step="0.01" value="1" aria-label="Brightness"></label>
+    <label>Contrast: <input type="range" id="contrastInput" min="0" max="2" step="0.01" value="1" aria-label="Contrast"></label>
+    <label>Grayscale: <input type="checkbox" id="grayscaleInput" aria-label="Grayscale"></label>
+    <label>Invert: <input type="checkbox" id="invertInput" aria-label="Invert"></label>
+    <button class="btn btn-secondary btn-sm" id="applyFilterBtn" aria-label="Apply filter">Apply Filter</button>
+  </div>
+  <div class="my-3 d-flex flex-wrap gap-2">
+    <button class="btn btn-primary" id="resizeBtn" aria-label="Resize">Resize</button>
+    <button class="btn btn-warning" id="compressBtn" aria-label="Compress">Compress</button>
+    <button class="btn btn-secondary" id="resetBtn" aria-label="Reset">Reset</button>
+    <button class="btn btn-dark" id="themeBtn" aria-label="Switch theme">Switch Theme</button>
+    <button class="btn btn-info" id="helpBtn" aria-label="Help">Help</button>
+    <button class="btn btn-info" id="aboutBtn" aria-label="About">About</button>
+  </div>
+  <div id="progress"></div>
+  <div class="my-3">
+    <h5>Recent Images</h5>
+    <div id="recentList"></div>
+  </div>
+</div>
+
+<!-- Crop Modal -->
+<div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cropModalLabel">Crop Image</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close crop modal"></button>
+      </div>
+      <div class="modal-body">
+        <img id="cropImage" src="" alt="Crop preview" />
+        <div class="mt-2">
+          <label>Aspect Ratio:
+            <select id="aspectRatioSelect" aria-label="Aspect ratio">
+              <option value="NaN">Free</option>
+              <option value="1">1:1</option>
+              <option value="4/3">4:3</option>
+              <option value="16/9">16:9</option>
+              <option value="3/2">3:2</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="applyCropBtn" aria-label="Apply crop">Apply Crop</button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel crop">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-2">
+      <div class="modal-header">
+        <h5 class="modal-title" id="previewModalLabel">Image Preview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close preview"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="previewModalImg" src="" alt="Large preview" style="max-width:100%;max-height:70vh;border-radius:8px;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
+<script>
+const dropzone = document.getElementById('dropzone');
+const fileInput = document.getElementById('fileInput');
+const imgList = document.getElementById('imgList');
+const widthInput = document.getElementById('widthInput');
+const widthUnit = document.getElementById('widthUnit');
+const heightInput = document.getElementById('heightInput');
+const heightUnit = document.getElementById('heightUnit');
+const dpiInput = document.getElementById('dpiInput');
+const targetSizeInput = document.getElementById('targetSizeInput');
+const renameInput = document.getElementById('renameInput');
+const formatSelect = document.getElementById('formatSelect');
+const resizeBtn = document.getElementById('resizeBtn');
+const compressBtn = document.getElementById('compressBtn');
+const resetBtn = document.getElementById('resetBtn');
+const themeBtn = document.getElementById('themeBtn');
+const helpBtn = document.getElementById('helpBtn');
+const aboutBtn = document.getElementById('aboutBtn');
+const progress = document.getElementById('progress');
+const brightnessInput = document.getElementById('brightnessInput');
+const contrastInput = document.getElementById('contrastInput');
+const grayscaleInput = document.getElementById('grayscaleInput');
+const invertInput = document.getElementById('invertInput');
+const applyFilterBtn = document.getElementById('applyFilterBtn');
+const recentList = document.getElementById('recentList');
+const deleteAllBtn = document.getElementById('deleteAllBtn');
+const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
+const previewModalImg = document.getElementById('previewModalImg');
+
+let darkTheme = false;
+let images = []; // {file, img, previewUrl, processedBlob, info, history:[], redoStack:[], compressInfo:{}}
+let currentCropIdx = 0;
+let cropper = null;
+
+// Track downloaded images in this session
+let downloadedImages = new Set();
+
+// Attach all dynamic functions to window for HTML event handlers
+window.startCrop = startCrop;
+window.undo = undo;
+window.redo = redo;
+window.deleteImage = deleteImage;
+window.compressAgain = compressAgain;
+window.saveImage = saveImage;
+window.previewImage = previewImage;
+
+// Helper functions
+function cmToPx(cm, dpi) { return Math.round((cm / 2.54) * dpi); }
+function pxToCm(px, dpi) { return (px * 2.54 / dpi).toFixed(2); }
+function formatSize(bytes) {
+  if (bytes > 1024*1024) return (bytes/1024/1024).toFixed(2) + " MB";
+  if (bytes > 1024) return (bytes/1024).toFixed(2) + " KB";
+  return bytes + " B";
+}
+function getOperationSuffix(imgObj) {
+  if (imgObj.info) {
+    if (imgObj.info.startsWith("Compressed")) return "_compressed";
+    if (imgObj.info.startsWith("Resized")) return "_resized";
+    if (imgObj.info.startsWith("Cropped")) return "_cropped";
+    if (imgObj.info.startsWith("Filtered")) return "_filtered";
+  }
+  return "";
+}
+function getMimeAndExt(format) {
+  switch(format) {
+    case "jpeg": case "jpg": return ["image/jpeg", ".jpg"];
+    case "png": return ["image/png", ".png"];
+    case "webp": return ["image/webp", ".webp"];
+    case "gif": return ["image/gif", ".gif"];
+    case "bmp": return ["image/bmp", ".bmp"];
+    case "tiff": return ["image/tiff", ".tiff"];
+    default: return ["image/png", ".png"];
+  }
+}
+
+// Show images and info
+function showImages() {
+  imgList.innerHTML = "";
+  images.forEach((imgObj, idx) => {
+    const w = imgObj.img.width;
+    const h = imgObj.img.height;
+    const dpi = parseInt(dpiInput.value) || 96;
+    const wcm = pxToCm(w, dpi);
+    const hcm = pxToCm(h, dpi);
+    let compressInfo = "";
+    // Show Compress Again only if file is still too big
+    if (imgObj.compressInfo && imgObj.compressInfo.showAgainBtn) {
+      compressInfo = `
+        <div class="img-info-preview">
+          <b>Compressed:</b> ${imgObj.compressInfo.sizeKB} KB (${imgObj.compressInfo.percent}%)
+          <br>
+          <b>Dimensions:</b> ${w}x${h} px (${wcm}x${hcm} cm)
+        </div>
+        <div class="img-preview-box">
+          <img src="${imgObj.previewUrl}" style="max-width:180px;max-height:180px;border:1px solid #aaa;border-radius:6px;margin-top:0.3em;" alt="Compressed preview">
+        </div>
+        <button class="btn btn-sm btn-warning compress-again-btn" onclick="compressAgain(${idx})" aria-label="Compress again">Compress Again</button>
+      `;
+    } else if (imgObj.compressInfo) {
+      compressInfo = `
+        <div class="img-info-preview">
+          <b>Compressed:</b> ${imgObj.compressInfo.sizeKB} KB (${imgObj.compressInfo.percent}%)
+          <br>
+          <b>Dimensions:</b> ${w}x${h} px (${wcm}x${hcm} cm)
+        </div>
+        <div class="img-preview-box">
+          <img src="${imgObj.previewUrl}" style="max-width:180px;max-height:180px;border:1px solid #aaa;border-radius:6px;margin-top:0.3em;" alt="Compressed preview">
+        </div>
+      `;
+    }
+    const div = document.createElement('div');
+    div.className = "img-row";
+    div.innerHTML = `
+      <img src="${imgObj.previewUrl}" class="img-thumb" alt="preview of ${imgObj.file.name}" tabindex="0" aria-label="Preview image" onclick="previewImage('${encodeURIComponent(imgObj.previewUrl)}')" />
+      <div>
+        <div><b>${imgObj.file.name}</b></div>
+        <div>Original: ${formatSize(imgObj.file.size)} (${imgObj.img.width}x${imgObj.img.height})</div>
+        <div>${imgObj.info||""}</div>
+        <div class="img-actions">
+          <button class="btn btn-sm btn-outline-primary" onclick="startCrop(${idx})" aria-label="Crop">Crop</button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="undo(${idx})" aria-label="Undo">Undo</button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="redo(${idx})" aria-label="Redo">Redo</button>
+          <button class="btn btn-sm btn-outline-danger" onclick="deleteImage(${idx})" aria-label="Delete">Delete</button>
+          <button class="btn btn-sm btn-success" onclick="saveImage(${idx})" aria-label="Save">Save</button>
+        </div>
+        ${compressInfo}
+      </div>
+    `;
+    imgList.appendChild(div);
+  });
+}
+
+// Preview modal for image zoom
+function previewImage(url) {
+  previewModalImg.src = decodeURIComponent(url);
+  previewModal.show();
+}
+
+// Undo/Redo
+function saveHistory(idx) {
+  const imgObj = images[idx];
+  if (!imgObj.history) imgObj.history = [];
+  if (!imgObj.redoStack) imgObj.redoStack = [];
+  imgObj.history.push({
+    processedBlob: imgObj.processedBlob,
+    previewUrl: imgObj.previewUrl,
+    info: imgObj.info,
+    compressInfo: imgObj.compressInfo
+  });
+  imgObj.redoStack = [];
+}
+function restoreImgObj(idx, state) {
+  const imgObj = images[idx];
+  imgObj.processedBlob = state.processedBlob;
+  imgObj.previewUrl = state.previewUrl;
+  imgObj.info = state.info;
+  imgObj.compressInfo = state.compressInfo;
+  // Restore img object
+  const img = new window.Image();
+  img.onload = function() {
+    imgObj.img = img;
+    showImages();
+  };
+  img.src = imgObj.previewUrl;
+}
+function undo(idx) {
+  const imgObj = images[idx];
+  if (imgObj.history && imgObj.history.length) {
+    if (!imgObj.redoStack) imgObj.redoStack = [];
+    imgObj.redoStack.push({
+      processedBlob: imgObj.processedBlob,
+      previewUrl: imgObj.previewUrl,
+      info: imgObj.info,
+      compressInfo: imgObj.compressInfo
+    });
+    const last = imgObj.history.pop();
+    restoreImgObj(idx, last);
+  }
+}
+function redo(idx) {
+  const imgObj = images[idx];
+  if (imgObj.redoStack && imgObj.redoStack.length) {
+    if (!imgObj.history) imgObj.history = [];
+    imgObj.history.push({
+      processedBlob: imgObj.processedBlob,
+      previewUrl: imgObj.previewUrl,
+      info: imgObj.info,
+      compressInfo: imgObj.compressInfo
+    });
+    const next = imgObj.redoStack.pop();
+    restoreImgObj(idx, next);
+  }
+}
+
+// Delete image
+function deleteImage(idx) {
+  images.splice(idx, 1);
+  showImages();
+}
+
+// Delete all images with alert
+deleteAllBtn.onclick = function() {
+  if (confirm("Delete all images?")) {
+    images = [];
+    imgList.innerHTML = "";
+    fileInput.value = "";
+    progress.innerText = "";
+    alert("All images deleted.");
+  }
+};
+
+// Delete all history with alert
+clearHistoryBtn.onclick = function() {
+  images.forEach(imgObj => {
+    imgObj.history = [];
+    imgObj.redoStack = [];
+  });
+  alert("All undo/redo history cleared. Undo/redo is now disabled for all images.");
+};
+
+// Cropper
+function startCrop(idx) {
+  currentCropIdx = idx;
+  const imgObj = images[idx];
+  const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
+  const cropImage = document.getElementById('cropImage');
+  cropImage.src = imgObj.previewUrl;
+  cropModal.show();
+  setTimeout(() => {
+    if (cropper) cropper.destroy();
+    cropper = new Cropper(cropImage, {
+      aspectRatio: NaN,
+      viewMode: 1,
+      autoCropArea: 1
+    });
+    document.getElementById('aspectRatioSelect').onchange = function() {
+      const val = eval(this.value);
+      cropper.setAspectRatio(isNaN(val) ? NaN : val);
+    };
+  }, 300);
+}
+document.getElementById('applyCropBtn').onclick = function() {
+  if (!cropper) return;
+  const canvas = cropper.getCroppedCanvas();
+  canvas.toBlob(blob => {
+    const url = URL.createObjectURL(blob);
+    const img = new window.Image();
+    img.onload = function() {
+      saveHistory(currentCropIdx);
+      images[currentCropIdx].processedBlob = blob;
+      images[currentCropIdx].previewUrl = url;
+      images[currentCropIdx].img = img;
+      images[currentCropIdx].info = `Cropped: ${img.width}x${img.height}, ${formatSize(blob.size)}`;
+      images[currentCropIdx].compressInfo = null;
+      showImages();
+      saveRecent(blob, url);
+    };
+    img.src = url;
+  }, "image/png");
+  bootstrap.Modal.getInstance(document.getElementById('cropModal')).hide();
+  cropper.destroy();
+  cropper = null;
+};
+
+// Filters
+applyFilterBtn.onclick = () => {
+  images.forEach((imgObj, idx) => {
+    saveHistory(idx);
+    const canvas = document.createElement('canvas');
+    canvas.width = imgObj.img.width;
+    canvas.height = imgObj.img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.filter =
+      `brightness(${brightnessInput.value}) contrast(${contrastInput.value})` +
+      (grayscaleInput.checked ? " grayscale(1)" : "") +
+      (invertInput.checked ? " invert(1)" : "");
+    ctx.drawImage(imgObj.img, 0, 0);
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const img = new window.Image();
+      img.onload = function() {
+        imgObj.processedBlob = blob;
+        imgObj.previewUrl = url;
+        imgObj.img = img;
+        imgObj.info = `Filtered: ${img.width}x${img.height}, ${formatSize(blob.size)}`;
+        imgObj.compressInfo = null;
+        showImages();
+        saveRecent(blob, url);
+      };
+      img.src = url;
+    }, "image/png");
+  });
+};
+
+// Resize
+resizeBtn.onclick = () => {
+  if (!images.length) return alert("Select images first!");
+  let w = parseInt(widthInput.value), h = parseInt(heightInput.value), dpi = parseInt(dpiInput.value);
+  if (widthUnit.value === "cm") w = cmToPx(w, dpi);
+  if (heightUnit.value === "cm") h = cmToPx(h, dpi);
+  progress.innerText = "Resizing...";
+  images.forEach((imgObj, idx) => {
+    saveHistory(idx);
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(imgObj.img, 0, 0, w, h);
+    canvas.toBlob(blob => {
+      const url = URL.createObjectURL(blob);
+      const img = new window.Image();
+      img.onload = function() {
+        imgObj.processedBlob = blob;
+        imgObj.previewUrl = url;
+        imgObj.img = img;
+        imgObj.info = `Resized: ${w}x${h}, ${formatSize(blob.size)}`;
+        imgObj.compressInfo = null;
+        showImages();
+        saveRecent(blob, url);
+        progress.innerText = "";
+      };
+      img.src = url;
+    }, "image/png");
+  });
+};
+
+// Compress (improved: loops quality until target size or min quality)
+compressBtn.onclick = () => {
+  if (!images.length) return alert("Select images first!");
+  let targetKB = parseInt(targetSizeInput.value);
+  if (!targetKB || targetKB < 1) return alert("Enter a valid target size in KB.");
+  progress.innerText = "Compressing...";
+  images.forEach((imgObj, idx) => {
+    compressImage(idx, targetKB);
+  });
+};
+
+function compressImage(idx, targetKB) {
+  saveHistory(idx);
+  const imgObj = images[idx];
+  const fileOrBlob = imgObj.processedBlob || imgObj.file;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = new window.Image();
+    img.onload = function() {
+      let quality = 0.95;
+      let lastBlob = null;
+      function tryCompress() {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        canvas.toBlob(blob => {
+          lastBlob = blob;
+          const sizeKB = (blob.size/1024).toFixed(2);
+          const showAgainBtn = blob.size/1024 > targetKB;
+          if (blob.size/1024 <= targetKB || quality < 0.05) {
+            const percent = ((1 - blob.size/(fileOrBlob.size||imgObj.file.size))*100).toFixed(2);
+            const url = URL.createObjectURL(blob);
+            const img2 = new window.Image();
+            img2.onload = function() {
+              imgObj.processedBlob = blob;
+              imgObj.previewUrl = url;
+              imgObj.img = img2;
+              imgObj.info = `Compressed: ${formatSize(blob.size)}, Compression: ${percent}%`;
+              imgObj.compressInfo = {
+                sizeKB,
+                percent,
+                showAgainBtn
+              };
+              showImages();
+              saveRecent(blob, url);
+              progress.innerText = "";
+            };
+            img2.src = url;
+          } else {
+            quality -= 0.05;
+            tryCompress();
+          }
+        }, "image/jpeg", quality);
+      }
+      tryCompress();
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(fileOrBlob);
+}
+
+// Compress Again
+function compressAgain(idx) {
+  let targetKB = parseInt(targetSizeInput.value);
+  if (!targetKB || targetKB < 1) return alert("Enter a valid target size in KB.");
+  compressImage(idx, targetKB);
+}
+
+// Save single image with duplicate prevention, default name, and format selection
+function saveImage(idx) {
+  const imgObj = images[idx];
+  const blob = imgObj.processedBlob || imgObj.file;
+  const format = formatSelect.value;
+  const [mime, ext] = getMimeAndExt(format);
+
+  // Use a canvas to convert to the selected format if possible
+  function doDownload(dataUrl) {
+    if (downloadedImages.has(dataUrl)) {
+      alert("This file was already downloaded. Duplicate download prevented.");
+      return;
+    }
+    downloadedImages.add(dataUrl);
+
+    let name = renameInput.value.trim();
+    if (!name) {
+      if (imgObj.info && imgObj.info.startsWith("Compressed")) {
+        name = "RajApp_compressed";
+      } else {
+        name = "RajApp_image";
+      }
+    }
+    name += getOperationSuffix(imgObj);
+
+    // Safari fix: download must be in direct user event, so we wrap in setTimeout
+    setTimeout(() => {
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = name + ext;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }, 0);
+  }
+
+  // If already in the right format, just download
+  if (blob.type === mime || (format === "jpg" && blob.type === "image/jpeg")) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      doDownload(e.target.result);
+    };
+    reader.readAsDataURL(blob);
+    return;
+  }
+
+  // Otherwise, convert using canvas
+  const img = new window.Image();
+  img.onload = function() {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+    // GIF and TIFF are not supported by canvas.toBlob, fallback to PNG
+    let outMime = mime;
+    if (format === "gif" || format === "tiff") outMime = "image/png";
+    canvas.toBlob(function(newBlob) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        doDownload(e.target.result);
+      };
+      reader.readAsDataURL(newBlob);
+    }, outMime, (outMime === "image/jpeg" || outMime === "image/webp") ? 0.92 : undefined);
+  };
+  img.src = URL.createObjectURL(blob);
+}
+
+// Reset
+resetBtn.onclick = resetAll;
+function resetAll() {
+  images = [];
+  imgList.innerHTML = "";
+  fileInput.value = "";
+  progress.innerText = "";
+}
+
+// Drag-and-drop
+dropzone.ondragover = e => { e.preventDefault(); dropzone.style.background="#e0e0e0"; };
+dropzone.ondragleave = e => { e.preventDefault(); dropzone.style.background=""; };
+dropzone.ondrop = e => {
+  e.preventDefault();
+  dropzone.style.background="";
+  handleFiles(e.dataTransfer.files);
+};
+fileInput.onchange = e => handleFiles(e.target.files);
+
+function handleFiles(fileList) {
+  // Do not reset all, allow multiple images
+  [...fileList].forEach(file => {
+    if (!file.type.startsWith("image/")) return alert("Only image files allowed!");
+    if (file.size > 10 * 1024 * 1024) return alert("Image too large (max 10MB).");
+    const url = URL.createObjectURL(file);
+    const img = new window.Image();
+    img.onload = function() {
+      images.push({file, img, previewUrl: url, processedBlob: null, info: "", history: [], redoStack: [], compressInfo: null});
+      showImages();
+      saveRecent(file, url);
+    };
+    img.src = url;
+  });
+}
+
+// Theme
+themeBtn.onclick = () => {
+  darkTheme = !darkTheme;
+  document.body.classList.toggle("theme-dark", darkTheme);
+  document.getElementById('app').classList.toggle("theme-dark", darkTheme);
+};
+
+// Help/About
+helpBtn.onclick = () => alert(
+  "1. Select or drag images.\n2. Crop (per image), resize, filter, or compress as needed.\n3. Undo/redo (per image), preview, and save each image.\n4. Use theme, help, about as needed.\n5. Use Delete to remove an image, Delete All to clear all images, and Delete All History to clear undo/redo for all.\n6. Click a thumbnail to preview it larger."
+);
+aboutBtn.onclick = () => alert(
+  "Image Resizer & Compressor\nBy RajApp\nCross-platform, works in any browser or device."
+);
+
+// Recent Images (localStorage) with delete button
+function showRecent() {
+  let recent = JSON.parse(localStorage.getItem("rajapp_recent") || "[]");
+  recentList.innerHTML = "";
+  recent.forEach((dataUrl, i) => {
+    const wrapper = document.createElement('span');
+    wrapper.className = "recent-thumb-wrapper";
+    const img = document.createElement('img');
+    img.src = dataUrl;
+    img.className = "recent-thumb";
+    img.alt = "Recent image";
+    img.onclick = () => loadRecent(dataUrl);
+
+    // Add delete button
+    const delBtn = document.createElement('button');
+    delBtn.textContent = "×";
+    delBtn.title = "Delete";
+    delBtn.className = "recent-delete-btn";
+    delBtn.onclick = (e) => {
+      e.stopPropagation();
+      let recentArr = JSON.parse(localStorage.getItem("rajapp_recent") || "[]");
+      recentArr.splice(i, 1);
+      localStorage.setItem("rajapp_recent", JSON.stringify(recentArr));
+      showRecent();
+    };
+
+    wrapper.appendChild(img);
+    wrapper.appendChild(delBtn);
+    recentList.appendChild(wrapper);
+  });
+}
+function saveRecent(blobOrFile, url) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    let recent = JSON.parse(localStorage.getItem("rajapp_recent") || "[]");
+    recent.unshift(e.target.result);
+    recent = recent.slice(0, 10);
+    localStorage.setItem("rajapp_recent", JSON.stringify(recent));
+    showRecent();
+  };
+  reader.readAsDataURL(blobOrFile);
+}
+function loadRecent(dataUrl) {
+  const img = new window.Image();
+  img.onload = function() {
+    images.push({
+      file: {name: "recent.png", size: 0, type: "image/png"},
+      img,
+      previewUrl: dataUrl,
+      processedBlob: null,
+      info: "Loaded from recent",
+      history: [],
+      redoStack: [],
+      compressInfo: null
+    });
+    showImages();
+  };
+  img.src = dataUrl;
+}
+showRecent();
+</script>
+</body>
