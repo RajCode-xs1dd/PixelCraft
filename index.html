@@ -1,790 +1,3125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Image Resizer & Compressor – Resize & Optimize Images Online</title>
+  <title>PixelCraft by RajCode – Fast, Visual & Private Online Image Suite</title>
+  <meta name="description" content="Free client-side image tool suite by RajCode. Visually compress, resize, crop, convert, watermark, rotate, upscale, and edit images directly in your browser." />
+  <meta name="author" content="RajCode" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://pixelcraft-rajcode.netlify.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixelcraft-rajcode.netlify.app/" />
+  <meta property="og:title" content="PixelCraft – Online Image Tools" />
+  <meta property="og:description" content="Compress, resize, crop, convert, watermark, rotate, upscale, and edit images privately in your browser." />
+  <meta property="og:image" content="https://pixelcraft-rajcode.netlify.app/preview.png" />
+  <meta property="og:site_name" content="PixelCraft by RajCode" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PixelCraft – Online Image Tools" />
+  <meta name="twitter:description" content="Private browser-based tools for compressing, resizing, cropping, converting, and editing images." />
+  <meta name="twitter:image" content="https://pixelcraft-rajcode.netlify.app/preview.png" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "PixelCraft",
+      "url": "https://pixelcraft-rajcode.netlify.app/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "description": "Private browser-based image compression, resizing, cropping, conversion, watermarking, upscaling, and editing tools.",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "author": { "@type": "Person", "name": "RajCode" }
+    }
+  </script>
 
-  <meta name="description"
-    content="Image Resizer & Compressor — resize, compress, crop, and optimize images online. Fast, free, no account needed. Built with JavaScript by RajCode.">
-  <meta name="keywords"
-    content="image resizer, image compressor, crop image, optimize image, online image tool, bulk resize, rajcode">
-  <meta name="author" content="RajCode-xs1dd">
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css" />
 
-  <!-- Theme Color (Mobile browser UI) -->
-  <meta name="theme-color" content="#f4f4f4">
-
-  <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
-  <meta property="og:title" content="Image Resizer & Compressor">
-  <meta property="og:description"
-    content="Resize, compress, crop, and optimize images online instantly. Fast, free, no sign-up required.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://rajcode-xs1dd.github.io/image-compress-tool/">
-  <meta property="og:image" content="https://rajcode-xs1dd.github.io/image-compress-tool/preview.png">
-
-  <!-- Twitter / X -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Image Resizer & Compressor">
-  <meta name="twitter:description"
-    content="Resize, compress, crop, and optimize images online instantly.">
-  <meta name="twitter:image" content="https://rajcode-xs1dd.github.io/image-compress-tool/preview.png">
-
-  <!-- Mobile Web App -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Image Resizer">
-
-  <!-- Favicon (optional but recommended) -->
-  <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16x16.png">
-  <link rel="icon" href="./favicon.ico">
-  <link rel="manifest" href="./site.webmanifest">
-
-<link rel="canonical" href="https://rajcode-xs1dd.github.io/image-compress-tool/">
-
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.css"/>
   <style>
-    body { background: #f4f4f4; }
-    #dropzone { border: 2px dashed #888; border-radius: 8px; padding: 2em; text-align: center; color: #888; margin-bottom: 1em; }
-    .img-thumb { max-width: 100px; max-height: 100px; margin: 0.5em; border-radius: 6px; border: 1px solid #ccc; cursor: zoom-in; }
-    .img-row { display: flex; align-items: center; gap: 1em; flex-wrap: wrap; }
-    .theme-dark { background: #222 !important; color: #fff !important; }
-    .theme-dark input, .theme-dark select { background: #333 !important; color: #fff !important; }
-    .theme-dark .modal-content { background: #333 !important; color: #fff !important; }
-    #cropModal .modal-dialog { max-width: 90vw; }
-    #cropImage { max-width: 100%; max-height: 60vh; }
-    .filter-controls label { margin-right: 1em; }
-    .recent-thumb { max-width: 60px; max-height: 60px; margin: 0.2em; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; }
-    .img-info-preview { margin-top: 0.5em; font-size: 0.95em; color: #444; }
-    .img-actions { margin-top: 0.5em; }
-    .img-preview-box { margin-top: 0.5em; }
-    .compress-again-btn { margin-top: 0.5em; }
-    .recent-delete-btn {
-      position: absolute;
+    :root {
+      --primary: #1e70bf;
+      --primary-hover: #155b9e;
+      --primary-light: #eef5fc;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --success-hover: #059669;
+      --warning: #f59e0b;
+      --warning-hover: #d97706;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --slate-800: #1e293b;
+      --slate-600: #475569;
+      --slate-400: #94a3b8;
+      --slate-200: #e2e8f0;
+      --slate-100: #f8fafc;
+      --white: #ffffff;
+      --nav-height: 64px;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 10px rgba(0,0,0,0.06);
+      --shadow-xl: 0 20px 30px -10px rgba(0,0,0,0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f1f5f9;
+      color: var(--slate-800);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* ---------------- MAIN APP NAVBAR ---------------- */
+    header#mainAppHeader {
+      background: var(--white);
+      border-bottom: 1px solid var(--slate-200);
+      position: sticky;
       top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      height: var(--nav-height);
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 10px rgba(30, 112, 191, 0.3);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 0.2rem;
+      margin: 0;
+    }
+
+    .nav-item { position: relative; }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--slate-600);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 1.35rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+
+    .nav-more-link i { font-size: 0.72rem; }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0.75rem;
+      right: 0.75rem;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px 3px 0 0;
+    }
+
+    .mega-dropdown {
+      position: absolute;
+      top: 100%;
       right: 0;
-      background: #f33;
-      color: #fff;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xl);
+      padding: 1.5rem;
+      display: none;
+      grid-template-columns: repeat(4, 180px);
+      gap: 1.25rem;
+      z-index: 1050;
+    }
+
+    .nav-item.dropdown:hover .mega-dropdown { display: grid; }
+
+    .mega-col-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--slate-400);
+      margin-bottom: 0.65rem;
+      letter-spacing: 0.5px;
+    }
+
+    .mega-menu-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .mega-item {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.45rem 0.6rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+    .mega-item i { font-size: 1rem; color: var(--primary); }
+    .mega-item:hover { background: var(--primary-light); color: var(--primary); }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      color: var(--dark);
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .mobile-nav-drawer {
+      display: none;
+      position: fixed;
+      inset: var(--nav-height) 0 0 0;
+      background: var(--white);
+      z-index: 999;
+      flex-direction: column;
+      padding: 1.25rem;
+      overflow-y: auto;
+      border-top: 1px solid var(--slate-200);
+    }
+
+    .mobile-nav-drawer.open { display: flex; }
+
+    .mobile-drawer-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--slate-400);
+      margin: 1rem 0 0.5rem 0;
+      letter-spacing: 0.5px;
+    }
+
+    .mobile-drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.75rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--slate-800);
+      text-decoration: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .mobile-drawer-link:hover, .mobile-drawer-link.active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* ---------------- HERO / UPLOAD ZONE ---------------- */
+    .hero-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3.5rem 1.25rem;
+    }
+
+    .hero-title {
+      font-size: 2.75rem;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -1px;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.15rem;
+      color: var(--slate-600);
+      max-width: 650px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .format-pill {
+      color: var(--primary);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .btn-select-main {
+      background: var(--primary);
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding: 1.1rem 3rem;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 25px -4px rgba(30, 112, 191, 0.4);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn-select-main:hover {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -4px rgba(30, 112, 191, 0.5);
+    }
+
+    .drop-hint-text {
+      margin-top: 1.25rem;
+      font-size: 0.95rem;
+      color: var(--slate-400);
+      font-weight: 500;
+    }
+
+    /* ---------------- UNIVERSAL WORKSPACE ---------------- */
+    .workspace-view {
+      display: none;
+      flex: 1;
+      height: calc(100vh - var(--nav-height));
+    }
+
+    .workspace-view.active { display: flex; }
+
+    .stage-main {
+      flex: 1;
+      background: #e2e8f0;
+      padding: 1.5rem;
+      overflow-y: auto;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .floating-add-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      background: var(--primary);
+      color: white;
+      border-radius: 50%;
+      width: 46px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(30, 112, 191, 0.35);
+      border: none;
+      z-index: 10;
+    }
+
+    .floating-badge {
+      position: absolute;
+      top: -4px;
+      left: -4px;
+      background: var(--dark);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 800;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+    }
+
+    .cards-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+
+    .thumb-card {
+      width: 220px;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      border: 1px solid var(--slate-200);
+      position: relative;
+      transition: transform 0.15s;
+    }
+
+    .thumb-card:hover { transform: translateY(-2px); }
+
+    .thumb-card-img {
+      height: 160px;
+      width: 100%;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+    }
+
+    .thumb-card-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .thumb-card-body {
+      padding: 0.75rem;
+      background: var(--white);
+      border-top: 1px solid var(--slate-100);
+    }
+
+    .thumb-card-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+
+    .thumb-dim-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      border-radius: 4px;
+    }
+
+    .thumb-card-delete {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      background: rgba(15, 23, 42, 0.65);
+      color: white;
       border: none;
       border-radius: 50%;
-      width: 18px;
-      height: 18px;
-      font-size: 14px;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       cursor: pointer;
-      z-index: 2;
-      line-height: 16px;
-      padding: 0;
+      font-size: 0.75rem;
+      opacity: 0;
+      transition: opacity 0.15s;
     }
-    .recent-thumb-wrapper {
-      display: inline-block;
+
+    .thumb-card:hover .thumb-card-delete { opacity: 1; }
+    .thumb-card-delete:hover { background: var(--danger); }
+
+    .crop-stage-container {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #090d16;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .crop-stage-container img { max-width: 100%; max-height: 75vh; }
+
+    .stage-sidebar {
+      width: 360px;
+      background: var(--white);
+      border-left: 1px solid var(--slate-200);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.75rem 1.5rem;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 1.25rem;
+    }
+
+    .sidebar-desc {
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+
+    .mode-switch-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .mode-switch-card {
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 0.5rem;
+      text-align: center;
+      cursor: pointer;
       position: relative;
-      margin: 0.2em;
+      transition: all 0.15s;
     }
-    /* Responsive: stack buttons vertically on mobile */
-    @media (max-width: 600px) {
-      .img-row { flex-direction: column; align-items: flex-start; }
-      .my-3 > .btn, .my-3 > .form-select { display: block; width: 100%; margin-bottom: 0.5em; }
-      .img-actions > .btn { display: block; width: 100%; margin-bottom: 0.3em; }
+
+    .mode-switch-card i {
+      font-size: 1.3rem;
+      display: block;
+      margin-bottom: 0.35rem;
+      color: var(--slate-400);
+    }
+
+    .mode-switch-card span {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--slate-800);
+    }
+
+    .mode-switch-card.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .mode-switch-card.active i, .mode-switch-card.active span {
+      color: var(--primary);
+    }
+
+    .form-group-block { margin-bottom: 1.25rem; }
+
+    .form-group-label {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .app-input-text, .app-select {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      background: #f8fafc;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .app-input-text:focus, .app-select:focus {
+      border-color: var(--primary);
+      background: var(--white);
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--slate-600);
+      margin-bottom: 0.65rem;
+      cursor: pointer;
+    }
+
+    .checkbox-row input {
+      accent-color: var(--primary);
+      width: 16px;
+      height: 16px;
+    }
+
+    .percent-btn-group { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .btn-percent-select {
+      width: 100%;
+      padding: 0.8rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      background: #f8fafc;
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-percent-select.active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-execute-main {
+      width: 100%;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 1rem;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      box-shadow: 0 4px 14px rgba(30, 112, 191, 0.35);
+      transition: all 0.15s;
+    }
+
+    .btn-execute-main:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* ---------------- RESULTS VIEW ---------------- */
+    .results-view {
+      display: none;
+      flex: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 2.5rem 1.25rem;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .results-view.active { display: flex; }
+
+    .result-badge-success {
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 800;
+      font-size: 0.9rem;
+      padding: 0.45rem 1.25rem;
+      border-radius: 30px;
+      margin-bottom: 0.75rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+      width: 100%;
+      margin: 1.5rem 0;
+    }
+
+    .result-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .result-preview-box {
+      width: 100%;
+      height: 180px;
+      background: #f8fafc;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.85rem;
+    }
+
+    .result-preview-box img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .result-stats-row {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      color: var(--slate-600);
+      margin-bottom: 0.75rem;
+      padding: 0.5rem;
+      background: #f8fafc;
+      border-radius: 6px;
+    }
+
+    .result-button-row {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .result-download-btn {
+      flex: 1;
+      background: var(--success);
+      color: white;
+      font-weight: 700;
+      font-size: 0.86rem;
+      border: none;
+      padding: 0.65rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .result-download-btn:hover { background: var(--success-hover); }
+
+    .result-compress-more-btn {
+      background: var(--warning);
+      color: white;
+      font-weight: 700;
+      font-size: 0.86rem;
+      border: none;
+      padding: 0.65rem 0.85rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .result-compress-more-btn:hover { background: var(--warning-hover); }
+
+    .result-actions-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .btn-secondary-action {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      padding: 0.75rem 1.5rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-secondary-action:hover { background: #f8fafc; }
+
+    /* ---------------- PHOTO EDITOR SUITE ---------------- */
+    .photo-editor-app {
+      display: none;
+      flex-direction: column;
+      flex: 1;
+      height: 100vh;
+      background: #f8fafc;
+      overflow: hidden;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+    }
+
+    .photo-editor-app.active { display: flex; }
+
+    .editor-navbar-header {
+      height: 52px;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      box-shadow: var(--shadow-sm);
+      z-index: 10;
+      position: relative;
+    }
+
+    .editor-header-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.25rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      border-radius: 6px;
+    }
+
+    .editor-header-btn:hover { background: rgba(255,255,255,0.15); }
+
+    .editor-header-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .editor-viewport-area {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: auto;
+      padding: 1rem;
+      background-color: #f1f5f9;
+      background-image: 
+        linear-gradient(to right, rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+      background-size: 16px 16px;
+    }
+
+    .canvas-interaction-stage {
+      position: relative;
+      display: inline-block;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      background: white;
+    }
+
+    .canvas-interaction-stage canvas {
+      display: block;
+      max-width: 85vw;
+      max-height: 55vh;
+      border-radius: 4px;
+    }
+
+    .editor-interactive-layer {
+      position: absolute;
+      cursor: grab;
+      border: 2px dashed rgba(30, 112, 191, 0.8);
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 10px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+      z-index: 50;
+    }
+
+    .editor-interactive-layer:active { cursor: grabbing; }
+
+    .layer-delete-badge {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background: #ef4444;
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .layer-resize-handle {
+      position: absolute;
+      bottom: -10px;
+      right: -10px;
+      background: #1e70bf;
+      color: white;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: nwse-resize;
+      touch-action: none;
+    }
+
+    .editor-bottom-bar-container {
+      background: var(--white);
+      border-top: 1px solid var(--slate-200);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.04);
+      z-index: 20;
+    }
+
+    .editor-main-tools-carousel {
+      display: flex;
+      align-items: center;
+      overflow-x: auto;
+      padding: 0.6rem 0.75rem;
+      gap: 1.25rem;
+    }
+
+    .editor-main-tools-carousel::-webkit-scrollbar { display: none; }
+
+    .editor-tool-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      min-width: 68px;
+      padding: 0.35rem 0.25rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+    }
+
+    .editor-tool-item i {
+      font-size: 1.35rem;
+      color: var(--slate-800);
+    }
+
+    .editor-tool-item span {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--slate-600);
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+    }
+
+    .editor-tool-item:hover, .editor-tool-item.active {
+      background: var(--primary-light);
+    }
+
+    .editor-tool-item:hover i, .editor-tool-item:hover span,
+    .editor-tool-item.active i, .editor-tool-item.active span {
+      color: var(--primary);
+    }
+
+    .editor-subtool-drawer {
+      display: none;
+      padding: 0.85rem 1rem;
+      background: #ffffff;
+      border-top: 1px solid var(--slate-200);
+      overflow-x: auto;
+    }
+
+    .editor-subtool-drawer.open {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .drawer-tab-strip {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      margin-bottom: 6px;
+      border-bottom: 1px solid var(--slate-200);
+      width: 100%;
+    }
+
+    .drawer-tab-strip::-webkit-scrollbar { display: none; }
+
+    .file-input-hidden { display: none; }
+    .crop-stage-hidden { display: none; }
+    .result-heading { font-size: 2.1rem; margin-bottom: 0.5rem; }
+    .result-description { margin-bottom: 1.25rem; }
+    .download-all-button { font-size: 1rem; padding: 0.8rem 1.8rem; }
+    .footer-meta { display: flex; align-items: center; gap: 8px; }
+
+    .drawer-tab-btn {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.76rem;
+      font-weight: 700;
+      border-radius: 20px;
+      border: 1px solid var(--slate-200);
+      background: #f8fafc;
+      color: var(--slate-600);
+      white-space: nowrap;
+      cursor: pointer;
+    }
+
+    .drawer-tab-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .preset-card-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      min-width: 78px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      border-radius: 8px;
+      padding: 4px;
+      background: #f8fafc;
+      transition: all 0.15s;
+    }
+
+    .preset-card-item:hover, .preset-card-item.active {
+      border-color: var(--primary);
+      background: var(--primary-light);
+    }
+
+    .preset-thumb-box {
+      width: 68px;
+      height: 52px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #cbd5e1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .preset-thumb-box img { width: 100%; height: 100%; object-fit: cover; }
+
+    .preset-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .frame-sample-polaroid { border-bottom: 10px solid #ffffff; border-top: 3px solid #ffffff; border-left: 3px solid #ffffff; border-right: 3px solid #ffffff; }
+    .frame-sample-wood { border: 4px solid #854d0e; }
+    .frame-sample-gold { border: 4px double #eab308; }
+    .frame-sample-neon { border: 3px solid #ec4899; box-shadow: 0 0 6px #ec4899; }
+    .frame-sample-film { border: 4px dashed #0f172a; }
+    .frame-sample-shadow { border: 4px solid #334155; }
+    .frame-sample-stitch { border: 3px dotted #38bdf8; }
+
+    /* ---------------- FOOTER ---------------- */
+    footer#mainAppFooter {
+      margin-top: auto;
+      background: var(--white);
+      border-top: 1px solid var(--slate-200);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      font-size: 0.85rem;
+      color: var(--slate-600);
+    }
+
+    .footer-brand-badge {
+      font-weight: 700;
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.85rem;
+    }
+
+    .footer-links a {
+      color: var(--slate-600);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--primary); }
+
+    .footer-social-links {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .footer-social-links a {
+      color: var(--slate-600);
+      font-size: 1.05rem;
+      text-decoration: none;
+      transition: color 0.15s ease, transform 0.15s ease;
+    }
+
+    .footer-social-links a:hover {
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .footer-privacy-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #dcfce7;
+      color: #15803d;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .nav-menu { display: none; }
+      .mobile-menu-btn { display: block; }
+      .hero-title { font-size: 2.1rem; }
+      .hero-view { padding: 2.5rem 1rem; }
+      
+      .workspace-view.active {
+        flex-direction: column;
+        height: auto;
+        min-height: calc(100vh - var(--nav-height));
+      }
+
+      .stage-main { min-height: 340px; padding: 1rem; }
+      .cards-grid { justify-content: center; }
+
+      .stage-sidebar {
+        width: 100%;
+        border-left: none;
+        border-top: 1px solid var(--slate-200);
+        padding: 1.25rem 1rem;
+      }
     }
   </style>
 </head>
 <body>
-<div class="container my-4" id="app">
-  <h2 class="text-center mb-4">Image Resizer & Compressor</h2>
-  <div id="dropzone" class="mb-3" aria-label="Image dropzone">
-    Drag & drop images here or <input type="file" id="fileInput" multiple accept="image/*" style="display:inline-block;width:auto;" aria-label="Select images">
-  </div>
-  <div class="mb-2">
-    <button class="btn btn-danger btn-sm" id="deleteAllBtn" aria-label="Delete all images">Delete All Images</button>
-    <button class="btn btn-secondary btn-sm" id="clearHistoryBtn" aria-label="Delete all history">Delete All History</button>
-  </div>
-  <div id="imgList"></div>
-  <div class="row g-2 align-items-end">
-    <div class="col">
-      <label>Width: <input type="number" id="widthInput" class="form-control" min="1" style="width:90px;display:inline-block;" aria-label="Width">
-        <select id="widthUnit" class="form-select" style="width:60px;display:inline-block;" aria-label="Width unit">
-          <option value="px">px</option><option value="cm">cm</option>
-        </select>
-      </label>
-    </div>
-    <div class="col">
-      <label>Height: <input type="number" id="heightInput" class="form-control" min="1" style="width:90px;display:inline-block;" aria-label="Height">
-        <select id="heightUnit" class="form-select" style="width:60px;display:inline-block;" aria-label="Height unit">
-          <option value="px">px</option><option value="cm">cm</option>
-        </select>
-      </label>
-    </div>
-    <div class="col">
-      <label>DPI: <input type="number" id="dpiInput" class="form-control" min="1" value="96" style="width:70px;display:inline-block;" aria-label="DPI"></label>
-    </div>
-    <div class="col">
-      <label>Target Size (KB): <input type="number" id="targetSizeInput" class="form-control" min="1" style="width:90px;display:inline-block;" aria-label="Target size"></label>
-    </div>
-    <div class="col">
-      <label>Rename: <input type="text" id="renameInput" class="form-control" placeholder="Optional" style="width:120px;display:inline-block;" aria-label="Rename"></label>
-    </div>
-    <div class="col">
-      <label>Format:
-        <select id="formatSelect" class="form-select" style="width:100px;display:inline-block;" aria-label="Image format">
-          <option value="png">PNG</option>
-          <option value="jpeg">JPEG</option>
-          <option value="jpg">JPG</option>
-          <option value="webp">WEBP</option>
-          <option value="gif">GIF</option>
-          <option value="bmp">BMP</option>
-          <option value="tiff">TIFF</option>
-        </select>
-      </label>
-    </div>
-  </div>
-  <div class="my-3 filter-controls">
-    <label>Brightness: <input type="range" id="brightnessInput" min="0" max="2" step="0.01" value="1" aria-label="Brightness"></label>
-    <label>Contrast: <input type="range" id="contrastInput" min="0" max="2" step="0.01" value="1" aria-label="Contrast"></label>
-    <label>Grayscale: <input type="checkbox" id="grayscaleInput" aria-label="Grayscale"></label>
-    <label>Invert: <input type="checkbox" id="invertInput" aria-label="Invert"></label>
-    <button class="btn btn-secondary btn-sm" id="applyFilterBtn" aria-label="Apply filter">Apply Filter</button>
-  </div>
-  <div class="my-3 d-flex flex-wrap gap-2">
-    <button class="btn btn-primary" id="resizeBtn" aria-label="Resize">Resize</button>
-    <button class="btn btn-warning" id="compressBtn" aria-label="Compress">Compress</button>
-    <button class="btn btn-secondary" id="resetBtn" aria-label="Reset">Reset</button>
-    <button class="btn btn-dark" id="themeBtn" aria-label="Switch theme">Switch Theme</button>
-    <button class="btn btn-info" id="helpBtn" aria-label="Help">Help</button>
-    <button class="btn btn-info" id="aboutBtn" aria-label="About">About</button>
-  </div>
-  <div id="progress"></div>
-  <div class="my-3">
-    <h5>Recent Images</h5>
-    <div id="recentList"></div>
-  </div>
-</div>
 
-<!-- Crop Modal -->
-<div class="modal fade" id="cropModal" tabindex="-1" aria-labelledby="cropModalLabel" aria-modal="true" role="dialog">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content p-3">
-      <div class="modal-header">
-        <h5 class="modal-title" id="cropModalLabel">Crop Image</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close crop modal"></button>
-      </div>
-      <div class="modal-body">
-        <img id="cropImage" src="" alt="Crop preview" />
-        <div class="mt-2">
-          <label>Aspect Ratio:
-            <select id="aspectRatioSelect" aria-label="Aspect ratio">
-              <option value="NaN">Free</option>
-              <option value="1">1:1</option>
-              <option value="4/3">4:3</option>
-              <option value="16/9">16:9</option>
-              <option value="3/2">3:2</option>
-            </select>
-          </label>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" id="applyCropBtn" aria-label="Apply crop">Apply Crop</button>
-        <button class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Cancel crop">Cancel</button>
-      </div>
-    </div>
-  </div>
-</div>
+  <!-- Top Navigation Header -->
+  <header id="mainAppHeader">
+    <nav class="navbar">
+      <a class="brand-logo" data-route="compress-image">
+        <div class="brand-badge"><i class="bi bi-layers-fill"></i></div>
+        <span>PixelCraft</span>
+      </a>
 
-<!-- Preview Modal -->
-<div class="modal fade" id="previewModal" tabindex="-1" aria-labelledby="previewModalLabel" aria-modal="true" role="dialog">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content p-2">
-      <div class="modal-header">
-        <h5 class="modal-title" id="previewModalLabel">Image Preview</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close preview"></button>
-      </div>
-      <div class="modal-body text-center">
-        <img id="previewModalImg" src="" alt="Large preview" style="max-width:100%;max-height:70vh;border-radius:8px;">
+      <!-- Desktop Nav -->
+      <ul class="nav-menu">
+        <li class="nav-item"><a class="nav-link" data-route="compress-image">Compress</a></li>
+        <li class="nav-item"><a class="nav-link" data-route="increase-size">Increase Size</a></li>
+        <li class="nav-item"><a class="nav-link" data-route="resize-image">Resize</a></li>
+        <li class="nav-item"><a class="nav-link" data-route="crop-image">Crop</a></li>
+        <li class="nav-item"><a class="nav-link" data-route="convert-to-jpg">Convert to JPG</a></li>
+        <li class="nav-item"><a class="nav-link" data-route="photo-editor">Photo Editor</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-more-link">More Tools <i class="bi bi-chevron-down ms-1"></i></a>
+          <div class="mega-dropdown">
+            <div>
+              <div class="mega-col-title">Size Tools</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" data-route="compress-image"><i class="bi bi-file-earmark-zip"></i> Compress Image</a></li>
+                <li><a class="mega-item" data-route="increase-size"><i class="bi bi-file-earmark-plus"></i> Increase File Size</a></li>
+                <li><a class="mega-item" data-route="upscale-image"><i class="bi bi-arrows-fullscreen"></i> Upscale Resolution</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Modify</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" data-route="resize-image"><i class="bi bi-arrows-angle-expand"></i> Resize Image</a></li>
+                <li><a class="mega-item" data-route="crop-image"><i class="bi bi-crop"></i> Crop Image</a></li>
+                <li><a class="mega-item" data-route="rotate-image"><i class="bi bi-arrow-clockwise"></i> Rotate Image</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Convert</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" data-route="convert-to-jpg"><i class="bi bi-filetype-jpg"></i> Convert to JPG</a></li>
+                <li><a class="mega-item" data-route="convert-to-png"><i class="bi bi-filetype-png"></i> Convert to PNG</a></li>
+                <li><a class="mega-item" data-route="convert-to-webp"><i class="bi bi-file-earmark-code"></i> Convert to WEBP</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Edit & Protect</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" data-route="photo-editor"><i class="bi bi-palette"></i> Full Photo Editor</a></li>
+                <li><a class="mega-item" data-route="watermark-image"><i class="bi bi-shield-check"></i> Watermark Image</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <button class="mobile-menu-btn" id="mobileNavToggle" aria-label="Toggle Menu">
+        <i class="bi bi-list"></i>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-title">Core Tools</div>
+    <a class="mobile-drawer-link" data-route="compress-image"><i class="bi bi-file-earmark-zip text-primary"></i> Compress Image</a>
+    <a class="mobile-drawer-link" data-route="increase-size"><i class="bi bi-file-earmark-plus text-primary"></i> Increase File Size</a>
+    <a class="mobile-drawer-link" data-route="resize-image"><i class="bi bi-arrows-angle-expand text-primary"></i> Resize Image</a>
+    <a class="mobile-drawer-link" data-route="crop-image"><i class="bi bi-crop text-primary"></i> Crop Image</a>
+    <a class="mobile-drawer-link" data-route="photo-editor"><i class="bi bi-palette text-primary"></i> Photo Editor</a>
+
+    <div class="mobile-drawer-title">Convert & Modify</div>
+    <a class="mobile-drawer-link" data-route="convert-to-jpg"><i class="bi bi-filetype-jpg text-primary"></i> Convert to JPG</a>
+    <a class="mobile-drawer-link" data-route="convert-to-png"><i class="bi bi-filetype-png text-primary"></i> Convert to PNG</a>
+    <a class="mobile-drawer-link" data-route="convert-to-webp"><i class="bi bi-file-earmark-code text-primary"></i> Convert to WEBP</a>
+    <a class="mobile-drawer-link" data-route="rotate-image"><i class="bi bi-arrow-clockwise text-primary"></i> Rotate Image</a>
+    <a class="mobile-drawer-link" data-route="watermark-image"><i class="bi bi-shield-check text-primary"></i> Watermark Image</a>
+    <a class="mobile-drawer-link" data-route="upscale-image"><i class="bi bi-arrows-fullscreen text-primary"></i> Upscale 2X/4X</a>
+  </div>
+
+  <!-- 1. Hero Landing View -->
+  <main class="hero-view" id="heroView">
+    <h1 class="hero-title" id="heroTitle">Compress IMAGE</h1>
+    <p class="hero-subtitle" id="heroSubtitle">
+      Compress <span class="format-pill">JPG</span>, <span class="format-pill">PNG</span>, or <span class="format-pill">WEBP</span> with target file size controls.<br />
+      Visual comparisons and 100% private in-browser processing.
+    </p>
+
+    <button class="btn-select-main" id="btnUploadSelect">
+      <i class="bi bi-cloud-arrow-up-fill"></i> Select Images
+    </button>
+    <p class="drop-hint-text">or drag and drop images directly</p>
+    <input type="file" id="hiddenFileInput" class="file-input-hidden" multiple accept="image/*" />
+  </main>
+
+  <!-- 2. Universal Workspace (Stage 2) -->
+  <section class="workspace-view" id="universalWorkspace">
+    <div class="stage-main">
+      <button class="floating-add-btn" id="btnAddMoreFiles" title="Add more images">
+        <i class="bi bi-plus-lg"></i>
+        <div class="floating-badge" id="imageCountBadge">1</div>
+      </button>
+
+      <div class="cards-grid" id="workspaceCardsGrid"></div>
+
+      <div class="crop-stage-container crop-stage-hidden" id="cropStageContainer">
+        <img id="cropperTargetImage" src="" alt="Cropping Stage" />
       </div>
     </div>
-  </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
-<script>
-const dropzone = document.getElementById('dropzone');
-const fileInput = document.getElementById('fileInput');
-const imgList = document.getElementById('imgList');
-const widthInput = document.getElementById('widthInput');
-const widthUnit = document.getElementById('widthUnit');
-const heightInput = document.getElementById('heightInput');
-const heightUnit = document.getElementById('heightUnit');
-const dpiInput = document.getElementById('dpiInput');
-const targetSizeInput = document.getElementById('targetSizeInput');
-const renameInput = document.getElementById('renameInput');
-const formatSelect = document.getElementById('formatSelect');
-const resizeBtn = document.getElementById('resizeBtn');
-const compressBtn = document.getElementById('compressBtn');
-const resetBtn = document.getElementById('resetBtn');
-const themeBtn = document.getElementById('themeBtn');
-const helpBtn = document.getElementById('helpBtn');
-const aboutBtn = document.getElementById('aboutBtn');
-const progress = document.getElementById('progress');
-const brightnessInput = document.getElementById('brightnessInput');
-const contrastInput = document.getElementById('contrastInput');
-const grayscaleInput = document.getElementById('grayscaleInput');
-const invertInput = document.getElementById('invertInput');
-const applyFilterBtn = document.getElementById('applyFilterBtn');
-const recentList = document.getElementById('recentList');
-const deleteAllBtn = document.getElementById('deleteAllBtn');
-const clearHistoryBtn = document.getElementById('clearHistoryBtn');
-const previewModal = new bootstrap.Modal(document.getElementById('previewModal'));
-const previewModalImg = document.getElementById('previewModalImg');
-
-let darkTheme = false;
-let images = []; // {file, img, previewUrl, processedBlob, info, history:[], redoStack:[], compressInfo:{}}
-let currentCropIdx = 0;
-let cropper = null;
-
-// Track downloaded images in this session
-let downloadedImages = new Set();
-
-// Attach all dynamic functions to window for HTML event handlers
-window.startCrop = startCrop;
-window.undo = undo;
-window.redo = redo;
-window.deleteImage = deleteImage;
-window.compressAgain = compressAgain;
-window.saveImage = saveImage;
-window.previewImage = previewImage;
-
-// Helper functions
-function cmToPx(cm, dpi) { return Math.round((cm / 2.54) * dpi); }
-function pxToCm(px, dpi) { return (px * 2.54 / dpi).toFixed(2); }
-function formatSize(bytes) {
-  if (bytes > 1024*1024) return (bytes/1024/1024).toFixed(2) + " MB";
-  if (bytes > 1024) return (bytes/1024).toFixed(2) + " KB";
-  return bytes + " B";
-}
-function getOperationSuffix(imgObj) {
-  if (imgObj.info) {
-    if (imgObj.info.startsWith("Compressed")) return "_compressed";
-    if (imgObj.info.startsWith("Resized")) return "_resized";
-    if (imgObj.info.startsWith("Cropped")) return "_cropped";
-    if (imgObj.info.startsWith("Filtered")) return "_filtered";
-  }
-  return "";
-}
-function getMimeAndExt(format) {
-  switch(format) {
-    case "jpeg": case "jpg": return ["image/jpeg", ".jpg"];
-    case "png": return ["image/png", ".png"];
-    case "webp": return ["image/webp", ".webp"];
-    case "gif": return ["image/gif", ".gif"];
-    case "bmp": return ["image/bmp", ".bmp"];
-    case "tiff": return ["image/tiff", ".tiff"];
-    default: return ["image/png", ".png"];
-  }
-}
-
-// Show images and info
-function showImages() {
-  imgList.innerHTML = "";
-  images.forEach((imgObj, idx) => {
-    const w = imgObj.img.width;
-    const h = imgObj.img.height;
-    const dpi = parseInt(dpiInput.value) || 96;
-    const wcm = pxToCm(w, dpi);
-    const hcm = pxToCm(h, dpi);
-    let compressInfo = "";
-    // Show Compress Again only if file is still too big
-    if (imgObj.compressInfo && imgObj.compressInfo.showAgainBtn) {
-      compressInfo = `
-        <div class="img-info-preview">
-          <b>Compressed:</b> ${imgObj.compressInfo.sizeKB} KB (${imgObj.compressInfo.percent}%)
-          <br>
-          <b>Dimensions:</b> ${w}x${h} px (${wcm}x${hcm} cm)
-        </div>
-        <div class="img-preview-box">
-          <img src="${imgObj.previewUrl}" style="max-width:180px;max-height:180px;border:1px solid #aaa;border-radius:6px;margin-top:0.3em;" alt="Compressed preview">
-        </div>
-        <button class="btn btn-sm btn-warning compress-again-btn" onclick="compressAgain(${idx})" aria-label="Compress again">Compress Again</button>
-      `;
-    } else if (imgObj.compressInfo) {
-      compressInfo = `
-        <div class="img-info-preview">
-          <b>Compressed:</b> ${imgObj.compressInfo.sizeKB} KB (${imgObj.compressInfo.percent}%)
-          <br>
-          <b>Dimensions:</b> ${w}x${h} px (${wcm}x${hcm} cm)
-        </div>
-        <div class="img-preview-box">
-          <img src="${imgObj.previewUrl}" style="max-width:180px;max-height:180px;border:1px solid #aaa;border-radius:6px;margin-top:0.3em;" alt="Compressed preview">
-        </div>
-      `;
-    }
-    const div = document.createElement('div');
-    div.className = "img-row";
-    div.innerHTML = `
-      <img src="${imgObj.previewUrl}" class="img-thumb" alt="preview of ${imgObj.file.name}" tabindex="0" aria-label="Preview image" onclick="previewImage('${encodeURIComponent(imgObj.previewUrl)}')" />
+    <!-- Options Sidebar -->
+    <aside class="stage-sidebar">
       <div>
-        <div><b>${imgObj.file.name}</b></div>
-        <div>Original: ${formatSize(imgObj.file.size)} (${imgObj.img.width}x${imgObj.img.height})</div>
-        <div>${imgObj.info||""}</div>
-        <div class="img-actions">
-          <button class="btn btn-sm btn-outline-primary" onclick="startCrop(${idx})" aria-label="Crop">Crop</button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="undo(${idx})" aria-label="Undo">Undo</button>
-          <button class="btn btn-sm btn-outline-secondary" onclick="redo(${idx})" aria-label="Redo">Redo</button>
-          <button class="btn btn-sm btn-outline-danger" onclick="deleteImage(${idx})" aria-label="Delete">Delete</button>
-          <button class="btn btn-sm btn-success" onclick="saveImage(${idx})" aria-label="Save">Save</button>
-        </div>
-        ${compressInfo}
+        <h2 class="sidebar-header" id="sidebarTitle">Options</h2>
+        <div id="dynamicSidebarContent"></div>
       </div>
-    `;
-    imgList.appendChild(div);
-  });
-}
 
-// Preview modal for image zoom
-function previewImage(url) {
-  previewModalImg.src = decodeURIComponent(url);
-  previewModal.show();
-}
+      <button class="btn-execute-main" id="btnExecuteAction">
+        <span id="executeBtnText">Process Images</span>
+        <i class="bi bi-arrow-right"></i>
+      </button>
+    </aside>
+  </section>
 
-// Undo/Redo
-function saveHistory(idx) {
-  const imgObj = images[idx];
-  if (!imgObj.history) imgObj.history = [];
-  if (!imgObj.redoStack) imgObj.redoStack = [];
-  imgObj.history.push({
-    processedBlob: imgObj.processedBlob,
-    previewUrl: imgObj.previewUrl,
-    info: imgObj.info,
-    compressInfo: imgObj.compressInfo
-  });
-  imgObj.redoStack = [];
-}
-function restoreImgObj(idx, state) {
-  const imgObj = images[idx];
-  imgObj.processedBlob = state.processedBlob;
-  imgObj.previewUrl = state.previewUrl;
-  imgObj.info = state.info;
-  imgObj.compressInfo = state.compressInfo;
-  // Restore img object
-  const img = new window.Image();
-  img.onload = function() {
-    imgObj.img = img;
-    showImages();
-  };
-  img.src = imgObj.previewUrl;
-}
-function undo(idx) {
-  const imgObj = images[idx];
-  if (imgObj.history && imgObj.history.length) {
-    if (!imgObj.redoStack) imgObj.redoStack = [];
-    imgObj.redoStack.push({
-      processedBlob: imgObj.processedBlob,
-      previewUrl: imgObj.previewUrl,
-      info: imgObj.info,
-      compressInfo: imgObj.compressInfo
-    });
-    const last = imgObj.history.pop();
-    restoreImgObj(idx, last);
-  }
-}
-function redo(idx) {
-  const imgObj = images[idx];
-  if (imgObj.redoStack && imgObj.redoStack.length) {
-    if (!imgObj.history) imgObj.history = [];
-    imgObj.history.push({
-      processedBlob: imgObj.processedBlob,
-      previewUrl: imgObj.previewUrl,
-      info: imgObj.info,
-      compressInfo: imgObj.compressInfo
-    });
-    const next = imgObj.redoStack.pop();
-    restoreImgObj(idx, next);
-  }
-}
+  <!-- 3. Visual Interactive Results View (Stage 3) -->
+  <section class="results-view" id="resultsView">
+    <div class="result-badge-success">
+      <i class="bi bi-check-circle-fill"></i> Processing Completed!
+    </div>
+    <h2 class="hero-title result-heading" id="resultHeaderTitle">Images Ready</h2>
+    <p class="hero-subtitle result-description" id="resultHeaderDesc">Review your visual results below. Download individually or as a single ZIP.</p>
 
-// Delete image
-function deleteImage(idx) {
-  images.splice(idx, 1);
-  showImages();
-}
+    <div class="results-grid" id="resultsGridContainer"></div>
 
-// Delete all images with alert
-deleteAllBtn.onclick = function() {
-  if (confirm("Delete all images?")) {
-    images = [];
-    imgList.innerHTML = "";
-    fileInput.value = "";
-    progress.innerText = "";
-    alert("All images deleted.");
-  }
-};
+    <div class="result-actions-bar">
+      <button class="btn-select-main download-all-button" id="btnDownloadZipAll">
+        <i class="bi bi-file-earmark-zip-fill"></i> Download All as .ZIP
+      </button>
+      <button class="btn-secondary-action" id="btnProcessAnother">
+        <i class="bi bi-arrow-left"></i> Process More Images
+      </button>
+    </div>
+  </section>
 
-// Delete all history with alert
-clearHistoryBtn.onclick = function() {
-  images.forEach(imgObj => {
-    imgObj.history = [];
-    imgObj.redoStack = [];
-  });
-  alert("All undo/redo history cleared. Undo/redo is now disabled for all images.");
-};
+  <!-- 4. AUTHENTIC PHOTO EDITOR SUITE -->
+  <section class="photo-editor-app" id="photoEditorWorkspace">
+    <div class="editor-navbar-header" id="editorNavbarHeader">
+      <button class="editor-header-btn" id="editorHeaderLeftBtn" title="Back / Discard">
+        <i class="bi bi-arrow-left" id="editorHeaderLeftIcon"></i>
+      </button>
+      <span class="editor-header-title" id="editorHeaderTitle">Photo Editor</span>
+      <button class="editor-header-btn" id="editorHeaderRightBtn" title="Save / Commit">
+        <i class="bi bi-download" id="editorHeaderRightIcon"></i>
+      </button>
+    </div>
 
-// Cropper
-function startCrop(idx) {
-  currentCropIdx = idx;
-  const imgObj = images[idx];
-  const cropModal = new bootstrap.Modal(document.getElementById('cropModal'));
-  const cropImage = document.getElementById('cropImage');
-  cropImage.src = imgObj.previewUrl;
-  cropModal.show();
-  setTimeout(() => {
-    if (cropper) cropper.destroy();
-    cropper = new Cropper(cropImage, {
-      aspectRatio: NaN,
-      viewMode: 1,
-      autoCropArea: 1
-    });
-    document.getElementById('aspectRatioSelect').onchange = function() {
-      const val = eval(this.value);
-      cropper.setAspectRatio(isNaN(val) ? NaN : val);
+    <div class="editor-viewport-area" id="editorViewportArea">
+      <div class="canvas-interaction-stage" id="canvasInteractionStage">
+        <canvas id="photoEditorCanvas"></canvas>
+      </div>
+    </div>
+
+    <div class="editor-bottom-bar-container" id="editorBottomBarContainer">
+      <div class="editor-subtool-drawer" id="editorSubtoolDrawer"></div>
+
+      <div class="editor-main-tools-carousel" id="editorMainToolsCarousel">
+        <button class="editor-tool-item" data-tool="filter">
+          <i class="bi bi-sliders"></i>
+          <span>Filter & Light</span>
+        </button>
+        <button class="editor-tool-item" data-tool="resize">
+          <i class="bi bi-arrows-angle-expand"></i>
+          <span>Resize</span>
+        </button>
+        <button class="editor-tool-item" data-tool="crop">
+          <i class="bi bi-crop"></i>
+          <span>Crop</span>
+        </button>
+        <button class="editor-tool-item" data-tool="transform">
+          <i class="bi bi-arrow-repeat"></i>
+          <span>Transform</span>
+        </button>
+        <button class="editor-tool-item" data-tool="draw">
+          <i class="bi bi-pencil"></i>
+          <span>Draw</span>
+        </button>
+        <button class="editor-tool-item" data-tool="text">
+          <i class="bi bi-fonts"></i>
+          <span>Text</span>
+        </button>
+        <button class="editor-tool-item" data-tool="stickers">
+          <i class="bi bi-emoji-smile"></i>
+          <span>Stickers</span>
+        </button>
+        <button class="editor-tool-item" data-tool="frame">
+          <i class="bi bi-square"></i>
+          <span>Frame</span>
+        </button>
+        <button class="editor-tool-item" data-tool="background">
+          <i class="bi bi-paint-bucket"></i>
+          <span>Background</span>
+        </button>
+        <button class="editor-tool-item" data-tool="corners">
+          <i class="bi bi-bounding-box"></i>
+          <span>Corners</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Background Custom Image Input -->
+  <input type="file" id="bgFileInput" class="file-input-hidden" accept="image/*" />
+
+  <!-- Footer -->
+  <footer id="mainAppFooter">
+    <div class="footer-links">
+      <span>Built with 🤍 by <a href="https://rajcode.netlify.app/" class="footer-brand-badge" target="_blank" rel="noopener noreferrer">RajCode</a></span>
+      <span aria-hidden="true">&bull;</span>
+      <span>&copy; 2025 RajCode</span>
+    </div>
+    <div class="footer-social-links" aria-label="Social links">
+      <a href="https://www.facebook.com/share/179kT8WjZz/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/rajcode_official" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+      <a href="https://x.com/RajeshPatraCS" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="https://www.linkedin.com/in/rajesh-patra-0b0913381?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    </div>
+    <div class="footer-privacy-pill">
+      <i class="bi bi-shield-lock-fill"></i> 100% In-Browser &bull; Zero Server Uploads
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.6.2/dist/cropper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+
+  <script>
+    const EMOJI_CATEGORIES = {
+      'Emoticons': ['😀','😃','😄','😁','😆','😅','😂','🤣','😊','😇','🙂','🙃','😉','😌','😍','🥰','😘','😗','😙','😚','😋','😛','😝','😜','🤪','🤨','🧐','🤓','😎','🥸','🤩','🥳','😏','😒','😞','😔','😟','😕','🙁','☹️','😣','😖','😫','😩','🥺','😢','😭','😤','😠','😡','🤬','🤯','😳','🥵','🥶','😱','😨','😰','😥','😓','🤗','🤔','🤭','🤫','🤥','😶','😐','😑','😬','🙄','😯','😦','😧','😮','😲','🥱','😴','🤤','😪','😵','🤐','🥴','🤢','🤮','🤧','😷','🤒','🤕','🤑','🤠','😈','👿','👹','👺','🤡','💩','👻','💀','☠️','👽','👾','🤖','🎃'],
+      'Gestures': ['👋','🤚','🖐️','✋','🖖','👌','🤌','🤏','✌️','🤞','🤟','🤘','🤙','👈','👉','👆','🖕','👇','☝️','👍','👎','✊','👊','🤛','🤜','👏','🙌','👐','🤲','🤝','🙏','✍️','💅','🤳','💪','🦾','🦵','🦿','🦶','👀','👁️','👅','👄','💋','🧠','🫀','🫁','🦷','🦴','👶','👧','🧒','👦','👩','🧑','👨','👵','🧓','👴'],
+      'Animals & Nature': ['🐶','🐱','🐭','🐹','🐰','🦊','🐻','🐼','🐨','🐯','🦁','🐮','🐷','🐸','🐵','🐔','🐧','🐦','🐤','🦆','🦅','🦉','🦇','🐺','🐗','🐴','🦄','🐝','🐛','🦋','🐌','🐞','🐜','🦟','🦗','🕷️','🦂','🐢','🐍','🦎','🐙','🦑','🦐','🦞','🦀','🐡','🐠','🐟','🐬','🐳','🦈','🐊','🐅','🐆','🦓','🦍','🦧','🐘','🦛','🦏','🐪','🐫','🦒','🦘','🌲','🌳','🌴','🌵','🌾','🌿','☘️','🍀','🍁','🍂','🍃','🍄','🌸','🌹','🌻','🌼','🌷','🌱','☀️','🌤️','⛅','☁️','🌧️','⛈️','❄️','🌈','⚡','🌊'],
+      'Food & Drink': ['🍏','🍎','🍐','🍊','🍋','🍌','🍉','🍇','🍓','🫐','🍈','🍒','🍑','🥭','🍍','🥥','🥝','🍅','🍆','🥑','🥦','🥬','🥒','🌶️','🌽','🥕','🧄','🥔','🥐','🥯','🍞','🥖','🥨','🧀','🥚','🍳','🧈','🥞','🧇','🥓','🥩','🍗','🍖','🌭','🍔','🍟','🍕','🥪','🥙','🌮','🌯','🥗','🥘','🍝','🍜','🍲','🍛','🍣','🍱','🥟','🍤','🍙','🍚','🍧','🍨','🍦','🥧','🧁','🍰','🎂','🍮','🍭','🍬','🍫','🍿','🍩','🍪','☕','🫖','🍵','🍷','🍸','🍹','🍺','🍻','🥂','🥤','🧋','🧃','🧊'],
+      'Activities & Symbols': ['⚽','🏀','🏈','⚾','🥎','🎾','🏐','🎱','🏓','🏸','🏒','🏏','⛳','🏹','🎣','🥊','🥋','🛹','🛼','🎿','🏂','🏋️','🤸','⛹️','🏆','🥇','🥈','🥉','🏅','🎫','🎪','🎨','🎬','🎤','🎧','🎼','🎹','🥁','🎷','🎺','🎸','🎯','🎳','🎮','🎰','🧩','❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💔','❣️','💕','💞','💓','💗','💖','💘','💝','💟','☮️','✝️','☪️','🕉️','☸️','✡️','🔯','🕎','☯️','⚛️','☣️','☢️','⚠️','🔞','💯','🔥','✨','🎉','🚀','💡','👑','💎']
     };
-  }, 300);
-}
-document.getElementById('applyCropBtn').onclick = function() {
-  if (!cropper) return;
-  const canvas = cropper.getCroppedCanvas();
-  canvas.toBlob(blob => {
-    const url = URL.createObjectURL(blob);
-    const img = new window.Image();
-    img.onload = function() {
-      saveHistory(currentCropIdx);
-      images[currentCropIdx].processedBlob = blob;
-      images[currentCropIdx].previewUrl = url;
-      images[currentCropIdx].img = img;
-      images[currentCropIdx].info = `Cropped: ${img.width}x${img.height}, ${formatSize(blob.size)}`;
-      images[currentCropIdx].compressInfo = null;
-      showImages();
-      saveRecent(blob, url);
+
+    const TOOL_REGISTRY = {
+      'compress-image': {
+        title: 'Compress IMAGE',
+        subtitle: 'Compress <span class="format-pill">JPG</span>, <span class="format-pill">PNG</span>, or <span class="format-pill">WEBP</span> with target file size controls.<br>Reduce file sizes directly in your browser.',
+        sidebarHeader: 'Compress Settings',
+        btnText: 'Compress IMAGES',
+        fileActionPrefix: 'compressed_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        renderSidebar: () => `
+          <div class="form-group-block">
+            <label class="form-group-label">Target Max Size (Optional)</label>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <input type="number" class="app-input-text" id="targetSizeInputKB" placeholder="e.g. 100 or 200" min="5" />
+              <span style="font-weight: 700; font-size: 0.9rem; color: var(--slate-600);">KB</span>
+            </div>
+            <small style="color: var(--slate-400); font-size: 0.76rem; display:block; margin-top:4px;">Applies iterative compression to achieve target KB.</small>
+          </div>
+          <div class="form-group-block">
+            <label class="form-group-label">Compression Presets</label>
+            <div class="percent-btn-group">
+              <button class="btn-percent-select active" data-quality="0.75">Balanced (Recommended) <i class="bi bi-check-lg text-success"></i></button>
+              <button class="btn-percent-select" data-quality="0.50">High Compression (Smallest Size)</button>
+              <button class="btn-percent-select" data-quality="0.92">Low Compression (Max Quality)</button>
+            </div>
+          </div>
+        `
+      },
+      'increase-size': {
+        title: 'Increase File Size',
+        subtitle: 'Increase image file size (e.g., 50KB to 200KB, 500KB to 1MB) for exam portals, government forms, or submission requirements.',
+        sidebarHeader: 'Increase Size Options',
+        btnText: 'Increase File Size',
+        fileActionPrefix: 'increased_size_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        renderSidebar: () => `
+          <div class="form-group-block">
+            <label class="form-group-label">Target Required File Size</label>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+              <input type="number" class="app-input-text" id="targetEnlargeSizeVal" value="200" min="10" />
+              <select class="app-select" id="targetEnlargeUnit" style="width: 90px;">
+                <option value="KB" selected>KB</option>
+                <option value="MB">MB</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group-block">
+            <label class="form-group-label">Quick Target Presets</label>
+            <div class="percent-btn-group">
+              <button class="btn-percent-select active" data-pad-kb="200">Target 200 KB</button>
+              <button class="btn-percent-select" data-pad-kb="500">Target 500 KB</button>
+              <button class="btn-percent-select" data-pad-kb="1024">Target 1 MB</button>
+              <button class="btn-percent-select" data-pad-kb="2048">Target 2 MB</button>
+            </div>
+          </div>
+        `
+      },
+      'resize-image': {
+        title: 'Resize IMAGE',
+        subtitle: 'Resize <span class="format-pill">JPG</span>, <span class="format-pill">PNG</span>, or <span class="format-pill">WEBP</span> by defining new height and width pixels.<br>Change image dimensions in bulk.',
+        sidebarHeader: 'Resize Options',
+        btnText: 'Resize IMAGES',
+        fileActionPrefix: 'resize_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        renderSidebar: () => `
+          <div class="mode-switch-grid">
+            <div class="mode-switch-card active" id="modeByPixelsBtn">
+              <i class="bi bi-grid-3x3"></i>
+              <span>By pixels</span>
+            </div>
+            <div class="mode-switch-card" id="modeByPercentageBtn">
+              <i class="bi bi-aspect-ratio"></i>
+              <span>By percentage</span>
+            </div>
+          </div>
+
+          <div id="pixelResizeSettings">
+            <div class="form-group-block">
+              <label class="form-group-label">Width (px)</label>
+              <input type="number" class="app-input-text" id="resizeWidthVal" value="800" />
+            </div>
+            <div class="form-group-block">
+              <label class="form-group-label">Height (px)</label>
+              <input type="number" class="app-input-text" id="resizeHeightVal" value="600" />
+            </div>
+            <label class="checkbox-row">
+              <input type="checkbox" id="resizeMaintainAspect" checked /> Maintain aspect ratio
+            </label>
+          </div>
+
+          <div id="percentResizeSettings" style="display:none;">
+            <div class="percent-btn-group">
+              <button class="btn-percent-select" data-percent="0.25">25% SMALLER</button>
+              <button class="btn-percent-select active" data-percent="0.50">50% SMALLER <i class="bi bi-check-lg text-success"></i></button>
+              <button class="btn-percent-select" data-percent="0.75">75% SMALLER</button>
+            </div>
+          </div>
+        `
+      },
+      'crop-image': {
+        title: 'Crop IMAGE',
+        subtitle: 'Crop <span class="format-pill">JPG</span>, <span class="format-pill">PNG</span>, or <span class="format-pill">WEBP</span> by selecting regions or presets.<br>Cut your image with pixel precision.',
+        sidebarHeader: 'Crop Options',
+        btnText: 'Crop IMAGE',
+        fileActionPrefix: 'cropped_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: true,
+        renderSidebar: () => `
+          <div class="form-group-block">
+            <label class="form-group-label">Aspect Ratio Presets</label>
+            <select class="app-select" id="cropAspectSelect">
+              <option value="NaN">Free Selection</option>
+              <option value="1">1:1 (Square)</option>
+              <option value="1.3333">4:3 (Standard)</option>
+              <option value="1.7777">16:9 (Widescreen)</option>
+            </select>
+          </div>
+          <div class="form-group-block">
+            <label class="form-group-label">Width (px)</label>
+            <input type="number" class="app-input-text" id="cropWidthVal" readonly />
+          </div>
+          <div class="form-group-block">
+            <label class="form-group-label">Height (px)</label>
+            <input type="number" class="app-input-text" id="cropHeightVal" readonly />
+          </div>
+        `
+      },
+      'convert-to-jpg': {
+        title: 'Convert to JPG',
+        subtitle: 'Transform <span class="format-pill">PNG</span>, <span class="format-pill">WEBP</span>, <span class="format-pill">GIF</span>, or <span class="format-pill">SVG</span> to standard JPG images.',
+        sidebarHeader: 'Convert Options',
+        btnText: 'Convert to JPG',
+        fileActionPrefix: 'converted_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        targetMime: 'image/jpeg',
+        renderSidebar: () => `
+          <p class="sidebar-desc">All uploaded images will be converted to JPG with customizable quality.</p>
+          <div class="form-group-block">
+            <label class="form-group-label">JPG Quality (<span id="jpgQualLabel">90%</span>)</label>
+            <input type="range" class="form-range" id="jpgQualityInput" min="20" max="100" value="90" style="width:100%; accent-color:var(--primary);" />
+          </div>
+        `
+      },
+      'convert-to-png': {
+        title: 'Convert to PNG',
+        subtitle: 'Transform images to lossless <span class="format-pill">PNG</span> format with full alpha transparency.',
+        sidebarHeader: 'Convert Options',
+        btnText: 'Convert to PNG',
+        fileActionPrefix: 'converted_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        targetMime: 'image/png',
+        renderSidebar: () => `
+          <p class="sidebar-desc">All images will be converted to lossless PNG format preserving transparency.</p>
+        `
+      },
+      'convert-to-webp': {
+        title: 'Convert to WEBP',
+        subtitle: 'Transform images to next-generation lightweight <span class="format-pill">WEBP</span> format.',
+        sidebarHeader: 'Convert Options',
+        btnText: 'Convert to WEBP',
+        fileActionPrefix: 'converted_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        targetMime: 'image/webp',
+        renderSidebar: () => `
+          <p class="sidebar-desc">All images will be converted to modern Google WEBP format for optimal speed.</p>
+        `
+      },
+      'watermark-image': {
+        title: 'Watermark IMAGE',
+        subtitle: 'Stamp text copyright protection directly onto your images in seconds.',
+        sidebarHeader: 'Watermark Options',
+        btnText: 'Apply Watermark',
+        fileActionPrefix: 'watermarked_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        renderSidebar: () => `
+          <div class="form-group-block">
+            <label class="form-group-label">Watermark Text</label>
+            <input type="text" class="app-input-text" id="wmTextInput" value="© RajCode" />
+          </div>
+          <div class="form-group-block">
+            <label class="form-group-label">Position</label>
+            <select class="app-select" id="wmPositionSelect">
+              <option value="bottom-right">Bottom Right</option>
+              <option value="center">Center</option>
+              <option value="top-left">Top Left</option>
+            </select>
+          </div>
+          <div class="form-group-block">
+            <label class="form-group-label">Opacity (<span id="wmOpacityLabel">75%</span>)</label>
+            <input type="range" class="form-range" id="wmOpacityInput" min="10" max="100" value="75" style="width:100%; accent-color:var(--primary);" />
+          </div>
+        `
+      },
+      'rotate-image': {
+        title: 'Rotate IMAGE',
+        subtitle: 'Rotate multiple images clockwise, counter-clockwise, or 180 degrees at once.',
+        sidebarHeader: 'Rotate Options',
+        btnText: 'Rotate Images',
+        fileActionPrefix: 'rotated_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        renderSidebar: () => `
+          <div class="form-group-block">
+            <label class="form-group-label">Rotation Angle</label>
+            <div class="percent-btn-group">
+              <button class="btn-percent-select active" data-angle="90">90° Clockwise <i class="bi bi-arrow-clockwise"></i></button>
+              <button class="btn-percent-select" data-angle="180">180° Flip</button>
+              <button class="btn-percent-select" data-angle="270">90° Counter-Clockwise <i class="bi bi-arrow-counterclockwise"></i></button>
+            </div>
+          </div>
+        `
+      },
+      'upscale-image': {
+        title: 'Upscale IMAGE',
+        subtitle: 'Enlarge small images 2x or 4x with high-definition bicubic interpolation.',
+        sidebarHeader: 'Upscale Options',
+        btnText: 'Upscale Images',
+        fileActionPrefix: 'upscaled_image_pixelcraft',
+        isPhotoEditor: false,
+        isCrop: false,
+        renderSidebar: () => `
+          <div class="form-group-block">
+            <label class="form-group-label">Upscale Factor</label>
+            <div class="percent-btn-group">
+              <button class="btn-percent-select active" data-scale="2">2X Resolution (Double)</button>
+              <button class="btn-percent-select" data-scale="4">4X Resolution (Ultra HD)</button>
+            </div>
+          </div>
+        `
+      },
+      'photo-editor': {
+        title: 'Photo Editor',
+        subtitle: 'Adjust light, contrast, saturation, draw, and polish your photos online.',
+        sidebarHeader: 'Photo Editor',
+        btnText: 'Save Photo',
+        fileActionPrefix: 'edited_image_pixelcraft',
+        isPhotoEditor: true,
+        isCrop: false,
+        renderSidebar: () => ''
+      }
     };
-    img.src = url;
-  }, "image/png");
-  bootstrap.Modal.getInstance(document.getElementById('cropModal')).hide();
-  cropper.destroy();
-  cropper = null;
-};
 
-// Filters
-applyFilterBtn.onclick = () => {
-  images.forEach((imgObj, idx) => {
-    saveHistory(idx);
-    const canvas = document.createElement('canvas');
-    canvas.width = imgObj.img.width;
-    canvas.height = imgObj.img.height;
-    const ctx = canvas.getContext('2d');
-    ctx.filter =
-      `brightness(${brightnessInput.value}) contrast(${contrastInput.value})` +
-      (grayscaleInput.checked ? " grayscale(1)" : "") +
-      (invertInput.checked ? " invert(1)" : "");
-    ctx.drawImage(imgObj.img, 0, 0);
-    canvas.toBlob(blob => {
-      const url = URL.createObjectURL(blob);
-      const img = new window.Image();
-      img.onload = function() {
-        imgObj.processedBlob = blob;
-        imgObj.previewUrl = url;
-        imgObj.img = img;
-        imgObj.info = `Filtered: ${img.width}x${img.height}, ${formatSize(blob.size)}`;
-        imgObj.compressInfo = null;
-        showImages();
-        saveRecent(blob, url);
-      };
-      img.src = url;
-    }, "image/png");
-  });
-};
+    class PixelCraftEngine {
+      constructor() {
+        this.currentTool = 'compress-image';
+        this.images = [];
+        this.processedResults = [];
+        this.cropper = null;
 
-// Resize
-resizeBtn.onclick = () => {
-  if (!images.length) return alert("Select images first!");
-  let w = parseInt(widthInput.value), h = parseInt(heightInput.value), dpi = parseInt(dpiInput.value);
-  if (widthUnit.value === "cm") w = cmToPx(w, dpi);
-  if (heightUnit.value === "cm") h = cmToPx(h, dpi);
-  progress.innerText = "Resizing...";
-  images.forEach((imgObj, idx) => {
-    saveHistory(idx);
-    const canvas = document.createElement('canvas');
-    canvas.width = w; canvas.height = h;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(imgObj.img, 0, 0, w, h);
-    canvas.toBlob(blob => {
-      const url = URL.createObjectURL(blob);
-      const img = new window.Image();
-      img.onload = function() {
-        imgObj.processedBlob = blob;
-        imgObj.previewUrl = url;
-        imgObj.img = img;
-        imgObj.info = `Resized: ${w}x${h}, ${formatSize(blob.size)}`;
-        imgObj.compressInfo = null;
-        showImages();
-        saveRecent(blob, url);
-        progress.innerText = "";
-      };
-      img.src = url;
-    }, "image/png");
-  });
-};
+        this.editorImg = null;
+        this.activeSubtool = null;
+        this.editorCropper = null;
 
-// Compress (improved: loops quality until target size or min quality)
-compressBtn.onclick = () => {
-  if (!images.length) return alert("Select images first!");
-  let targetKB = parseInt(targetSizeInput.value);
-  if (!targetKB || targetKB < 1) return alert("Enter a valid target size in KB.");
-  progress.innerText = "Compressing...";
-  images.forEach((imgObj, idx) => {
-    compressImage(idx, targetKB);
-  });
-};
+        this.editorBrightness = 100;
+        this.editorContrast = 100;
+        this.editorSaturate = 100;
+        this.editorFilterPreset = 'normal';
+        this.editorFramePreset = 'none';
+        this.editorCornerRadius = 0;
+        this.editorBgType = 'none';
+        this.editorBgValue = '#ffffff';
+        this.editorBgPadding = 30;
+        this.editorCustomBgImg = null;
 
-function compressImage(idx, targetKB) {
-  saveHistory(idx);
-  const imgObj = images[idx];
-  const fileOrBlob = imgObj.processedBlob || imgObj.file;
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = new window.Image();
-    img.onload = function() {
-      let quality = 0.95;
-      let lastBlob = null;
-      function tryCompress() {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        canvas.toBlob(blob => {
-          lastBlob = blob;
-          const sizeKB = (blob.size/1024).toFixed(2);
-          const showAgainBtn = blob.size/1024 > targetKB;
-          if (blob.size/1024 <= targetKB || quality < 0.05) {
-            const percent = ((1 - blob.size/(fileOrBlob.size||imgObj.file.size))*100).toFixed(2);
-            const url = URL.createObjectURL(blob);
-            const img2 = new window.Image();
-            img2.onload = function() {
-              imgObj.processedBlob = blob;
-              imgObj.previewUrl = url;
-              imgObj.img = img2;
-              imgObj.info = `Compressed: ${formatSize(blob.size)}, Compression: ${percent}%`;
-              imgObj.compressInfo = {
-                sizeKB,
-                percent,
-                showAgainBtn
-              };
-              showImages();
-              saveRecent(blob, url);
-              progress.innerText = "";
+        this.previewFilterPreset = 'normal';
+        this.previewFramePreset = 'none';
+        this.previewCornerRadius = 0;
+        this.previewBgType = 'none';
+        this.previewBgValue = '#ffffff';
+        this.previewCustomBgImg = null;
+        this.tempRotationAngle = 0;
+        this.tempFlipH = false;
+
+        this.editorLayers = [];
+        this.editorTempCanvas = document.createElement('canvas');
+
+        this.isEditorDrawing = false;
+        this.editorBrushColor = '#1e70bf';
+
+        this.initDOM();
+        this.bindEvents();
+        
+        const initialHash = window.location.hash.replace('#', '').trim();
+        this.switchTool(initialHash || 'compress-image');
+      }
+
+      initDOM() {
+        this.dom = {
+          mainAppHeader: document.getElementById('mainAppHeader'),
+          mainAppFooter: document.getElementById('mainAppFooter'),
+          heroView: document.getElementById('heroView'),
+          heroTitle: document.getElementById('heroTitle'),
+          heroSubtitle: document.getElementById('heroSubtitle'),
+          btnUploadSelect: document.getElementById('btnUploadSelect'),
+          hiddenFileInput: document.getElementById('hiddenFileInput'),
+          bgFileInput: document.getElementById('bgFileInput'),
+          
+          mobileNavToggle: document.getElementById('mobileNavToggle'),
+          mobileNavDrawer: document.getElementById('mobileNavDrawer'),
+
+          universalWorkspace: document.getElementById('universalWorkspace'),
+          workspaceCardsGrid: document.getElementById('workspaceCardsGrid'),
+          cropStageContainer: document.getElementById('cropStageContainer'),
+          cropperTargetImage: document.getElementById('cropperTargetImage'),
+          imageCountBadge: document.getElementById('imageCountBadge'),
+          btnAddMoreFiles: document.getElementById('btnAddMoreFiles'),
+          sidebarTitle: document.getElementById('sidebarTitle'),
+          dynamicSidebarContent: document.getElementById('dynamicSidebarContent'),
+          btnExecuteAction: document.getElementById('btnExecuteAction'),
+          executeBtnText: document.getElementById('executeBtnText'),
+
+          resultsView: document.getElementById('resultsView'),
+          resultsGridContainer: document.getElementById('resultsGridContainer'),
+          btnDownloadZipAll: document.getElementById('btnDownloadZipAll'),
+          btnProcessAnother: document.getElementById('btnProcessAnother'),
+
+          photoEditorWorkspace: document.getElementById('photoEditorWorkspace'),
+          photoEditorCanvas: document.getElementById('photoEditorCanvas'),
+          canvasInteractionStage: document.getElementById('canvasInteractionStage'),
+          editorHeaderTitle: document.getElementById('editorHeaderTitle'),
+          editorHeaderLeftBtn: document.getElementById('editorHeaderLeftBtn'),
+          editorHeaderLeftIcon: document.getElementById('editorHeaderLeftIcon'),
+          editorHeaderRightBtn: document.getElementById('editorHeaderRightBtn'),
+          editorHeaderRightIcon: document.getElementById('editorHeaderRightIcon'),
+          editorSubtoolDrawer: document.getElementById('editorSubtoolDrawer'),
+          editorMainToolsCarousel: document.getElementById('editorMainToolsCarousel')
+        };
+      }
+
+      bindEvents() {
+        this.dom.btnUploadSelect.onclick = () => this.dom.hiddenFileInput.click();
+        this.dom.btnAddMoreFiles.onclick = () => this.dom.hiddenFileInput.click();
+        this.dom.hiddenFileInput.onchange = (e) => this.loadFiles(e.target.files);
+
+        this.dom.mobileNavToggle.onclick = () => {
+          this.dom.mobileNavDrawer.classList.toggle('open');
+        };
+
+        document.querySelectorAll('[data-route]').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetRoute = link.dataset.route;
+            if (targetRoute) this.switchTool(targetRoute);
+          });
+        });
+
+        window.addEventListener('dragover', (e) => e.preventDefault());
+        window.addEventListener('drop', (e) => {
+          e.preventDefault();
+          if (e.dataTransfer.files.length) this.loadFiles(e.dataTransfer.files);
+        });
+
+        window.addEventListener('hashchange', () => {
+          const hash = window.location.hash.replace('#', '').trim();
+          if (hash && hash !== this.currentTool) this.switchTool(hash);
+        });
+
+        this.dom.btnExecuteAction.onclick = () => this.executeProcessing();
+        this.dom.btnProcessAnother.onclick = () => this.resetToUpload();
+        this.dom.btnDownloadZipAll.onclick = () => this.downloadAllZip();
+
+        document.querySelectorAll('.editor-tool-item').forEach(btn => {
+          btn.onclick = (e) => {
+            const tool = e.currentTarget.dataset.tool;
+            this.openEditorSubtool(tool);
+          };
+        });
+
+        this.dom.editorHeaderLeftBtn.onclick = () => this.handleEditorHeaderLeftClick();
+        this.dom.editorHeaderRightBtn.onclick = () => this.handleEditorHeaderRightClick();
+
+        this.dom.bgFileInput.onchange = (e) => {
+          if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0];
+            const img = new Image();
+            img.onload = () => {
+              this.previewCustomBgImg = img;
+              this.previewBgType = 'custom';
+              this.redrawEditorCanvas();
             };
-            img2.src = url;
-          } else {
-            quality -= 0.05;
-            tryCompress();
+            img.src = URL.createObjectURL(file);
           }
-        }, "image/jpeg", quality);
+        };
+
+        this.bindDrawingCanvasListeners();
       }
-      tryCompress();
-    };
-    img.src = e.target.result;
-  };
-  reader.readAsDataURL(fileOrBlob);
-}
 
-// Compress Again
-function compressAgain(idx) {
-  let targetKB = parseInt(targetSizeInput.value);
-  if (!targetKB || targetKB < 1) return alert("Enter a valid target size in KB.");
-  compressImage(idx, targetKB);
-}
+      switchTool(rawKey) {
+        let key = (rawKey || '').toLowerCase().trim();
 
-// Save single image with duplicate prevention, default name, and format selection
-function saveImage(idx) {
-  const imgObj = images[idx];
-  const blob = imgObj.processedBlob || imgObj.file;
-  const format = formatSelect.value;
-  const [mime, ext] = getMimeAndExt(format);
+        if (key === 'convert-to-png' || key === 'png') key = 'convert-to-png';
+        else if (key === 'convert-to-webp' || key === 'webp') key = 'convert-to-webp';
+        else if (key === 'convert-to-jpg' || key === 'jpg' || key === 'jpeg' || key === 'convert') key = 'convert-to-jpg';
+        else if (key === 'increase-size' || key === 'upgrade' || key === 'enlarge') key = 'increase-size';
+        else if (key === 'resize-image' || key === 'resize') key = 'resize-image';
+        else if (key === 'crop-image' || key === 'crop') key = 'crop-image';
+        else if (key === 'watermark-image' || key === 'watermark') key = 'watermark-image';
+        else if (key === 'rotate-image' || key === 'rotate') key = 'rotate-image';
+        else if (key === 'upscale-image' || key === 'upscale') key = 'upscale-image';
+        else if (key === 'photo-editor' || key === 'editor') key = 'photo-editor';
+        else key = 'compress-image';
 
-  // Use a canvas to convert to the selected format if possible
-  function doDownload(dataUrl) {
-    if (downloadedImages.has(dataUrl)) {
-      alert("This file was already downloaded. Duplicate download prevented.");
-      return;
-    }
-    downloadedImages.add(dataUrl);
+        this.currentTool = key;
+        window.location.hash = key;
+        this.dom.mobileNavDrawer.classList.remove('open');
 
-    let name = renameInput.value.trim();
-    if (!name) {
-      if (imgObj.info && imgObj.info.startsWith("Compressed")) {
-        name = "RajApp_compressed";
-      } else {
-        name = "RajApp_image";
+        document.querySelectorAll('.nav-link, .mobile-drawer-link, .mega-item').forEach(link => {
+          link.classList.toggle('active', link.dataset.route === key);
+        });
+
+        const cfg = TOOL_REGISTRY[key] || TOOL_REGISTRY['compress-image'];
+        document.title = `${cfg.title} – PixelCraft by RajCode`;
+        this.dom.heroTitle.innerHTML = cfg.title;
+        this.dom.heroSubtitle.innerHTML = cfg.subtitle;
+        this.dom.sidebarTitle.textContent = cfg.sidebarHeader;
+        this.dom.executeBtnText.textContent = cfg.btnText;
+        this.dom.dynamicSidebarContent.innerHTML = cfg.renderSidebar();
+
+        this.updateActionButton(key, false);
+        this.bindDynamicSidebarEvents(key);
+        this.renderStageView();
+      }
+
+      navigate(routeKey) {
+        this.switchTool(routeKey);
+      }
+
+      updateActionButton(toolKey, isLoading = false) {
+        const cfg = TOOL_REGISTRY[toolKey];
+        if (!cfg) return;
+        if (isLoading) {
+          this.dom.btnExecuteAction.disabled = true;
+          this.dom.btnExecuteAction.innerHTML = `<span class="spinner-border spinner-border-sm me-2"></span> Processing Visuals...`;
+        } else {
+          this.dom.btnExecuteAction.disabled = false;
+          this.dom.btnExecuteAction.innerHTML = `<span id="executeBtnText">${cfg.btnText}</span> <i class="bi bi-arrow-right"></i>`;
+        }
+      }
+
+      bindDynamicSidebarEvents(toolKey) {
+        if (toolKey === 'resize-image') {
+          const pixelBtn = document.getElementById('modeByPixelsBtn');
+          const percentBtn = document.getElementById('modeByPercentageBtn');
+          const pixelBox = document.getElementById('pixelResizeSettings');
+          const percentBox = document.getElementById('percentResizeSettings');
+
+          if (pixelBtn && percentBtn) {
+            pixelBtn.onclick = () => {
+              pixelBtn.classList.add('active');
+              percentBtn.classList.remove('active');
+              pixelBox.style.display = 'block';
+              percentBox.style.display = 'none';
+            };
+            percentBtn.onclick = () => {
+              percentBtn.classList.add('active');
+              pixelBtn.classList.remove('active');
+              pixelBox.style.display = 'none';
+              percentBox.style.display = 'block';
+            };
+          }
+
+          document.querySelectorAll('#percentResizeSettings .btn-percent-select').forEach(b => {
+            b.onclick = (e) => {
+              document.querySelectorAll('#percentResizeSettings .btn-percent-select').forEach(el => el.classList.remove('active'));
+              e.currentTarget.classList.add('active');
+            };
+          });
+        } else if (toolKey === 'convert-to-jpg') {
+          const input = document.getElementById('jpgQualityInput');
+          if (input) input.oninput = (e) => document.getElementById('jpgQualLabel').textContent = `${e.target.value}%`;
+        } else if (toolKey === 'watermark-image') {
+          const input = document.getElementById('wmOpacityInput');
+          if (input) input.oninput = (e) => document.getElementById('wmOpacityLabel').textContent = `${e.target.value}%`;
+        } else if (toolKey === 'increase-size') {
+          document.querySelectorAll('.percent-btn-group .btn-percent-select').forEach(b => {
+            b.onclick = (e) => {
+              document.querySelectorAll('.percent-btn-group .btn-percent-select').forEach(el => el.classList.remove('active'));
+              e.currentTarget.classList.add('active');
+              const kb = parseInt(e.currentTarget.dataset.padKb);
+              if (kb >= 1024) {
+                document.getElementById('targetEnlargeSizeVal').value = kb / 1024;
+                document.getElementById('targetEnlargeUnit').value = 'MB';
+              } else {
+                document.getElementById('targetEnlargeSizeVal').value = kb;
+                document.getElementById('targetEnlargeUnit').value = 'KB';
+              }
+            };
+          });
+        } else if (toolKey === 'crop-image') {
+          const select = document.getElementById('cropAspectSelect');
+          if (select) {
+            select.onchange = (e) => {
+              const val = parseFloat(e.target.value);
+              if (this.cropper) this.cropper.setAspectRatio(isNaN(val) ? NaN : val);
+            };
+          }
+        } else {
+          document.querySelectorAll('.percent-btn-group .btn-percent-select').forEach(b => {
+            b.onclick = (e) => {
+              e.currentTarget.parentElement.querySelectorAll('.btn-percent-select').forEach(el => el.classList.remove('active'));
+              e.currentTarget.classList.add('active');
+            };
+          });
+        }
+      }
+
+      async loadFiles(files) {
+        if (!files || !files.length) return;
+        for (const file of Array.from(files)) {
+          if (!file.type.startsWith('image/')) continue;
+          const url = URL.createObjectURL(file);
+          await new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+              this.images.push({
+                file, img, url,
+                name: file.name,
+                size: file.size,
+                width: img.naturalWidth,
+                height: img.naturalHeight
+              });
+              resolve();
+            };
+            img.onerror = () => resolve();
+            img.src = url;
+          });
+        }
+        this.renderStageView();
+      }
+
+      renderStageView() {
+        const cfg = TOOL_REGISTRY[this.currentTool];
+
+        if (!cfg.isPhotoEditor) {
+          this.dom.mainAppHeader.style.display = 'block';
+          this.dom.mainAppFooter.style.display = 'flex';
+          this.dom.photoEditorWorkspace.classList.remove('active');
+        }
+
+        if (!this.images.length) {
+          this.dom.heroView.style.display = 'flex';
+          this.dom.universalWorkspace.classList.remove('active');
+          this.dom.resultsView.classList.remove('active');
+          this.dom.photoEditorWorkspace.classList.remove('active');
+          if (this.cropper) { this.cropper.destroy(); this.cropper = null; }
+          return;
+        }
+
+        this.dom.heroView.style.display = 'none';
+        this.dom.resultsView.classList.remove('active');
+
+        if (cfg.isPhotoEditor) {
+          this.dom.mainAppHeader.style.display = 'none';
+          this.dom.mainAppFooter.style.display = 'none';
+          this.dom.universalWorkspace.classList.remove('active');
+          this.dom.photoEditorWorkspace.classList.add('active');
+          this.editorImg = this.images[0].img;
+          this.initPhotoEditor();
+        } else if (cfg.isCrop) {
+          this.dom.photoEditorWorkspace.classList.remove('active');
+          this.dom.universalWorkspace.classList.add('active');
+          this.dom.workspaceCardsGrid.style.display = 'none';
+          this.dom.cropStageContainer.style.display = 'flex';
+          this.dom.imageCountBadge.textContent = '1';
+
+          this.dom.cropperTargetImage.src = this.images[0].url;
+          if (this.cropper) { this.cropper.destroy(); this.cropper = null; }
+
+          setTimeout(() => {
+            if (this.currentTool !== 'crop-image') return;
+            this.cropper = new Cropper(this.dom.cropperTargetImage, {
+              viewMode: 1,
+              autoCropArea: 0.85,
+              crop: (event) => {
+                const w = document.getElementById('cropWidthVal');
+                const h = document.getElementById('cropHeightVal');
+                if (w) w.value = Math.round(event.detail.width);
+                if (h) h.value = Math.round(event.detail.height);
+              }
+            });
+          }, 150);
+        } else {
+          if (this.cropper) { this.cropper.destroy(); this.cropper = null; }
+          this.dom.photoEditorWorkspace.classList.remove('active');
+          this.dom.universalWorkspace.classList.add('active');
+          this.dom.cropStageContainer.style.display = 'none';
+          this.dom.workspaceCardsGrid.style.display = 'flex';
+
+          this.dom.imageCountBadge.textContent = this.images.length;
+          this.dom.workspaceCardsGrid.innerHTML = '';
+
+          this.images.forEach((item, idx) => {
+            const card = document.createElement('div');
+            card.className = 'thumb-card';
+            card.innerHTML = `
+              <button class="thumb-card-delete" onclick="app.removeImage(${idx})"><i class="bi bi-x-lg"></i></button>
+              <div class="thumb-card-img"><img src="${item.url}" alt="${item.name}" /></div>
+              <div class="thumb-card-body">
+                <div class="thumb-card-title">${item.name}</div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="thumb-dim-badge">${item.width}×${item.height}</span>
+                  <span style="font-size:0.75rem; color:#64748b;">${this.formatBytes(item.size)}</span>
+                </div>
+              </div>
+            `;
+            this.dom.workspaceCardsGrid.appendChild(card);
+          });
+        }
+      }
+
+      removeImage(idx) {
+        URL.revokeObjectURL(this.images[idx].url);
+        this.images.splice(idx, 1);
+        this.renderStageView();
+      }
+
+      resetToUpload() {
+        this.images.forEach(i => URL.revokeObjectURL(i.url));
+        this.processedResults.forEach(r => URL.revokeObjectURL(r.url));
+        this.images = [];
+        this.processedResults = [];
+        this.renderStageView();
+      }
+
+      formatBytes(bytes) {
+        if (!bytes || bytes <= 0) return '0 B';
+        const k = 1024, s = ['B', 'KB', 'MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return (bytes / Math.pow(k, i)).toFixed(1) + ' ' + s[i];
+      }
+
+      async compressToTargetKB(canvas, mime, targetKB) {
+        let min = 0.05, max = 0.95, bestBlob = null;
+        const targetBytes = targetKB * 1024;
+
+        for (let iter = 0; iter < 6; iter++) {
+          const mid = (min + max) / 2;
+          const blob = await new Promise(r => canvas.toBlob(r, mime, mid));
+          bestBlob = blob;
+          if (blob.size > targetBytes) {
+            max = mid;
+          } else {
+            min = mid;
+          }
+        }
+        return bestBlob;
+      }
+
+      async executeProcessing() {
+        if (!this.images.length) return;
+        const tool = this.currentTool;
+        const cfg = TOOL_REGISTRY[tool];
+
+        this.updateActionButton(tool, true);
+        this.processedResults = [];
+
+        try {
+          if (tool === 'crop-image' && this.cropper) {
+            const canvas = this.cropper.getCroppedCanvas();
+            const blob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.92));
+            const url = URL.createObjectURL(blob);
+            const ext = 'jpg';
+            const baseName = this.images[0].name.substring(0, this.images[0].name.lastIndexOf('.')) || 'image';
+            const finalName = `${baseName}_${cfg.fileActionPrefix}.${ext}`;
+
+            this.processedResults.push({
+              name: finalName,
+              blob, url,
+              oldSize: this.images[0].size,
+              newSize: blob.size,
+              dim: `${canvas.width}×${canvas.height}`,
+              rawImage: this.images[0]
+            });
+          } else {
+            const targetKBVal = tool === 'compress-image' ? parseInt(document.getElementById('targetSizeInputKB')?.value) : null;
+
+            for (let i = 0; i < this.images.length; i++) {
+              const item = this.images[i];
+              let w = item.width, h = item.height;
+              let mime = item.file.type || 'image/jpeg';
+              let quality = 0.85;
+
+              if (tool === 'compress-image') {
+                const activeQ = document.querySelector('.percent-btn-group .btn-percent-select.active');
+                if (activeQ) quality = parseFloat(activeQ.dataset.quality);
+                mime = 'image/jpeg';
+              } else if (tool === 'resize-image') {
+                const isPixel = document.getElementById('modeByPixelsBtn').classList.contains('active');
+                if (isPixel) {
+                  const reqW = parseInt(document.getElementById('resizeWidthVal').value);
+                  const reqH = parseInt(document.getElementById('resizeHeightVal').value);
+                  if (reqW && reqH) { w = reqW; h = reqH; }
+                } else {
+                  const activePct = document.querySelector('#percentResizeSettings .btn-percent-select.active');
+                  const factor = 1 - parseFloat(activePct.dataset.percent);
+                  w = Math.round(w * factor);
+                  h = Math.round(h * factor);
+                }
+              } else if (tool === 'convert-to-jpg') {
+                mime = 'image/jpeg';
+                quality = parseInt(document.getElementById('jpgQualityInput').value) / 100;
+              } else if (tool === 'convert-to-png') {
+                mime = 'image/png';
+              } else if (tool === 'convert-to-webp') {
+                mime = 'image/webp';
+              } else if (tool === 'upscale-image') {
+                const scale = parseInt(document.querySelector('.percent-btn-group .btn-percent-select.active').dataset.scale);
+                w = w * scale; h = h * scale;
+              }
+
+              const canvas = document.createElement('canvas');
+              canvas.width = w; canvas.height = h;
+              const ctx = canvas.getContext('2d');
+
+              if (tool === 'rotate-image') {
+                const angle = parseInt(document.querySelector('.percent-btn-group .btn-percent-select.active').dataset.angle);
+                if (angle === 90 || angle === 270) {
+                  canvas.width = h; canvas.height = w;
+                }
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate((angle * Math.PI) / 180);
+                ctx.drawImage(item.img, -w / 2, -h / 2);
+              } else {
+                ctx.drawImage(item.img, 0, 0, w, h);
+              }
+
+              if (tool === 'watermark-image') {
+                const text = document.getElementById('wmTextInput').value || '© RajCode';
+                const opacity = parseInt(document.getElementById('wmOpacityInput').value) / 100;
+                const pos = document.getElementById('wmPositionSelect').value;
+
+                ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+                const fontSize = Math.max(22, Math.round(w / 18));
+                ctx.font = `bold ${fontSize}px Plus Jakarta Sans, sans-serif`;
+
+                if (pos === 'bottom-right') {
+                  ctx.textAlign = 'right';
+                  ctx.fillText(text, w - 24, h - 24);
+                } else if (pos === 'top-left') {
+                  ctx.textAlign = 'left';
+                  ctx.fillText(text, 24, fontSize + 24);
+                } else {
+                  ctx.textAlign = 'center';
+                  ctx.fillText(text, w / 2, h / 2);
+                }
+              }
+
+              let blob;
+              if (tool === 'compress-image' && targetKBVal && targetKBVal > 0) {
+                blob = await this.compressToTargetKB(canvas, mime, targetKBVal);
+              } else {
+                blob = await new Promise(r => canvas.toBlob(r, mime, quality));
+              }
+
+              if (tool === 'increase-size') {
+                const targetVal = parseFloat(document.getElementById('targetEnlargeSizeVal').value) || 200;
+                const unit = document.getElementById('targetEnlargeUnit').value;
+                const targetBytes = Math.round(unit === 'MB' ? targetVal * 1024 * 1024 : targetVal * 1024);
+
+                if (blob.size < targetBytes) {
+                  const paddingBytes = targetBytes - blob.size;
+                  const paddingChunk = new Uint8Array(paddingBytes);
+                  blob = new Blob([blob, paddingChunk], { type: blob.type });
+                }
+              }
+
+              const ext = mime.split('/')[1].replace('jpeg', 'jpg');
+              const baseName = item.name.substring(0, item.name.lastIndexOf('.')) || `image_${i + 1}`;
+              const finalName = `${baseName}_${cfg.fileActionPrefix}.${ext}`;
+
+              const url = URL.createObjectURL(blob);
+
+              this.processedResults.push({
+                name: finalName,
+                blob, url,
+                oldSize: item.size,
+                newSize: blob.size,
+                dim: `${canvas.width}×${canvas.height}`,
+                rawItem: item
+              });
+            }
+          }
+
+          this.showVisualResults();
+        } catch (err) {
+          alert('Processing error: ' + err.message);
+        } finally {
+          this.updateActionButton(tool, false);
+        }
+      }
+
+      showVisualResults() {
+        this.dom.universalWorkspace.classList.remove('active');
+        this.dom.resultsView.classList.add('active');
+        this.dom.resultsGridContainer.innerHTML = '';
+
+        const isCompress = this.currentTool === 'compress-image';
+
+        this.processedResults.forEach((res, idx) => {
+          const percent = Math.round(((res.oldSize - res.newSize) / res.oldSize) * 100);
+          const isSmaller = percent > 0;
+
+          const card = document.createElement('div');
+          card.className = 'result-card';
+          card.innerHTML = `
+            <div class="result-preview-box">
+              <img src="${res.url}" alt="${res.name}" />
+            </div>
+            <div class="thumb-card-title" style="margin-bottom:0.4rem;">${res.name}</div>
+            <div class="result-stats-row">
+              <span>Dim: <b>${res.dim}</b></span>
+              <span>
+                ${this.formatBytes(res.oldSize)} → <b>${this.formatBytes(res.newSize)}</b>
+                ${isSmaller ? `<span style="color:#10b981; font-weight:800;">(-${percent}%)</span>` : ''}
+              </span>
+            </div>
+            <div class="result-button-row">
+              <a href="${res.url}" download="${res.name}" class="result-download-btn">
+                <i class="bi bi-download"></i> Download
+              </a>
+              ${isCompress ? `
+                <button class="result-compress-more-btn" onclick="app.compressMoreSingle(${idx})" title="Compress this image further">
+                  <i class="bi bi-arrow-repeat"></i> Compress More
+                </button>
+              ` : ''}
+            </div>
+          `;
+          this.dom.resultsGridContainer.appendChild(card);
+        });
+      }
+
+      async compressMoreSingle(idx) {
+        const item = this.processedResults[idx];
+        const img = new Image();
+        img.onload = async () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = img.naturalWidth;
+          canvas.height = img.naturalHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0);
+
+          const newBlob = await new Promise(r => canvas.toBlob(r, 'image/jpeg', 0.45));
+          URL.revokeObjectURL(item.url);
+
+          item.url = URL.createObjectURL(newBlob);
+          item.oldSize = item.newSize;
+          item.newSize = newBlob.size;
+          item.blob = newBlob;
+
+          this.showVisualResults();
+        };
+        img.src = item.url;
+      }
+
+      async downloadAllZip() {
+        if (!this.processedResults.length) return;
+        const zip = new JSZip();
+        this.processedResults.forEach(r => zip.file(r.name, r.blob));
+        const content = await zip.generateAsync({ type: 'blob' });
+        const a = document.createElement('a');
+        const url = URL.createObjectURL(content);
+        a.href = url;
+        a.download = `pixelcraft_${this.currentTool}_export.zip`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      /* ---------------- AUTHENTIC PHOTO EDITOR ENGINE ---------------- */
+      initPhotoEditor() {
+        const canvas = this.dom.photoEditorCanvas;
+        canvas.width = this.editorImg.naturalWidth;
+        canvas.height = this.editorImg.naturalHeight;
+
+        this.editorTempCanvas.width = canvas.width;
+        this.editorTempCanvas.height = canvas.height;
+        this.editorTempCanvas.getContext('2d').drawImage(this.editorImg, 0, 0);
+
+        this.clearAllInteractiveDOMlayers();
+        this.editorLayers = [];
+        this.editorBgType = 'none';
+        this.editorFramePreset = 'none';
+        this.editorCornerRadius = 0;
+
+        this.resetEditorHeader();
+        this.redrawEditorCanvas();
+      }
+
+      clearAllInteractiveDOMlayers() {
+        const stage = this.dom.canvasInteractionStage;
+        const domLayers = stage.querySelectorAll('.editor-interactive-layer');
+        domLayers.forEach(el => el.remove());
+      }
+
+      resetEditorHeader() {
+        if (this.editorCropper) {
+          this.editorCropper.destroy();
+          this.editorCropper = null;
+        }
+
+        this.activeSubtool = null;
+        this.dom.editorHeaderTitle.textContent = 'Photo Editor';
+        this.dom.editorHeaderLeftIcon.className = 'bi bi-arrow-left';
+        this.dom.editorHeaderRightIcon.className = 'bi bi-download';
+        this.dom.editorSubtoolDrawer.classList.remove('open');
+        this.dom.editorMainToolsCarousel.style.display = 'flex';
+        document.querySelectorAll('.editor-tool-item').forEach(el => el.classList.remove('active'));
+
+        this.previewFilterPreset = this.editorFilterPreset;
+        this.previewFramePreset = this.editorFramePreset;
+        this.previewCornerRadius = this.editorCornerRadius;
+        this.previewBgType = this.editorBgType;
+        this.previewBgValue = this.editorBgValue;
+        this.previewCustomBgImg = this.editorCustomBgImg;
+        this.tempRotationAngle = 0;
+        this.tempFlipH = false;
+      }
+
+      handleEditorHeaderLeftClick() {
+        if (this.activeSubtool) {
+          this.clearAllInteractiveDOMlayers();
+          this.resetEditorHeader();
+          this.redrawEditorCanvas();
+        } else {
+          this.switchTool('compress-image');
+        }
+      }
+
+      handleEditorHeaderRightClick() {
+        if (this.activeSubtool) {
+          if (this.activeSubtool === 'crop' && this.editorCropper) {
+            const cropped = this.editorCropper.getCroppedCanvas();
+            this.editorCropper.destroy();
+            this.editorCropper = null;
+
+            if (cropped) {
+              this.editorTempCanvas.width = cropped.width;
+              this.editorTempCanvas.height = cropped.height;
+              this.editorTempCanvas.getContext('2d').drawImage(cropped, 0, 0);
+
+              this.dom.photoEditorCanvas.width = cropped.width;
+              this.dom.photoEditorCanvas.height = cropped.height;
+
+              this.editorImg = new Image();
+              this.editorImg.src = this.editorTempCanvas.toDataURL();
+            }
+          } else if (this.activeSubtool === 'transform') {
+            this.bakeTransformToTempCanvas();
+          } else {
+            this.bakeDecorationsToTempCanvas();
+          }
+
+          this.editorFilterPreset = this.previewFilterPreset;
+          this.editorFramePreset = this.previewFramePreset;
+          this.editorCornerRadius = this.previewCornerRadius;
+          this.editorBgType = this.previewBgType;
+          this.editorBgValue = this.previewBgValue;
+          this.editorCustomBgImg = this.previewCustomBgImg;
+
+          this.flattenAllLayersToCanvas();
+          this.resetEditorHeader();
+          this.redrawEditorCanvas();
+        } else {
+          this.flattenAllLayersToCanvas();
+          const canvas = this.dom.photoEditorCanvas;
+          canvas.toBlob((blob) => {
+            const a = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            a.href = url;
+            a.download = `edited_image_pixelcraft.jpg`;
+            a.click();
+            URL.revokeObjectURL(url);
+          }, 'image/jpeg', 0.92);
+        }
+      }
+
+      bakeDecorationsToTempCanvas() {
+        const canvas = document.createElement('canvas');
+        canvas.width = this.dom.photoEditorCanvas.width;
+        canvas.height = this.dom.photoEditorCanvas.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(this.dom.photoEditorCanvas, 0, 0);
+
+        this.editorTempCanvas.width = canvas.width;
+        this.editorTempCanvas.height = canvas.height;
+        this.editorTempCanvas.getContext('2d').drawImage(canvas, 0, 0);
+
+        this.editorImg = new Image();
+        this.editorImg.src = this.editorTempCanvas.toDataURL();
+
+        this.previewFilterPreset = 'normal';
+        this.editorFilterPreset = 'normal';
+        this.previewFramePreset = 'none';
+        this.editorFramePreset = 'none';
+        this.previewBgType = 'none';
+        this.editorBgType = 'none';
+        this.previewCornerRadius = 0;
+        this.editorCornerRadius = 0;
+      }
+
+      bakeTransformToTempCanvas() {
+        if (this.tempRotationAngle === 0 && !this.tempFlipH) return;
+        const canvas = document.createElement('canvas');
+        const w = this.editorTempCanvas.width;
+        const h = this.editorTempCanvas.height;
+
+        if (this.tempRotationAngle === 90 || this.tempRotationAngle === 270) {
+          canvas.width = h;
+          canvas.height = w;
+        } else {
+          canvas.width = w;
+          canvas.height = h;
+        }
+
+        const ctx = canvas.getContext('2d');
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate((this.tempRotationAngle * Math.PI) / 180);
+        if (this.tempFlipH) ctx.scale(-1, 1);
+        ctx.drawImage(this.editorTempCanvas, -w / 2, -h / 2);
+
+        this.editorTempCanvas.width = canvas.width;
+        this.editorTempCanvas.height = canvas.height;
+        this.editorTempCanvas.getContext('2d').drawImage(canvas, 0, 0);
+
+        this.dom.photoEditorCanvas.width = canvas.width;
+        this.dom.photoEditorCanvas.height = canvas.height;
+        this.tempRotationAngle = 0;
+        this.tempFlipH = false;
+      }
+
+      flattenAllLayersToCanvas() {
+        if (!this.editorLayers.length) return;
+        const canvas = this.dom.photoEditorCanvas;
+        const tempCtx = this.editorTempCanvas.getContext('2d');
+        const canvasRect = canvas.getBoundingClientRect();
+
+        const scaleX = this.editorTempCanvas.width / canvasRect.width;
+        const scaleY = this.editorTempCanvas.height / canvasRect.height;
+
+        this.editorLayers.forEach(layer => {
+          const el = document.getElementById(layer.id);
+          if (el) {
+            const elRect = el.getBoundingClientRect();
+            const relX = (elRect.left - canvasRect.left) * scaleX;
+            const relY = (elRect.top - canvasRect.top) * scaleY;
+
+            tempCtx.save();
+            if (layer.type === 'text') {
+              const fSize = Math.round(layer.fontSize * scaleX);
+              tempCtx.font = `bold ${fSize}px Plus Jakarta Sans, sans-serif`;
+              tempCtx.fillStyle = layer.color || '#ffffff';
+              tempCtx.shadowColor = 'rgba(0,0,0,0.8)';
+              tempCtx.shadowBlur = 6 * scaleX;
+              tempCtx.textBaseline = 'top';
+              tempCtx.fillText(layer.content, relX + (8 * scaleX), relY + (6 * scaleY));
+            } else if (layer.type === 'sticker') {
+              const fSize = Math.round(layer.size * scaleX);
+              tempCtx.font = `${fSize}px sans-serif`;
+              tempCtx.textBaseline = 'top';
+              tempCtx.fillText(layer.content, relX + (4 * scaleX), relY + (2 * scaleY));
+            }
+            tempCtx.restore();
+            el.remove();
+          }
+        });
+
+        this.editorLayers = [];
+        this.editorImg = new Image();
+        this.editorImg.src = this.editorTempCanvas.toDataURL();
+      }
+
+      openEditorSubtool(toolKey) {
+        this.activeSubtool = toolKey;
+        const drawer = this.dom.editorSubtoolDrawer;
+        drawer.innerHTML = '';
+        drawer.classList.add('open');
+        this.dom.editorMainToolsCarousel.style.display = 'none';
+
+        this.dom.editorHeaderLeftIcon.className = 'bi bi-x-lg';
+        this.dom.editorHeaderRightIcon.className = 'bi bi-check-lg';
+
+        if (toolKey === 'filter') {
+          this.dom.editorHeaderTitle.textContent = 'Filter & Light';
+          const filterPresets = [
+            { id: 'normal', name: 'Original', filter: 'none' },
+            { id: 'grayscale', name: 'Grayscale', filter: 'grayscale(100%)' },
+            { id: 'bw', name: 'Black & White', filter: 'grayscale(100%) contrast(150%)' },
+            { id: 'sharpen', name: 'Sharpen', filter: 'contrast(130%) brightness(105%)' },
+            { id: 'invert', name: 'Invert', filter: 'invert(100%)' },
+            { id: 'vintage', name: 'Vintage', filter: 'sepia(60%) contrast(110%)' },
+            { id: 'polaroid', name: 'Polaroid', filter: 'sepia(30%) brightness(115%) contrast(120%)' },
+            { id: 'kodachrome', name: 'Kodachrome', filter: 'saturate(160%) contrast(120%)' },
+            { id: 'technicolor', name: 'Technicolor', filter: 'hue-rotate(30deg) saturate(140%)' },
+            { id: 'blur', name: 'Blur', filter: 'blur(3px)' }
+          ];
+
+          filterPresets.forEach(p => {
+            const card = document.createElement('div');
+            card.className = `preset-card-item ${this.previewFilterPreset === p.id ? 'active' : ''}`;
+            card.innerHTML = `
+              <div class="preset-thumb-box">
+                <img src="${this.images[0].url}" style="filter: ${p.filter};" />
+              </div>
+              <span class="preset-label">${p.name}</span>
+            `;
+            card.onclick = () => {
+              drawer.querySelectorAll('.preset-card-item').forEach(el => el.classList.remove('active'));
+              card.classList.add('active');
+              this.previewFilterPreset = p.id;
+              this.redrawEditorCanvas(p.filter);
+            };
+            drawer.appendChild(card);
+          });
+        } else if (toolKey === 'crop') {
+          this.dom.editorHeaderTitle.textContent = 'Manual Free Crop';
+          if (this.editorCropper) this.editorCropper.destroy();
+
+          this.editorCropper = new Cropper(this.dom.photoEditorCanvas, {
+            viewMode: 1,
+            autoCropArea: 0.9,
+            responsive: true
+          });
+
+          const ratios = [
+            { label: 'Free Drag', val: NaN },
+            { label: '1:1 Square', val: 1 },
+            { label: '4:3', val: 4/3 },
+            { label: '16:9', val: 16/9 },
+            { label: '3:2', val: 3/2 }
+          ];
+          ratios.forEach((r, i) => {
+            const btn = document.createElement('button');
+            btn.className = `btn-secondary-action ${i === 0 ? 'active' : ''}`;
+            btn.style.padding = '0.45rem 0.85rem';
+            btn.style.fontSize = '0.8rem';
+            btn.textContent = r.label;
+            btn.onclick = () => {
+              drawer.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              if (this.editorCropper) this.editorCropper.setAspectRatio(r.val);
+            };
+            drawer.appendChild(btn);
+          });
+        } else if (toolKey === 'transform') {
+          this.dom.editorHeaderTitle.textContent = 'Transform';
+          this.tempRotationAngle = 0;
+          this.tempFlipH = false;
+
+          drawer.innerHTML = `
+            <div style="display:flex; gap:0.75rem; width:100%; justify-content:center;">
+              <button class="btn-secondary-action" id="btnEdRotLeft"><i class="bi bi-arrow-counterclockwise"></i> Rotate -90°</button>
+              <button class="btn-secondary-action" id="btnEdRotRight"><i class="bi bi-arrow-clockwise"></i> Rotate +90°</button>
+              <button class="btn-secondary-action" id="btnEdFlipH"><i class="bi bi-symmetry-vertical"></i> Flip H</button>
+            </div>
+          `;
+          document.getElementById('btnEdRotLeft').onclick = () => {
+            this.tempRotationAngle = (this.tempRotationAngle - 90 + 360) % 360;
+            this.previewTransformState();
+          };
+          document.getElementById('btnEdRotRight').onclick = () => {
+            this.tempRotationAngle = (this.tempRotationAngle + 90) % 360;
+            this.previewTransformState();
+          };
+          document.getElementById('btnEdFlipH').onclick = () => {
+            this.tempFlipH = !this.tempFlipH;
+            this.previewTransformState();
+          };
+        } else if (toolKey === 'stickers') {
+          this.dom.editorHeaderTitle.textContent = 'Stickers';
+          drawer.style.flexDirection = 'column';
+          drawer.style.alignItems = 'flex-start';
+
+          const tabStrip = document.createElement('div');
+          tabStrip.className = 'drawer-tab-strip';
+
+          const gridContainer = document.createElement('div');
+          gridContainer.style.display = 'flex';
+          gridContainer.style.gap = '0.75rem';
+          gridContainer.style.overflowX = 'auto';
+          gridContainer.style.width = '100%';
+          gridContainer.style.padding = '4px 0';
+
+          const renderCategory = (catName) => {
+            gridContainer.innerHTML = '';
+            EMOJI_CATEGORIES[catName].forEach(emoji => {
+              const btn = document.createElement('button');
+              btn.style.fontSize = '1.8rem';
+              btn.style.background = 'none';
+              btn.style.border = 'none';
+              btn.style.cursor = 'pointer';
+              btn.textContent = emoji;
+              btn.onclick = () => this.addInteractiveMovableLayer('sticker', emoji);
+              gridContainer.appendChild(btn);
+            });
+          };
+
+          Object.keys(EMOJI_CATEGORIES).forEach((cat, i) => {
+            const tabBtn = document.createElement('button');
+            tabBtn.className = `drawer-tab-btn ${i === 0 ? 'active' : ''}`;
+            tabBtn.textContent = cat;
+            tabBtn.onclick = () => {
+              tabStrip.querySelectorAll('.drawer-tab-btn').forEach(b => b.classList.remove('active'));
+              tabBtn.classList.add('active');
+              renderCategory(cat);
+            };
+            tabStrip.appendChild(tabBtn);
+          });
+
+          drawer.appendChild(tabStrip);
+          drawer.appendChild(gridContainer);
+          renderCategory('Emoticons');
+        } else if (toolKey === 'text') {
+          this.dom.editorHeaderTitle.textContent = 'Text Box';
+          drawer.innerHTML = `
+            <div style="display:flex; align-items:center; gap:0.6rem; width:100%;">
+              <input type="text" id="edTextVal" placeholder="Type text..." class="app-input-text" style="flex:1;" />
+              <input type="color" id="edTextColor" value="#ffffff" title="Text Color" style="width:38px; height:36px; border:none; border-radius:6px; cursor:pointer;" />
+              <button class="btn-secondary-action" id="btnAddTextBox" style="padding:0.45rem 0.9rem; font-size:0.8rem; white-space:nowrap;">
+                <i class="bi bi-plus-lg"></i> Add Text Box
+              </button>
+            </div>
+          `;
+          document.getElementById('btnAddTextBox').onclick = () => {
+            const val = document.getElementById('edTextVal').value.trim();
+            const color = document.getElementById('edTextColor').value;
+            if (val) {
+              this.addInteractiveMovableLayer('text', val, { color, fontSize: 32 });
+              document.getElementById('edTextVal').value = '';
+            }
+          };
+        } else if (toolKey === 'frame') {
+          this.dom.editorHeaderTitle.textContent = 'Frames';
+          const frames = [
+            { id: 'none', label: 'None', previewClass: '' },
+            { id: 'polaroid', label: 'Polaroid', previewClass: 'frame-sample-polaroid' },
+            { id: 'wood', label: 'Classic Wood', previewClass: 'frame-sample-wood' },
+            { id: 'gold', label: 'Gold Elegance', previewClass: 'frame-sample-gold' },
+            { id: 'neon', label: 'Neon Glow', previewClass: 'frame-sample-neon' },
+            { id: 'film', label: 'Film Strip', previewClass: 'frame-sample-film' },
+            { id: 'shadow', label: 'Shadow Box', previewClass: 'frame-sample-shadow' },
+            { id: 'stitch', label: 'Dotted Stitch', previewClass: 'frame-sample-stitch' }
+          ];
+
+          frames.forEach(f => {
+            const card = document.createElement('div');
+            card.className = `preset-card-item ${this.previewFramePreset === f.id ? 'active' : ''}`;
+            card.innerHTML = `
+              <div class="preset-thumb-box">
+                <img src="${this.images[0].url}" class="${f.previewClass}" />
+              </div>
+              <span class="preset-label">${f.label}</span>
+            `;
+            card.onclick = () => {
+              drawer.querySelectorAll('.preset-card-item').forEach(el => el.classList.remove('active'));
+              card.classList.add('active');
+              this.previewFramePreset = f.id;
+              this.redrawEditorCanvas();
+            };
+            drawer.appendChild(card);
+          });
+        } else if (toolKey === 'background') {
+          this.dom.editorHeaderTitle.textContent = 'Background';
+          drawer.style.flexDirection = 'column';
+          drawer.style.alignItems = 'flex-start';
+
+          const tabStrip = document.createElement('div');
+          tabStrip.className = 'drawer-tab-strip';
+
+          const contentBox = document.createElement('div');
+          contentBox.style.display = 'flex';
+          contentBox.style.alignItems = 'center';
+          contentBox.style.gap = '0.75rem';
+          contentBox.style.overflowX = 'auto';
+          contentBox.style.width = '100%';
+
+          const bgPresets = {
+            'Solid Colors': ['#ffffff', '#0f172a', '#f43f5e', '#3b82f6', '#10b981', '#f59e0b', '#8b5cf6', '#ec4899', '#64748b'],
+            'Gradients': [
+              'linear-gradient(135deg, #f43f5e, #fbbf24)',
+              'linear-gradient(135deg, #4f46e5, #06b6d4)',
+              'linear-gradient(135deg, #10b981, #3b82f6)',
+              'linear-gradient(135deg, #8b5cf6, #ec4899)',
+              'linear-gradient(135deg, #0f172a, #334155)'
+            ],
+            'Patterns': ['carbon', 'grid', 'softbox', 'marble']
+          };
+
+          const renderBgTab = (tabName) => {
+            contentBox.innerHTML = '';
+            
+            const noneBtn = document.createElement('button');
+            noneBtn.className = 'btn-secondary-action';
+            noneBtn.style.padding = '0.45rem 0.85rem';
+            noneBtn.innerHTML = '<i class="bi bi-slash-circle"></i> None';
+            noneBtn.onclick = () => {
+              this.previewBgType = 'none';
+              this.previewCustomBgImg = null;
+              this.redrawEditorCanvas();
+            };
+            contentBox.appendChild(noneBtn);
+
+            if (tabName === 'Upload Custom') {
+              const upBtn = document.createElement('button');
+              upBtn.className = 'btn-secondary-action';
+              upBtn.innerHTML = '<i class="bi bi-image"></i> Pick Image Backdrop';
+              upBtn.onclick = () => document.getElementById('bgFileInput').click();
+              contentBox.appendChild(upBtn);
+            } else if (tabName === 'Solid Colors') {
+              bgPresets['Solid Colors'].forEach(color => {
+                const swatch = document.createElement('div');
+                swatch.style.width = '42px';
+                swatch.style.height = '42px';
+                swatch.style.borderRadius = '50%';
+                swatch.style.background = color;
+                swatch.style.border = '2px solid #e2e8f0';
+                swatch.style.cursor = 'pointer';
+                swatch.onclick = () => {
+                  this.previewBgType = 'color';
+                  this.previewBgValue = color;
+                  this.redrawEditorCanvas();
+                };
+                contentBox.appendChild(swatch);
+              });
+            } else if (tabName === 'Gradients') {
+              bgPresets['Gradients'].forEach(grad => {
+                const swatch = document.createElement('div');
+                swatch.style.width = '48px';
+                swatch.style.height = '42px';
+                swatch.style.borderRadius = '8px';
+                swatch.style.background = grad;
+                swatch.style.cursor = 'pointer';
+                swatch.onclick = () => {
+                  this.previewBgType = 'gradient';
+                  this.previewBgValue = grad;
+                  this.redrawEditorCanvas();
+                };
+                contentBox.appendChild(swatch);
+              });
+            } else if (tabName === 'Patterns') {
+              bgPresets['Patterns'].forEach(pat => {
+                const btn = document.createElement('button');
+                btn.className = 'btn-secondary-action';
+                btn.style.padding = '0.45rem 0.85rem';
+                btn.textContent = pat.toUpperCase();
+                btn.onclick = () => {
+                  this.previewBgType = 'pattern';
+                  this.previewBgValue = pat;
+                  this.redrawEditorCanvas();
+                };
+                contentBox.appendChild(btn);
+              });
+            }
+          };
+
+          ['Solid Colors', 'Gradients', 'Patterns', 'Upload Custom'].forEach((tab, i) => {
+            const b = document.createElement('button');
+            b.className = `drawer-tab-btn ${i === 0 ? 'active' : ''}`;
+            b.textContent = tab;
+            b.onclick = () => {
+              tabStrip.querySelectorAll('.drawer-tab-btn').forEach(el => el.classList.remove('active'));
+              b.classList.add('active');
+              renderBgTab(tab);
+            };
+            tabStrip.appendChild(b);
+          });
+
+          drawer.appendChild(tabStrip);
+          drawer.appendChild(contentBox);
+          renderBgTab('Solid Colors');
+        } else if (toolKey === 'corners') {
+          this.dom.editorHeaderTitle.textContent = 'Corners';
+          drawer.innerHTML = `
+            <div style="display:flex; align-items:center; gap:1rem; width:100%; justify-content:center;">
+              <label style="font-size:0.8rem; font-weight:700;">Corner Radius:</label>
+              <input type="range" id="edCornerRange" min="0" max="100" value="${this.previewCornerRadius}" style="accent-color:var(--primary); width:160px;" />
+            </div>
+          `;
+          document.getElementById('edCornerRange').oninput = (e) => {
+            this.previewCornerRadius = parseInt(e.target.value);
+            this.redrawEditorCanvas();
+          };
+        } else if (toolKey === 'resize') {
+          this.dom.editorHeaderTitle.textContent = 'Resize';
+          drawer.innerHTML = `
+            <div style="display:flex; align-items:center; gap:0.75rem; width:100%; justify-content:center;">
+              <div style="text-align:center;">
+                <label style="font-size:0.72rem; font-weight:700; color:#64748b; display:block;">Width (px)</label>
+                <input type="number" id="edResizeW" value="${this.editorTempCanvas.width}" class="app-input-text" style="width:100px; text-align:center;" />
+              </div>
+              <div style="text-align:center;">
+                <label style="font-size:0.72rem; font-weight:700; color:#64748b; display:block;">Height (px)</label>
+                <input type="number" id="edResizeH" value="${this.editorTempCanvas.height}" class="app-input-text" style="width:100px; text-align:center;" />
+              </div>
+            </div>
+          `;
+          const wIn = document.getElementById('edResizeW');
+          const hIn = document.getElementById('edResizeH');
+          const ratio = this.editorTempCanvas.width / this.editorTempCanvas.height;
+          wIn.oninput = () => { hIn.value = Math.round(wIn.value / ratio); this.applyEditorResize(parseInt(wIn.value), parseInt(hIn.value)); };
+          hIn.oninput = () => { wIn.value = Math.round(hIn.value * ratio); this.applyEditorResize(parseInt(wIn.value), parseInt(hIn.value)); };
+        } else if (toolKey === 'draw') {
+          this.dom.editorHeaderTitle.textContent = 'Draw';
+          drawer.innerHTML = `
+            <div style="display:flex; align-items:center; gap:1rem; width:100%; justify-content:center;">
+              <label style="font-size:0.8rem; font-weight:700;">Color:</label>
+              <input type="color" id="edDrawColor" value="#1e70bf" style="width:40px; height:34px; border:none; border-radius:6px; cursor:pointer;" />
+              <button class="btn-secondary-action" id="btnClearDrawing" style="padding:0.4rem 0.8rem; font-size:0.8rem;">Clear Strokes</button>
+            </div>
+          `;
+          const cPick = document.getElementById('edDrawColor');
+          cPick.onchange = (e) => { this.editorBrushColor = e.target.value; };
+          document.getElementById('btnClearDrawing').onclick = () => {
+            this.editorTempCanvas.getContext('2d').drawImage(this.editorImg, 0, 0);
+            this.redrawEditorCanvas();
+          };
+        }
+      }
+
+      previewTransformState() {
+        const canvas = this.dom.photoEditorCanvas;
+        const ctx = canvas.getContext('2d');
+        const w = this.editorTempCanvas.width;
+        const h = this.editorTempCanvas.height;
+
+        if (this.tempRotationAngle === 90 || this.tempRotationAngle === 270) {
+          canvas.width = h;
+          canvas.height = w;
+        } else {
+          canvas.width = w;
+          canvas.height = h;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate((this.tempRotationAngle * Math.PI) / 180);
+        if (this.tempFlipH) ctx.scale(-1, 1);
+        ctx.drawImage(this.editorTempCanvas, -w / 2, -h / 2);
+        ctx.restore();
+      }
+
+      addInteractiveMovableLayer(type, content, options = {}) {
+        const stage = this.dom.canvasInteractionStage;
+        const layerId = `layer_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`;
+
+        const layerObj = {
+          id: layerId,
+          type,
+          content,
+          x: Math.max(10, (stage.clientWidth / 2) - 60),
+          y: Math.max(10, (stage.clientHeight / 2) - 30),
+          fontSize: options.fontSize || 32,
+          size: options.size || 48,
+          color: options.color || '#ffffff'
+        };
+
+        const el = document.createElement('div');
+        el.id = layerId;
+        el.className = 'editor-interactive-layer';
+        el.style.left = `${layerObj.x}px`;
+        el.style.top = `${layerObj.y}px`;
+
+        const contentSpan = document.createElement('span');
+        contentSpan.className = 'layer-content-render';
+        if (type === 'text') {
+          contentSpan.style.color = layerObj.color;
+          contentSpan.style.fontSize = `${layerObj.fontSize}px`;
+          contentSpan.style.fontWeight = '800';
+          contentSpan.style.textShadow = '0 2px 8px rgba(0,0,0,0.8)';
+          contentSpan.textContent = content;
+        } else if (type === 'sticker') {
+          contentSpan.style.fontSize = `${layerObj.size}px`;
+          contentSpan.textContent = content;
+        }
+
+        const delBadge = document.createElement('div');
+        delBadge.className = 'layer-delete-badge';
+        delBadge.innerHTML = '<i class="bi bi-x"></i>';
+        delBadge.onclick = (e) => {
+          e.stopPropagation();
+          el.remove();
+          this.editorLayers = this.editorLayers.filter(l => l.id !== layerId);
+        };
+
+        const resizeHandle = document.createElement('div');
+        resizeHandle.className = 'layer-resize-handle';
+        resizeHandle.innerHTML = '<i class="bi bi-arrows-angle-expand"></i>';
+
+        el.appendChild(contentSpan);
+        el.appendChild(delBadge);
+        el.appendChild(resizeHandle);
+        stage.appendChild(el);
+
+        this.makeElementDraggableAndResizable(el, contentSpan, resizeHandle, layerObj);
+        this.editorLayers.push(layerObj);
+      }
+
+      makeElementDraggableAndResizable(el, contentSpan, resizeHandle, layerObj) {
+        let isDragging = false;
+        let isResizing = false;
+        let startX = 0, startY = 0;
+        let startFontSize = layerObj.fontSize;
+        let startStickerSize = layerObj.size;
+
+        const onDragStart = (clientX, clientY) => {
+          isDragging = true;
+          const rect = el.getBoundingClientRect();
+          startX = clientX - rect.left;
+          startY = clientY - rect.top;
+        };
+
+        const onResizeStart = (clientX, clientY, e) => {
+          e.stopPropagation();
+          isResizing = true;
+          startX = clientX;
+          startY = clientY;
+          startFontSize = layerObj.fontSize;
+          startStickerSize = layerObj.size;
+        };
+
+        const onMove = (clientX, clientY) => {
+          if (isDragging) {
+            const stageRect = this.dom.canvasInteractionStage.getBoundingClientRect();
+            let newX = clientX - stageRect.left - startX;
+            let newY = clientY - stageRect.top - startY;
+
+            el.style.left = `${newX}px`;
+            el.style.top = `${newY}px`;
+            layerObj.x = newX;
+            layerObj.y = newY;
+          } else if (isResizing) {
+            const deltaX = clientX - startX;
+            if (layerObj.type === 'text') {
+              const newSize = Math.max(14, Math.min(120, startFontSize + (deltaX * 0.4)));
+              contentSpan.style.fontSize = `${newSize}px`;
+              layerObj.fontSize = newSize;
+            } else if (layerObj.type === 'sticker') {
+              const newSize = Math.max(20, Math.min(160, startStickerSize + (deltaX * 0.5)));
+              contentSpan.style.fontSize = `${newSize}px`;
+              layerObj.size = newSize;
+            }
+          }
+        };
+
+        const onEnd = () => {
+          isDragging = false;
+          isResizing = false;
+        };
+
+        el.addEventListener('mousedown', (e) => {
+          if (e.target === resizeHandle || resizeHandle.contains(e.target)) return;
+          onDragStart(e.clientX, e.clientY);
+        });
+        resizeHandle.addEventListener('mousedown', (e) => onResizeStart(e.clientX, e.clientY, e));
+
+        window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+        window.addEventListener('mouseup', onEnd);
+
+        el.addEventListener('touchstart', (e) => {
+          if (e.target === resizeHandle || resizeHandle.contains(e.target)) return;
+          if (e.touches[0]) {
+            e.preventDefault();
+            onDragStart(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        }, { passive: false });
+
+        resizeHandle.addEventListener('touchstart', (e) => {
+          if (e.touches[0]) {
+            e.preventDefault();
+            onResizeStart(e.touches[0].clientX, e.touches[0].clientY, e);
+          }
+        }, { passive: false });
+
+        window.addEventListener('touchmove', (e) => {
+          if (e.touches[0] && (isDragging || isResizing)) {
+            onMove(e.touches[0].clientX, e.touches[0].clientY);
+          }
+        }, { passive: false });
+
+        window.addEventListener('touchend', onEnd);
+      }
+
+      redrawEditorCanvas(customFilter = null) {
+        if (!this.editorImg) return;
+        const canvas = this.dom.photoEditorCanvas;
+        const ctx = canvas.getContext('2d');
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+
+        const activeBg = this.previewBgType !== 'none' ? this.previewBgType : this.editorBgType;
+        const activeBgVal = this.previewBgValue || this.editorBgValue;
+        const activeCustomBg = this.previewCustomBgImg || this.editorCustomBgImg;
+
+        if (activeBg === 'color') {
+          ctx.fillStyle = activeBgVal;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else if (activeBg === 'gradient') {
+          const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+          grad.addColorStop(0, '#4f46e5');
+          grad.addColorStop(1, '#06b6d4');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else if (activeBg === 'pattern') {
+          ctx.fillStyle = activeBgVal === 'carbon' ? '#0f172a' : '#cbd5e1';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+        } else if (activeBg === 'custom' && activeCustomBg) {
+          ctx.drawImage(activeCustomBg, 0, 0, canvas.width, canvas.height);
+        }
+
+        const pad = (activeBg !== 'none') ? this.editorBgPadding : 0;
+        const drawW = canvas.width - (pad * 2);
+        const drawH = canvas.height - (pad * 2);
+
+        const activeRadius = this.previewCornerRadius || this.editorCornerRadius;
+        if (activeRadius > 0) {
+          ctx.beginPath();
+          ctx.roundRect(pad, pad, drawW, drawH, activeRadius);
+          ctx.clip();
+        }
+
+        ctx.filter = customFilter || 'none';
+        ctx.drawImage(this.editorTempCanvas, pad, pad, drawW, drawH);
+
+        const activeFrame = this.previewFramePreset !== 'none' ? this.previewFramePreset : this.editorFramePreset;
+        if (activeFrame === 'polaroid') {
+          ctx.strokeStyle = '#ffffff';
+          ctx.lineWidth = 18;
+          ctx.strokeRect(pad, pad, drawW, drawH);
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(pad, pad + drawH - 32, drawW, 32);
+        } else if (activeFrame === 'wood') {
+          ctx.strokeStyle = '#854d0e';
+          ctx.lineWidth = 20;
+          ctx.strokeRect(pad, pad, drawW, drawH);
+        } else if (activeFrame === 'gold') {
+          ctx.strokeStyle = '#eab308';
+          ctx.lineWidth = 14;
+          ctx.strokeRect(pad, pad, drawW, drawH);
+        } else if (activeFrame === 'neon') {
+          ctx.strokeStyle = '#ec4899';
+          ctx.lineWidth = 10;
+          ctx.strokeRect(pad, pad, drawW, drawH);
+        } else if (activeFrame === 'film') {
+          ctx.strokeStyle = '#0f172a';
+          ctx.lineWidth = 16;
+          ctx.strokeRect(pad, pad, drawW, drawH);
+        } else if (activeFrame === 'shadow') {
+          ctx.strokeStyle = '#334155';
+          ctx.lineWidth = 16;
+          ctx.strokeRect(pad, pad, drawW, drawH);
+        } else if (activeFrame === 'stitch') {
+          ctx.setLineDash([8, 8]);
+          ctx.strokeStyle = '#38bdf8';
+          ctx.lineWidth = 8;
+          ctx.strokeRect(pad + 6, pad + 6, drawW - 12, drawH - 12);
+        }
+
+        ctx.restore();
+      }
+
+      applyEditorResize(w, h) {
+        if (!w || !h) return;
+        const canvas = this.dom.photoEditorCanvas;
+        canvas.width = w;
+        canvas.height = h;
+        this.redrawEditorCanvas();
+      }
+
+      bindDrawingCanvasListeners() {
+        const canvas = this.dom.photoEditorCanvas;
+
+        const getCoords = (e) => {
+          const rect = canvas.getBoundingClientRect();
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          return {
+            x: (clientX - rect.left) * (canvas.width / rect.width),
+            y: (clientY - rect.top) * (canvas.height / rect.height)
+          };
+        };
+
+        const onDrawStart = (e) => {
+          if (this.activeSubtool !== 'draw') return;
+          this.isEditorDrawing = true;
+          const ctx = this.editorTempCanvas.getContext('2d');
+          const { x, y } = getCoords(e);
+          ctx.strokeStyle = this.editorBrushColor;
+          ctx.lineWidth = Math.max(4, Math.round(canvas.width / 120));
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+        };
+
+        const onDrawMove = (e) => {
+          if (!this.isEditorDrawing || this.activeSubtool !== 'draw') return;
+          if (e.cancelable) e.preventDefault();
+          const ctx = this.editorTempCanvas.getContext('2d');
+          const { x, y } = getCoords(e);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+          this.redrawEditorCanvas();
+        };
+
+        const onDrawEnd = () => {
+          if (this.isEditorDrawing) {
+            this.isEditorDrawing = false;
+            this.redrawEditorCanvas();
+          }
+        };
+
+        canvas.addEventListener('mousedown', onDrawStart);
+        window.addEventListener('mousemove', onDrawMove);
+        window.addEventListener('mouseup', onDrawEnd);
+
+        canvas.addEventListener('touchstart', onDrawStart, { passive: false });
+        window.addEventListener('touchmove', onDrawMove, { passive: false });
+        window.addEventListener('touchend', onDrawEnd);
       }
     }
-    name += getOperationSuffix(imgObj);
 
-    // Safari fix: download must be in direct user event, so we wrap in setTimeout
-    setTimeout(() => {
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = name + ext;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }, 0);
-  }
-
-  // If already in the right format, just download
-  if (blob.type === mime || (format === "jpg" && blob.type === "image/jpeg")) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      doDownload(e.target.result);
-    };
-    reader.readAsDataURL(blob);
-    return;
-  }
-
-  // Otherwise, convert using canvas
-  const img = new window.Image();
-  img.onload = function() {
-    const canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-    // GIF and TIFF are not supported by canvas.toBlob, fallback to PNG
-    let outMime = mime;
-    if (format === "gif" || format === "tiff") outMime = "image/png";
-    canvas.toBlob(function(newBlob) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        doDownload(e.target.result);
-      };
-      reader.readAsDataURL(newBlob);
-    }, outMime, (outMime === "image/jpeg" || outMime === "image/webp") ? 0.92 : undefined);
-  };
-  img.src = URL.createObjectURL(blob);
-}
-
-// Reset
-resetBtn.onclick = resetAll;
-function resetAll() {
-  images = [];
-  imgList.innerHTML = "";
-  fileInput.value = "";
-  progress.innerText = "";
-}
-
-// Drag-and-drop
-dropzone.ondragover = e => { e.preventDefault(); dropzone.style.background="#e0e0e0"; };
-dropzone.ondragleave = e => { e.preventDefault(); dropzone.style.background=""; };
-dropzone.ondrop = e => {
-  e.preventDefault();
-  dropzone.style.background="";
-  handleFiles(e.dataTransfer.files);
-};
-fileInput.onchange = e => handleFiles(e.target.files);
-
-function handleFiles(fileList) {
-  // Do not reset all, allow multiple images
-  [...fileList].forEach(file => {
-    if (!file.type.startsWith("image/")) return alert("Only image files allowed!");
-    if (file.size > 10 * 1024 * 1024) return alert("Image too large (max 10MB).");
-    const url = URL.createObjectURL(file);
-    const img = new window.Image();
-    img.onload = function() {
-      images.push({file, img, previewUrl: url, processedBlob: null, info: "", history: [], redoStack: [], compressInfo: null});
-      showImages();
-      saveRecent(file, url);
-    };
-    img.src = url;
-  });
-}
-
-// Theme
-themeBtn.onclick = () => {
-  darkTheme = !darkTheme;
-  document.body.classList.toggle("theme-dark", darkTheme);
-  document.getElementById('app').classList.toggle("theme-dark", darkTheme);
-};
-
-// Help/About
-helpBtn.onclick = () => alert(
-  "1. Select or drag images.\n2. Crop (per image), resize, filter, or compress as needed.\n3. Undo/redo (per image), preview, and save each image.\n4. Use theme, help, about as needed.\n5. Use Delete to remove an image, Delete All to clear all images, and Delete All History to clear undo/redo for all.\n6. Click a thumbnail to preview it larger."
-);
-aboutBtn.onclick = () => alert(
-  "Image Resizer & Compressor\nBy RajApp\nCross-platform, works in any browser or device."
-);
-
-// Recent Images (localStorage) with delete button
-function showRecent() {
-  let recent = JSON.parse(localStorage.getItem("rajapp_recent") || "[]");
-  recentList.innerHTML = "";
-  recent.forEach((dataUrl, i) => {
-    const wrapper = document.createElement('span');
-    wrapper.className = "recent-thumb-wrapper";
-    const img = document.createElement('img');
-    img.src = dataUrl;
-    img.className = "recent-thumb";
-    img.alt = "Recent image";
-    img.onclick = () => loadRecent(dataUrl);
-
-    // Add delete button
-    const delBtn = document.createElement('button');
-    delBtn.textContent = "×";
-    delBtn.title = "Delete";
-    delBtn.className = "recent-delete-btn";
-    delBtn.onclick = (e) => {
-      e.stopPropagation();
-      let recentArr = JSON.parse(localStorage.getItem("rajapp_recent") || "[]");
-      recentArr.splice(i, 1);
-      localStorage.setItem("rajapp_recent", JSON.stringify(recentArr));
-      showRecent();
-    };
-
-    wrapper.appendChild(img);
-    wrapper.appendChild(delBtn);
-    recentList.appendChild(wrapper);
-  });
-}
-function saveRecent(blobOrFile, url) {
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    let recent = JSON.parse(localStorage.getItem("rajapp_recent") || "[]");
-    recent.unshift(e.target.result);
-    recent = recent.slice(0, 10);
-    localStorage.setItem("rajapp_recent", JSON.stringify(recent));
-    showRecent();
-  };
-  reader.readAsDataURL(blobOrFile);
-}
-function loadRecent(dataUrl) {
-  const img = new window.Image();
-  img.onload = function() {
-    images.push({
-      file: {name: "recent.png", size: 0, type: "image/png"},
-      img,
-      previewUrl: dataUrl,
-      processedBlob: null,
-      info: "Loaded from recent",
-      history: [],
-      redoStack: [],
-      compressInfo: null
-    });
-    showImages();
-  };
-  img.src = dataUrl;
-}
-showRecent();
-</script>
+    const app = new PixelCraftEngine();
+  </script>
 </body>
+</html>

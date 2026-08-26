@@ -1,0 +1,83 @@
+/* Shared styles for PixelCraft SEO entry pages. The full application styles remain in the root app. */
+:root {
+  --pixelcraft-blue: #1e70bf;
+  --pixelcraft-cyan: #06b6d4;
+  --pixelcraft-ink: #0f172a;
+  --pixelcraft-muted: #475569;
+  --pixelcraft-line: #e2e8f0;
+  --pixelcraft-surface: #ffffff;
+  --pixelcraft-background: #f1f5f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  background: var(--pixelcraft-background);
+  color: var(--pixelcraft-ink);
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+}
+
+.seo-entry {
+  width: min(100%, 720px);
+  padding: clamp(1.5rem, 5vw, 3rem);
+  background: var(--pixelcraft-surface);
+  border: 1px solid var(--pixelcraft-line);
+  border-radius: 18px;
+  box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.12);
+  text-align: center;
+}
+
+.seo-entry h1 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.8rem, 5vw, 2.75rem);
+}
+
+.seo-entry p {
+  margin: 0 auto 1.5rem;
+  max-width: 58ch;
+  color: var(--pixelcraft-muted);
+  line-height: 1.6;
+}
+
+.seo-entry a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  background: var(--pixelcraft-blue);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.seo-entry a:hover {
+  background: #155b9e;
+}
+
+.tool-directory {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+}
+
+.tool-directory a {
+  padding: 0.4rem 0.65rem;
+  background: transparent;
+  color: var(--pixelcraft-blue);
+  font-size: 0.85rem;
+}
