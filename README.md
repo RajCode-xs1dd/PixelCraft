@@ -79,4 +79,3 @@ The SEO entry pages provide dedicated URLs and redirect to the corresponding too
 ## License
 
 This project is licensed under the [MIT License](LICENSE). You may use, modify, and distribute it under the terms of that license.
-
