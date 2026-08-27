@@ -2,13 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
   <title>PixelCraft by RajCode – Fast, Visual & Private Online Image Suite</title>
   <meta name="description" content="Free client-side image tool suite by RajCode. Visually compress, resize, crop, convert, watermark, rotate, upscale, and edit images directly in your browser." />
   <meta name="author" content="RajCode" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://pixelcraft-rajcode.netlify.app/" />
+  
+  <!-- Dynamic Vector SVG Favicon Matching App Logo -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='pcGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231e70bf'/><stop offset='100%25' stop-color='%2306b6d4'/></linearGradient></defs><rect width='32' height='32' rx='9' fill='url(%23pcGrad)'/><path d='M16 6L26 11L16 16L6 11Z M6 15.5L16 20.5L26 15.5V18L16 23L6 18Z M6 20.5L16 25.5L26 20.5V23L16 28L6 23Z' fill='%23ffffff'/></svg>" />
+
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixelcraft-rajcode.netlify.app/" />
   <meta property="og:title" content="PixelCraft – Online Image Tools" />
@@ -19,6 +23,7 @@
   <meta name="twitter:title" content="PixelCraft – Online Image Tools" />
   <meta name="twitter:description" content="Private browser-based tools for compressing, resizing, cropping, converting, and editing images." />
   <meta name="twitter:image" content="https://pixelcraft-rajcode.netlify.app/preview.png" />
+
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -75,19 +80,21 @@
       background-color: #f1f5f9;
       color: var(--slate-800);
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       flex-direction: column;
       -webkit-user-select: none;
       user-select: none;
     }
 
-    /* ---------------- MAIN APP NAVBAR ---------------- */
+    /* ---------------- HEADER & NAVBAR ---------------- */
     header#mainAppHeader {
       background: var(--white);
       border-bottom: 1px solid var(--slate-200);
       position: sticky;
       top: 0;
       z-index: 1000;
+      width: 100%;
     }
 
     .navbar {
@@ -101,9 +108,9 @@
     }
 
     .brand-logo {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 9px;
       font-size: 1.35rem;
       font-weight: 800;
       color: var(--dark);
@@ -123,6 +130,15 @@
       justify-content: center;
       font-size: 1.05rem;
       box-shadow: 0 4px 10px rgba(30, 112, 191, 0.3);
+      flex-shrink: 0;
+    }
+
+    .brand-logo .brand-accent,
+    .footer-brand-name .brand-accent {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .nav-menu {
@@ -152,8 +168,6 @@
 
     .nav-link:hover, .nav-link.active { color: var(--primary); }
 
-    .nav-more-link i { font-size: 0.72rem; }
-
     .nav-link.active::after {
       content: '';
       position: absolute;
@@ -165,6 +179,7 @@
       border-radius: 3px 3px 0 0;
     }
 
+    /* Mega Dropdown */
     .mega-dropdown {
       position: absolute;
       top: 100%;
@@ -214,18 +229,23 @@
       display: none;
       background: none;
       border: none;
-      font-size: 1.6rem;
+      font-size: 1.75rem;
       color: var(--dark);
       cursor: pointer;
-      padding: 4px;
+      padding: 6px;
+      line-height: 1;
     }
 
+    /* Mobile Drawer */
     .mobile-nav-drawer {
       display: none;
       position: fixed;
-      inset: var(--nav-height) 0 0 0;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: var(--white);
-      z-index: 999;
+      z-index: 9999;
       flex-direction: column;
       padding: 1.25rem;
       overflow-y: auto;
@@ -239,20 +259,22 @@
       font-weight: 800;
       text-transform: uppercase;
       color: var(--slate-400);
-      margin: 1rem 0 0.5rem 0;
+      margin: 1.25rem 0 0.5rem 0;
       letter-spacing: 0.5px;
     }
+
+    .mobile-drawer-title:first-child { margin-top: 0.25rem; }
 
     .mobile-drawer-link {
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 0.75rem;
+      gap: 12px;
+      padding: 0.85rem;
       font-weight: 700;
       font-size: 0.95rem;
       color: var(--slate-800);
       text-decoration: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
     }
 
@@ -468,7 +490,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: #090d16;
+      background-color: #f1f5f9;
+      background-image: 
+        linear-gradient(to right, rgba(203, 213, 225, 0.4) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(203, 213, 225, 0.4) 1px, transparent 1px);
+      background-size: 16px 16px;
       border-radius: var(--radius-md);
       overflow: hidden;
     }
@@ -774,12 +800,12 @@
       display: none;
       flex-direction: column;
       flex: 1;
-      height: 100vh;
+      height: calc(100vh - 76px);
       background: #f8fafc;
       overflow: hidden;
-      position: fixed;
-      inset: 0;
-      z-index: 2000;
+      position: relative;
+      width: 100%;
+      z-index: 1;
     }
 
     .photo-editor-app.active { display: flex; }
@@ -988,7 +1014,6 @@
     .result-heading { font-size: 2.1rem; margin-bottom: 0.5rem; }
     .result-description { margin-bottom: 1.25rem; }
     .download-all-button { font-size: 1rem; padding: 0.8rem 1.8rem; }
-    .footer-meta { display: flex; align-items: center; gap: 8px; }
 
     .drawer-tab-btn {
       padding: 0.35rem 0.75rem;
@@ -1057,73 +1082,168 @@
     .frame-sample-shadow { border: 4px solid #334155; }
     .frame-sample-stitch { border: 3px dotted #38bdf8; }
 
-    /* ---------------- FOOTER ---------------- */
+    /* ---------------- CLEAN, BALANCED, SYMMETRICAL FOOTER ---------------- */
     footer#mainAppFooter {
       margin-top: auto;
       background: var(--white);
       border-top: 1px solid var(--slate-200);
-      padding: 1.25rem 1.5rem;
+      padding: 3rem 1.25rem 2rem;
+      position: relative;
+      width: 100%;
+    }
+
+    .footer-container {
+      max-width: 960px;
+      margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      gap: 1rem;
-      font-size: 0.85rem;
-      color: var(--slate-600);
+      text-align: center;
+      gap: 1.75rem;
     }
 
-    .footer-brand-badge {
-      font-weight: 700;
-      color: var(--dark);
-      text-decoration: none;
-    }
-
-    .footer-links {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.85rem;
-    }
-
-    .footer-links a {
-      color: var(--slate-600);
-      font-weight: 700;
-      text-decoration: none;
-    }
-
-    .footer-links a:hover { color: var(--primary); }
-
-    .footer-social-links {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-    }
-
-    .footer-social-links a {
-      color: var(--slate-600);
-      font-size: 1.05rem;
-      text-decoration: none;
-      transition: color 0.15s ease, transform 0.15s ease;
-    }
-
-    .footer-social-links a:hover {
-      color: var(--primary);
-      transform: translateY(-1px);
-    }
-
-    .footer-privacy-pill {
+    .footer-brand-logo {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: #dcfce7;
-      color: #15803d;
-      font-weight: 700;
-      font-size: 0.75rem;
-      padding: 0.3rem 0.75rem;
-      border-radius: 20px;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 800;
+      font-size: 1.45rem;
+      letter-spacing: -0.5px;
+      cursor: pointer;
     }
 
+    .footer-tagline {
+      color: var(--slate-600);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      max-width: 520px;
+      margin: -0.5rem auto 0;
+    }
+
+    .footer-touch-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .footer-touch-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--slate-400);
+    }
+
+    .footer-social-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .footer-social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--slate-100);
+      color: var(--slate-600);
+      border: 1px solid var(--slate-200);
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .footer-social-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(30, 112, 191, 0.3);
+    }
+
+    /* 4 Distinct Core Action Pills */
+    .footer-pills-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      width: 100%;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--slate-200);
+      border-bottom: 1px solid var(--slate-200);
+    }
+
+    .footer-action-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.65rem 1.4rem;
+      background: var(--slate-100);
+      border: 1px solid var(--slate-200);
+      border-radius: 999px;
+      color: var(--slate-800);
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.18s ease;
+    }
+
+    .footer-action-pill i {
+      color: var(--primary);
+      font-size: 1rem;
+    }
+
+    .footer-action-pill:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .footer-bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.86rem;
+      color: var(--slate-500);
+    }
+
+    .footer-copyright strong {
+      color: var(--slate-800);
+      font-weight: 700;
+    }
+
+    .footer-copyright a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .footer-security-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #ecfdf5;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #10b981;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+    }
+
+    /* ---------------- MOBILE & ANDROID RESPONSIVENESS ---------------- */
     @media (max-width: 900px) {
       .nav-menu { display: none; }
       .mobile-menu-btn { display: block; }
@@ -1144,6 +1264,25 @@
         border-left: none;
         border-top: 1px solid var(--slate-200);
         padding: 1.25rem 1rem;
+      }
+
+      .footer-pills-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.65rem;
+      }
+
+      .footer-action-pill {
+        justify-content: center;
+        padding: 0.65rem 1rem;
+        font-size: 0.85rem;
+      }
+
+      .footer-bottom-bar {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 0.75rem;
       }
     }
   </style>
@@ -1204,13 +1343,14 @@
         </li>
       </ul>
 
+      <!-- Mobile Hamburger Button -->
       <button class="mobile-menu-btn" id="mobileNavToggle" aria-label="Toggle Menu">
         <i class="bi bi-list"></i>
       </button>
     </nav>
   </header>
 
-  <!-- Mobile Drawer Menu -->
+  <!-- Mobile Drawer Menu (Android & Mobile) -->
   <div class="mobile-nav-drawer" id="mobileNavDrawer">
     <div class="mobile-drawer-title">Core Tools</div>
     <a class="mobile-drawer-link" data-route="compress-image"><i class="bi bi-file-earmark-zip text-primary"></i> Compress Image</a>
@@ -1226,6 +1366,12 @@
     <a class="mobile-drawer-link" data-route="rotate-image"><i class="bi bi-arrow-clockwise text-primary"></i> Rotate Image</a>
     <a class="mobile-drawer-link" data-route="watermark-image"><i class="bi bi-shield-check text-primary"></i> Watermark Image</a>
     <a class="mobile-drawer-link" data-route="upscale-image"><i class="bi bi-arrows-fullscreen text-primary"></i> Upscale 2X/4X</a>
+
+    <div class="mobile-drawer-title">About & Legal</div>
+    <a class="mobile-drawer-link" href="about.html"><i class="bi bi-info-circle text-primary"></i> About PixelCraft</a>
+    <a class="mobile-drawer-link" href="about.html#security"><i class="bi bi-shield-check text-primary"></i> Security & Privacy</a>
+    <a class="mobile-drawer-link" href="about.html#terms"><i class="bi bi-file-earmark-text text-primary"></i> Terms of Use</a>
+    <a class="mobile-drawer-link" href="contact.html"><i class="bi bi-envelope text-primary"></i> Contact Us</a>
   </div>
 
   <!-- 1. Hero Landing View -->
@@ -1361,21 +1507,56 @@
   <!-- Background Custom Image Input -->
   <input type="file" id="bgFileInput" class="file-input-hidden" accept="image/*" />
 
-  <!-- Footer -->
+  <!-- ---------------- CLEAN, BALANCED, SYMMETRICAL FOOTER ---------------- -->
   <footer id="mainAppFooter">
-    <div class="footer-links">
-      <span>Built with 🤍 by <a href="https://rajcode.netlify.app/" class="footer-brand-badge" target="_blank" rel="noopener noreferrer">RajCode</a></span>
-      <span aria-hidden="true">&bull;</span>
-      <span>&copy; 2026 RajCode</span>
-    </div>
-    <div class="footer-social-links" aria-label="Social links">
-      <a href="https://www.facebook.com/share/179kT8WjZz/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/rajcode_official" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-      <a href="https://x.com/RajeshPatraCS" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
-      <a href="https://www.linkedin.com/in/rajesh-patra-0b0913381?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-    </div>
-    <div class="footer-privacy-pill">
-      <i class="bi bi-shield-lock-fill"></i> 100% In-Browser &bull; Zero Server Uploads
+    <div class="footer-container">
+      
+      <!-- Logo + Tagline -->
+      <a class="footer-brand-logo" data-route="compress-image">
+        <div class="brand-badge"><i class="bi bi-layers-fill"></i></div>
+        <span><span class="brand-accent">Pixel</span>Craft</span>
+      </a>
+      <p class="footer-tagline">
+        Simple, private browser-first image processing engineered by RajCode.
+      </p>
+
+      <!-- Get In Touch Header + Social Media Icons Directly Below -->
+      <div class="footer-touch-section">
+        <span class="footer-touch-label">Get in touch</span>
+        <div class="footer-social-strip" aria-label="Social profiles">
+          <a href="https://www.linkedin.com/in/rajesh-patra-0b0913381" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://x.com/RajeshPatraCS" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Twitter / X" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.facebook.com/rajesh.patra.official" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/rajcode_official" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <!-- Center: 4 Unified Core Action Buttons -->
+      <div class="footer-pills-bar">
+        <a href="about.html" class="footer-action-pill">
+          <i class="bi bi-info-circle"></i> About
+        </a>
+        <a href="about.html#security" class="footer-action-pill">
+          <i class="bi bi-shield-check"></i> Security & Privacy
+        </a>
+        <a href="about.html#terms" class="footer-action-pill">
+          <i class="bi bi-file-earmark-text"></i> Terms of Use
+        </a>
+        <a href="contact.html" class="footer-action-pill">
+          <i class="bi bi-envelope"></i> Contact Us
+        </a>
+      </div>
+
+      <!-- Bottom Bar: Copyright + Security Pill -->
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright">
+          <strong>© 2026 PixelCraft</strong> &bull; Crafted by <a href="https://rajcode.netlify.app" target="_blank" rel="noopener">RajCode</a>. All rights reserved.
+        </div>
+        <div class="footer-security-pill">
+          <i class="bi bi-shield-lock-fill"></i> 100% In-Browser &bull; Zero Server Uploads
+        </div>
+      </div>
+
     </div>
   </footer>
 
@@ -1732,10 +1913,16 @@
         this.dom.btnAddMoreFiles.onclick = () => this.dom.hiddenFileInput.click();
         this.dom.hiddenFileInput.onchange = (e) => this.loadFiles(e.target.files);
 
+        // Mobile Nav Toggle
         this.dom.mobileNavToggle.onclick = () => {
-          this.dom.mobileNavDrawer.classList.toggle('open');
+          const isOpen = this.dom.mobileNavDrawer.classList.toggle('open');
+          const icon = this.dom.mobileNavToggle.querySelector('i');
+          if (icon) {
+            icon.className = isOpen ? 'bi bi-x-lg' : 'bi bi-list';
+          }
         };
 
+        // All route links across Header, Mobile Drawer, and Brand Logo
         document.querySelectorAll('[data-route]').forEach(link => {
           link.addEventListener('click', (e) => {
             e.preventDefault();
@@ -1802,7 +1989,11 @@
 
         this.currentTool = key;
         window.location.hash = key;
+        
+        // Close mobile drawer and restore hamburger icon
         this.dom.mobileNavDrawer.classList.remove('open');
+        const toggleIcon = this.dom.mobileNavToggle.querySelector('i');
+        if (toggleIcon) toggleIcon.className = 'bi bi-list';
 
         document.querySelectorAll('.nav-link, .mobile-drawer-link, .mega-item').forEach(link => {
           link.classList.toggle('active', link.dataset.route === key);
@@ -1933,7 +2124,7 @@
 
         if (!cfg.isPhotoEditor) {
           this.dom.mainAppHeader.style.display = 'block';
-          this.dom.mainAppFooter.style.display = 'flex';
+          this.dom.mainAppFooter.style.display = 'block';
           this.dom.photoEditorWorkspace.classList.remove('active');
         }
 
@@ -1950,7 +2141,7 @@
         this.dom.resultsView.classList.remove('active');
 
         if (cfg.isPhotoEditor) {
-          this.dom.mainAppHeader.style.display = 'none';
+          this.dom.mainAppHeader.style.display = 'block';
           this.dom.mainAppFooter.style.display = 'none';
           this.dom.universalWorkspace.classList.remove('active');
           this.dom.photoEditorWorkspace.classList.add('active');
@@ -2014,12 +2205,22 @@
         this.renderStageView();
       }
 
-      resetToUpload() {
-        this.images.forEach(i => URL.revokeObjectURL(i.url));
-        this.processedResults.forEach(r => URL.revokeObjectURL(r.url));
+      resetToUpload(targetTool = 'compress-image') {
+        if (this.images.length) {
+          this.images.forEach(i => URL.revokeObjectURL(i.url));
+        }
+        if (this.processedResults.length) {
+          this.processedResults.forEach(r => URL.revokeObjectURL(r.url));
+        }
         this.images = [];
         this.processedResults = [];
-        this.renderStageView();
+        this.editorImg = null;
+        this.clearAllInteractiveDOMlayers();
+        if (this.editorCropper) {
+          this.editorCropper.destroy();
+          this.editorCropper = null;
+        }
+        this.switchTool(targetTool);
       }
 
       formatBytes(bytes) {
@@ -2321,7 +2522,7 @@
           this.resetEditorHeader();
           this.redrawEditorCanvas();
         } else {
-          this.switchTool('compress-image');
+          this.resetToUpload('photo-editor');
         }
       }
 
@@ -2511,7 +2712,7 @@
             drawer.appendChild(card);
           });
         } else if (toolKey === 'crop') {
-          this.dom.editorHeaderTitle.textContent = 'Manual Free Crop';
+          this.dom.editorHeaderTitle.textContent = 'Crop Image';
           if (this.editorCropper) this.editorCropper.destroy();
 
           this.editorCropper = new Cropper(this.dom.photoEditorCanvas, {
@@ -2872,6 +3073,7 @@
           contentSpan.textContent = content;
         }
 
+        // Delete Handle
         const delBadge = document.createElement('div');
         delBadge.className = 'layer-delete-badge';
         delBadge.innerHTML = '<i class="bi bi-x"></i>';
@@ -2881,6 +3083,7 @@
           this.editorLayers = this.editorLayers.filter(l => l.id !== layerId);
         };
 
+        // Resize Handle
         const resizeHandle = document.createElement('div');
         resizeHandle.className = 'layer-resize-handle';
         resizeHandle.innerHTML = '<i class="bi bi-arrows-angle-expand"></i>';

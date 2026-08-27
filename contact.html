@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+  <title>Contact RajCode | PixelCraft</title>
+  <meta name="description" content="Contact RajCode regarding PixelCraft, image tool ideas, collaborations, or custom projects. Submit a message through the form." />
+  <meta name="author" content="RajCode" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://pixelcraft-rajcode.netlify.app/contact.html" />
+
+  <!-- Dynamic Vector SVG Favicon Matching App Logo -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='pcGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231e70bf'/><stop offset='100%25' stop-color='%2306b6d4'/></linearGradient></defs><rect width='32' height='32' rx='9' fill='url(%23pcGrad)'/><path d='M16 6L26 11L16 16L6 11Z M6 15.5L16 20.5L26 15.5V18L16 23L6 18Z M6 20.5L16 25.5L26 20.5V23L16 28L6 23Z' fill='%23ffffff'/></svg>" />
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixelcraft-rajcode.netlify.app/contact.html" />
+  <meta property="og:title" content="Contact RajCode – PixelCraft" />
+  <meta property="og:description" content="Get in touch with RajCode regarding tool feedback, feature requests, or custom web projects." />
+  <meta property="og:image" content="https://pixelcraft-rajcode.netlify.app/preview.png" />
+  <meta property="og:site_name" content="PixelCraft by RajCode" />
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #1e70bf;
+      --primary-hover: #155b9e;
+      --primary-light: #eef5fc;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --success-hover: #059669;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-200: #e2e8f0;
+      --slate-100: #f8fafc;
+      --white: #ffffff;
+      --nav-height: 64px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 6px 16px -2px rgba(15, 23, 42, 0.06);
+      --shadow-xl: 0 20px 30px -10px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: var(--slate-800);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* ---------------- MAIN APP NAVBAR (Synchronized) ---------------- */
+    header#mainAppHeader {
+      background: var(--white);
+      border-bottom: 1px solid var(--slate-200);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .navbar {
+      height: var(--nav-height);
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 10px rgba(30, 112, 191, 0.3);
+      flex-shrink: 0;
+    }
+
+    .brand-logo .brand-accent,
+    .footer-brand-name .brand-accent {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 0.2rem;
+      margin: 0;
+    }
+
+    .nav-item { position: relative; }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--slate-600);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 1.35rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-more-link i { font-size: 0.72rem; }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0.75rem;
+      right: 0.75rem;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* Mega Dropdown */
+    .mega-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xl);
+      padding: 1.5rem;
+      display: none;
+      grid-template-columns: repeat(4, 180px);
+      gap: 1.25rem;
+      z-index: 1050;
+    }
+
+    .nav-item.dropdown:hover .mega-dropdown { display: grid; }
+
+    .mega-col-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--slate-400);
+      margin-bottom: 0.65rem;
+      letter-spacing: 0.5px;
+    }
+
+    .mega-menu-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .mega-item {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.45rem 0.6rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+    .mega-item i { font-size: 1rem; color: var(--primary); }
+    .mega-item:hover { background: var(--primary-light); color: var(--primary); }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.75rem;
+      color: var(--dark);
+      cursor: pointer;
+      padding: 6px;
+      line-height: 1;
+    }
+
+    /* Mobile Drawer */
+    .mobile-nav-drawer {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--white);
+      z-index: 9999;
+      flex-direction: column;
+      padding: 1.25rem;
+      overflow-y: auto;
+      border-top: 1px solid var(--slate-200);
+    }
+
+    .mobile-nav-drawer.open { display: flex; }
+
+    .mobile-drawer-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--slate-400);
+      margin: 1.25rem 0 0.5rem 0;
+      letter-spacing: 0.5px;
+    }
+
+    .mobile-drawer-title:first-child { margin-top: 0.25rem; }
+
+    .mobile-drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.85rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--slate-800);
+      text-decoration: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .mobile-drawer-link:hover, .mobile-drawer-link.active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* ---------------- CONTACT CONTENT SHELL ---------------- */
+    .contact-shell {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 4.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+      width: 100%;
+    }
+
+    .back-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: -0.5rem;
+    }
+
+    .btn-back-tool {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--primary);
+      border: 1px solid var(--slate-200);
+      padding: 0.6rem 1.15rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-back-tool:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .contact-hero {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-pill-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-title {
+      font-size: clamp(2.1rem, 3.5vw, 3rem);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-lead {
+      font-size: 1.12rem;
+      line-height: 1.75;
+      color: var(--slate-600);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 2.25rem 2rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .card:active {
+      transform: scale(0.99);
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .card p, .card li {
+      color: var(--slate-600);
+      line-height: 1.8;
+      font-size: 0.96rem;
+    }
+
+    .info-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+      font-weight: 600;
+      transition: all 0.15s ease;
+    }
+
+    .info-item:active {
+      transform: scale(0.98);
+    }
+
+    .info-item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    .info-item i {
+      color: var(--primary);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .info-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 700;
+      word-break: break-all;
+    }
+
+    .info-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Copy Button */
+    .btn-copy-email {
+      background: var(--white);
+      color: var(--slate-700);
+      border: 1px solid var(--slate-200);
+      padding: 0.4rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .btn-copy-email:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .btn-copy-email:active {
+      transform: scale(0.95);
+    }
+
+    /* Glowing Pulsing Green Dot */
+    .availability-dot-wrapper {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .glowing-green-dot {
+      width: 9px;
+      height: 9px;
+      background-color: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulseGreenDot 2s infinite;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulseGreenDot {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+
+    input, textarea {
+      width: 100%;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      background: #f8fafc;
+      padding: 0.85rem 1rem;
+      font: inherit;
+      color: var(--dark);
+      outline: none;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-light);
+      background: var(--white);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: none;
+      border-radius: 12px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 0.95rem 1.5rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      box-shadow: 0 8px 20px rgba(30, 112, 191, 0.25);
+    }
+
+    .submit-btn:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+    }
+
+    .note {
+      margin-top: 6px;
+      font-size: 0.84rem;
+      color: var(--slate-500);
+      line-height: 1.5;
+    }
+
+    /* ---------------- CLEAN, BALANCED FOOTER ---------------- */
+    footer#mainAppFooter {
+      margin-top: auto;
+      background: var(--white);
+      border-top: 1px solid var(--slate-200);
+      padding: 3rem 1.25rem 2rem;
+      position: relative;
+      width: 100%;
+    }
+
+    .footer-container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.75rem;
+    }
+
+    .footer-brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 800;
+      font-size: 1.45rem;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+    }
+
+    .footer-tagline {
+      color: var(--slate-600);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      max-width: 520px;
+      margin: -0.5rem auto 0;
+    }
+
+    .footer-touch-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .footer-touch-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--slate-400);
+    }
+
+    .footer-social-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .footer-social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--slate-100);
+      color: var(--slate-600);
+      border: 1px solid var(--slate-200);
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .footer-social-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(30, 112, 191, 0.3);
+    }
+
+    .footer-bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.86rem;
+      color: var(--slate-500);
+      border-top: 1px solid var(--slate-200);
+      padding-top: 1.5rem;
+    }
+
+    .footer-copyright strong { color: var(--slate-800); font-weight: 700; }
+    .footer-copyright a { color: var(--primary); text-decoration: none; font-weight: 700; }
+
+    .footer-security-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #ecfdf5;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #10b981;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+    }
+
+    @media (max-width: 900px) {
+      .nav-menu { display: none; }
+      .mobile-menu-btn { display: block; }
+      .content-grid { grid-template-columns: 1fr; }
+      .contact-hero { padding: 2.5rem 1.5rem; }
+      .footer-bottom-bar {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header (Fully Synchronized with index.html) -->
+  <header id="mainAppHeader">
+    <nav class="navbar">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-badge"><i class="bi bi-layers-fill"></i></div>
+        <span><span class="brand-accent">Pixel</span>Craft</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="nav-menu">
+        <li class="nav-item"><a class="nav-link" href="index.html#compress-image">Compress</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#increase-size">Increase Size</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#resize-image">Resize</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#crop-image">Crop</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#convert-to-jpg">Convert to JPG</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#photo-editor">Photo Editor</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-more-link">More Tools <i class="bi bi-chevron-down ms-1"></i></a>
+          <div class="mega-dropdown">
+            <div>
+              <div class="mega-col-title">Size Tools</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" href="index.html#compress-image"><i class="bi bi-file-earmark-zip"></i> Compress Image</a></li>
+                <li><a class="mega-item" href="index.html#increase-size"><i class="bi bi-file-earmark-plus"></i> Increase File Size</a></li>
+                <li><a class="mega-item" href="index.html#upscale-image"><i class="bi bi-arrows-fullscreen"></i> Upscale Resolution</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Modify</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" href="index.html#resize-image"><i class="bi bi-arrows-angle-expand"></i> Resize Image</a></li>
+                <li><a class="mega-item" href="index.html#crop-image"><i class="bi bi-crop"></i> Crop Image</a></li>
+                <li><a class="mega-item" href="index.html#rotate-image"><i class="bi bi-arrow-clockwise"></i> Rotate Image</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Convert</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" href="index.html#convert-to-jpg"><i class="bi bi-filetype-jpg"></i> Convert to JPG</a></li>
+                <li><a class="mega-item" href="index.html#convert-to-png"><i class="bi bi-filetype-png"></i> Convert to PNG</a></li>
+                <li><a class="mega-item" href="index.html#convert-to-webp"><i class="bi bi-file-earmark-code"></i> Convert to WEBP</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Edit & Protect</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" href="index.html#photo-editor"><i class="bi bi-palette"></i> Full Photo Editor</a></li>
+                <li><a class="mega-item" href="index.html#watermark-image"><i class="bi bi-shield-check"></i> Watermark Image</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-btn" id="mobileNavToggle" aria-label="Toggle Menu">
+        <i class="bi bi-list"></i>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-title">Core Tools</div>
+    <a class="mobile-drawer-link" href="index.html#compress-image"><i class="bi bi-file-earmark-zip text-primary"></i> Compress Image</a>
+    <a class="mobile-drawer-link" href="index.html#increase-size"><i class="bi bi-file-earmark-plus text-primary"></i> Increase File Size</a>
+    <a class="mobile-drawer-link" href="index.html#resize-image"><i class="bi bi-arrows-angle-expand text-primary"></i> Resize Image</a>
+    <a class="mobile-drawer-link" href="index.html#crop-image"><i class="bi bi-crop text-primary"></i> Crop Image</a>
+    <a class="mobile-drawer-link" href="index.html#photo-editor"><i class="bi bi-palette text-primary"></i> Photo Editor</a>
+
+    <div class="mobile-drawer-title">Convert & Modify</div>
+    <a class="mobile-drawer-link" href="index.html#convert-to-jpg"><i class="bi bi-filetype-jpg text-primary"></i> Convert to JPG</a>
+    <a class="mobile-drawer-link" href="index.html#convert-to-png"><i class="bi bi-filetype-png text-primary"></i> Convert to PNG</a>
+    <a class="mobile-drawer-link" href="index.html#convert-to-webp"><i class="bi bi-file-earmark-code text-primary"></i> Convert to WEBP</a>
+    <a class="mobile-drawer-link" href="index.html#rotate-image"><i class="bi bi-arrow-clockwise text-primary"></i> Rotate Image</a>
+    <a class="mobile-drawer-link" href="index.html#watermark-image"><i class="bi bi-shield-check text-primary"></i> Watermark Image</a>
+    <a class="mobile-drawer-link" href="index.html#upscale-image"><i class="bi bi-arrows-fullscreen text-primary"></i> Upscale 2X/4X</a>
+
+    <div class="mobile-drawer-title">About & Legal</div>
+   <a class="mobile-drawer-link" href="about.html"><i class="bi bi-info-circle text-primary"></i> About PixelCraft</a>
+    <a class="mobile-drawer-link" href="privacy.html"><i class="bi bi-shield-lock text-primary"></i> Privacy Policy</a>
+    <a class="mobile-drawer-link" href="terms.html"><i class="bi bi-file-earmark-text text-primary"></i> Terms of Use</a>
+    <a class="mobile-drawer-link active" href="contact.html"><i class="bi bi-envelope text-primary"></i> Contact Us</a>
+  </div>
+
+  <!-- Page Content Shell -->
+  <main class="contact-shell">
+    
+    <!-- Smart Back Navigation Bar -->
+    <div class="back-nav-bar">
+      <button class="btn-back-tool" onclick="history.length > 1 ? history.back() : window.location.href='index.html#compress-image'">
+        <i class="bi bi-arrow-left"></i> Go Back
+      </button>
+      <span style="font-size: 0.85rem; font-weight: 700; color: var(--slate-500);">Direct Inquiries</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="contact-hero">
+      <div class="contact-pill-eyebrow">
+        <i class="bi bi-chat-heart-fill"></i> We’d Love to Hear From You
+      </div>
+      <h1 class="contact-title">Let’s talk about your next idea or feedback.</h1>
+      <p class="contact-lead">
+        Whether you want a feature added to PixelCraft, have a bug report, or want to collaborate on a web project with RajCode, send a message below and you’ll get a prompt response.
+      </p>
+    </section>
+
+    <!-- Grid Content -->
+    <div class="content-grid">
+      <aside class="card">
+        <h2>Direct Info</h2>
+        <p style="margin-bottom: 0.25rem;">Connect with RajCode directly through these channels:</p>
+        <ul class="info-list">
+          
+          <!-- Email with Copy Button -->
+          <li class="info-item">
+            <div class="info-item-left">
+              <i class="bi bi-envelope-fill"></i>
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--slate-400); display: block; font-weight: 800;">Email</span>
+                <span id="targetEmail" style="font-size: 0.92rem; color: var(--dark); font-weight: 700;">rajeshpatracse@gmail.com</span>
+              </div>
+            </div>
+            <button class="btn-copy-email" onclick="copyEmailToClipboard(this)" title="Copy email">
+              <i class="bi bi-clipboard"></i> Copy
+            </button>
+          </li>
+
+          <!-- Portfolio Link -->
+          <li class="info-item">
+            <div class="info-item-left">
+              <i class="bi bi-globe"></i>
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--slate-400); display: block; font-weight: 800;">Portfolio</span>
+                <a href="https://rajcode.netlify.app" target="_blank" rel="noopener" class="info-link" style="font-size: 0.92rem;">rajcode.netlify.app</a>
+              </div>
+            </div>
+            <a href="https://rajcode.netlify.app" target="_blank" rel="noopener" style="color: var(--slate-400); font-size: 0.9rem;"><i class="bi bi-box-arrow-up-right"></i></a>
+          </li>
+
+          <!-- Availability with Glowing Green Dot -->
+          <li class="info-item">
+            <div class="info-item-left">
+              <i class="bi bi-geo-alt-fill"></i>
+              <div>
+                <span style="font-size: 0.72rem; text-transform: uppercase; color: var(--slate-400); display: block; font-weight: 800;">Availability</span>
+                <div class="availability-dot-wrapper">
+                  <span class="glowing-green-dot"></span>
+                  <span style="font-size: 0.92rem; color: var(--dark); font-weight: 700;">Remote / Global Projects</span>
+                </div>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+      </aside>
+
+      <section class="card">
+        <h2>Send a Message</h2>
+        <form action="https://formspree.io/f/xqazydaw" method="POST">
+          <div class="field">
+            <label for="name">Your Name</label>
+            <input id="name" name="name" type="text" placeholder="e.g. Alex Smith" required />
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address</label>
+            <input id="email" name="email" type="email" placeholder="alex@example.com" required />
+          </div>
+
+          <div class="field">
+            <label for="message">Message / Feature Request</label>
+            <textarea id="message" name="message" placeholder="Tell me about your feature request, bug report, or collaboration idea..." required></textarea>
+          </div>
+
+          <button class="submit-btn" type="submit">
+            <i class="bi bi-send-fill"></i> Send Message
+          </button>
+        </form>
+        <div class="note">Processed securely via Formspree. Your email is only used to reply to your inquiry.</div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ---------------- CLEAN, BALANCED FOOTER ---------------- -->
+  <footer id="mainAppFooter">
+    <div class="footer-container">
+      
+      <!-- Logo + Tagline -->
+      <a href="index.html#compress-image" class="footer-brand-logo">
+        <div class="brand-badge"><i class="bi bi-layers-fill"></i></div>
+        <span><span class="brand-accent">Pixel</span>Craft</span>
+      </a>
+      <p class="footer-tagline">
+        Simple, private browser-first image processing engineered by RajCode.
+      </p>
+
+      <!-- Get In Touch Header + Social Media Icons -->
+      <div class="footer-touch-section">
+        <span class="footer-touch-label">Get in touch</span>
+        <div class="footer-social-strip" aria-label="Social profiles">
+          <a href="https://www.linkedin.com/in/rajesh-patra-0b0913381" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://x.com/RajeshPatraCS" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Twitter / X" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.facebook.com/rajesh.patra.official" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/rajcode_official" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <!-- Bottom Bar: Copyright + Security Pill -->
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright">
+          <strong>© 2026 PixelCraft</strong> &bull; Crafted by <a href="https://rajcode.netlify.app" target="_blank" rel="noopener" style="color:var(--primary); text-decoration:none; font-weight:700;">RajCode</a>. All rights reserved.
+        </div>
+        <div class="footer-security-pill">
+          <i class="bi bi-shield-lock-fill"></i> 100% In-Browser &bull; Zero Server Uploads
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // Copy Email Functionality
+    function copyEmailToClipboard(btn) {
+      const emailText = document.getElementById('targetEmail').textContent;
+      navigator.clipboard.writeText(emailText).then(() => {
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-check2 text-success"></i> Copied!';
+        btn.style.borderColor = '#10b981';
+        btn.style.color = '#10b981';
+        setTimeout(() => {
+          btn.innerHTML = originalHTML;
+          btn.style.borderColor = '';
+          btn.style.color = '';
+        }, 2000);
+      }).catch(err => {
+        console.error('Failed to copy email: ', err);
+      });
+    }
+
+    // Mobile Drawer Toggle with X icon switch
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+
+    if (mobileNavToggle && mobileNavDrawer) {
+      mobileNavToggle.addEventListener('click', () => {
+        const isOpen = mobileNavDrawer.classList.toggle('open');
+        const icon = mobileNavToggle.querySelector('i');
+        if (icon) {
+          icon.className = isOpen ? 'bi bi-x-lg' : 'bi bi-list';
+        }
+      });
+
+      document.querySelectorAll('.mobile-drawer-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNavDrawer.classList.remove('open');
+          const icon = mobileNavToggle.querySelector('i');
+          if (icon) icon.className = 'bi bi-list';
+        });
+      });
+    }
+  </script>
+</body>
+</html>

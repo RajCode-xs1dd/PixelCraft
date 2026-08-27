@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+  <title>About PixelCraft – Architecture, Tools & Vision | RajCode</title>
+  <meta name="description" content="Discover how PixelCraft by RajCode delivers studio-grade image compression, conversion, and editing with 100% private, client-side browser processing." />
+  <meta name="author" content="RajCode" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://pixelcraft-rajcode.netlify.app/about.html" />
+
+  <!-- Dynamic Vector SVG Favicon Matching App Logo -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='pcGrad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%231e70bf'/><stop offset='100%25' stop-color='%2306b6d4'/></linearGradient></defs><rect width='32' height='32' rx='9' fill='url(%23pcGrad)'/><path d='M16 6L26 11L16 16L6 11Z M6 15.5L16 20.5L26 15.5V18L16 23L6 18Z M6 20.5L16 25.5L26 20.5V23L16 28L6 23Z' fill='%23ffffff'/></svg>" />
+
+  <!-- Open Graph / Meta -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pixelcraft-rajcode.netlify.app/about.html" />
+  <meta property="og:title" content="About PixelCraft – Online Image Tools by RajCode" />
+  <meta property="og:description" content="Learn about PixelCraft's zero-server, privacy-first image editing pipeline built by RajCode." />
+  <meta property="og:image" content="https://pixelcraft-rajcode.netlify.app/preview.png" />
+  <meta property="og:site_name" content="PixelCraft by RajCode" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About PixelCraft – Online Image Tools" />
+  <meta name="twitter:description" content="Learn about PixelCraft's zero-server, privacy-first image editing pipeline." />
+  <meta name="twitter:image" content="https://pixelcraft-rajcode.netlify.app/preview.png" />
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      "name": "About PixelCraft",
+      "url": "https://pixelcraft-rajcode.netlify.app/about.html",
+      "description": "Learn about PixelCraft, the browser-first image processing suite engineered by RajCode.",
+      "publisher": {
+        "@type": "Person",
+        "name": "RajCode",
+        "url": "https://rajcode.netlify.app"
+      }
+    }
+  </script>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary: #1e70bf;
+      --primary-hover: #155b9e;
+      --primary-light: #eef5fc;
+      --accent: #06b6d4;
+      --success: #10b981;
+      --success-hover: #059669;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-200: #e2e8f0;
+      --slate-100: #f8fafc;
+      --white: #ffffff;
+      --nav-height: 64px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+      --shadow-md: 0 6px 16px -2px rgba(15, 23, 42, 0.06);
+      --shadow-xl: 0 20px 30px -10px rgba(15, 23, 42, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: var(--slate-800);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    /* ---------------- NAVBAR ---------------- */
+    header#mainAppHeader {
+      background: var(--white);
+      border-bottom: 1px solid var(--slate-200);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      width: 100%;
+    }
+
+    .navbar {
+      height: var(--nav-height);
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--dark);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.05rem;
+      box-shadow: 0 4px 10px rgba(30, 112, 191, 0.3);
+      flex-shrink: 0;
+    }
+
+    .brand-logo .brand-accent,
+    .footer-brand-name .brand-accent {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 0.2rem;
+      margin: 0;
+    }
+
+    .nav-item { position: relative; }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--slate-600);
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      padding: 1.35rem 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      transition: color 0.15s ease;
+    }
+
+    .nav-link:hover, .nav-link.active { color: var(--primary); }
+    .nav-more-link i { font-size: 0.72rem; }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0.75rem;
+      right: 0.75rem;
+      height: 3px;
+      background: var(--primary);
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* Mega Dropdown */
+    .mega-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-xl);
+      padding: 1.5rem;
+      display: none;
+      grid-template-columns: repeat(4, 180px);
+      gap: 1.25rem;
+      z-index: 1050;
+    }
+
+    .nav-item.dropdown:hover .mega-dropdown { display: grid; }
+
+    .mega-col-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--slate-400);
+      margin-bottom: 0.65rem;
+      letter-spacing: 0.5px;
+    }
+
+    .mega-menu-list { list-style: none; display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .mega-item {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--slate-800);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.45rem 0.6rem;
+      border-radius: var(--radius-sm);
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+    .mega-item i { font-size: 1rem; color: var(--primary); }
+    .mega-item:hover { background: var(--primary-light); color: var(--primary); }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.75rem;
+      color: var(--dark);
+      cursor: pointer;
+      padding: 6px;
+      line-height: 1;
+    }
+
+    /* Mobile Drawer */
+    .mobile-nav-drawer {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--white);
+      z-index: 9999;
+      flex-direction: column;
+      padding: 1.25rem;
+      overflow-y: auto;
+      border-top: 1px solid var(--slate-200);
+    }
+
+    .mobile-nav-drawer.open { display: flex; }
+
+    .mobile-drawer-title {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--slate-400);
+      margin: 1.25rem 0 0.5rem 0;
+      letter-spacing: 0.5px;
+    }
+
+    .mobile-drawer-title:first-child { margin-top: 0.25rem; }
+
+    .mobile-drawer-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0.85rem;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--slate-800);
+      text-decoration: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .mobile-drawer-link:hover, .mobile-drawer-link.active {
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    /* ---------------- ABOUT CONTENT SHELL ---------------- */
+    .about-shell {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem 4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .back-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: -0.5rem;
+    }
+
+    .btn-back-tool {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--primary);
+      border: 1px solid var(--slate-200);
+      padding: 0.6rem 1.15rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      text-decoration: none;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.15s ease;
+      cursor: pointer;
+    }
+
+    .btn-back-tool:hover {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .about-hero {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::after {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .about-pill-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-title {
+      font-size: clamp(2.1rem, 3.5vw, 3rem);
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.04em;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-lead {
+      font-size: 1.12rem;
+      line-height: 1.75;
+      color: var(--slate-600);
+      max-width: 820px;
+      margin: 0 auto;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    .grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .about-card {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--dark);
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .about-card p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: var(--slate-600);
+      margin-bottom: 0.85rem;
+    }
+
+    .about-card p:last-child { margin-bottom: 0; }
+
+    .stats-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      height: 100%;
+      justify-content: space-between;
+    }
+
+    .stat-pill-box {
+      background: #f8fafc;
+      border: 1px solid var(--slate-200);
+      border-radius: 12px;
+      padding: 1.15rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .stat-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .stat-meta { display: flex; flex-direction: column; }
+    .stat-label { font-size: 0.72rem; text-transform: uppercase; font-weight: 800; letter-spacing: 0.06em; color: var(--slate-400); }
+    .stat-value { font-size: 1.02rem; font-weight: 800; color: var(--dark); }
+
+    .step-badge {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    /* Data Flow Visual */
+    .data-flow-banner {
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: var(--radius-lg);
+      padding: 2.75rem 2.25rem;
+      color: var(--slate-800);
+      box-shadow: var(--shadow-sm);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .data-flow-banner h2 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    .data-flow-banner p {
+      color: var(--slate-600);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .pipeline-visual {
+      background: #f8fafc;
+      border: 1px solid var(--slate-200);
+      border-radius: 14px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .pipeline-node {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--white);
+      border: 1px solid var(--slate-200);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--slate-800);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+
+    .pipeline-node i {
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    /* Tools Catalog */
+    .tools-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .tool-detail-card {
+      background: #f8fafc;
+      border: 1px solid var(--slate-200);
+      border-radius: 16px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .tool-detail-card:hover {
+      background: var(--white);
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .tool-detail-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tool-detail-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+    }
+
+    .tool-detail-card h3 {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--dark);
+    }
+
+    .tool-detail-card p {
+      font-size: 0.88rem;
+      color: var(--slate-600);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ---------------- CLEAN, BALANCED FOOTER ---------------- */
+    footer#mainAppFooter {
+      margin-top: auto;
+      background: var(--white);
+      border-top: 1px solid var(--slate-200);
+      padding: 3rem 1.25rem 2rem;
+      position: relative;
+      width: 100%;
+    }
+
+    .footer-container {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1.75rem;
+    }
+
+    .footer-brand-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 800;
+      font-size: 1.45rem;
+      letter-spacing: -0.5px;
+      cursor: pointer;
+    }
+
+    .footer-tagline {
+      color: var(--slate-600);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      max-width: 520px;
+      margin: -0.5rem auto 0;
+    }
+
+    .footer-touch-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .footer-touch-label {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--slate-400);
+    }
+
+    .footer-social-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .footer-social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--slate-100);
+      color: var(--slate-600);
+      border: 1px solid var(--slate-200);
+      text-decoration: none;
+      font-size: 1.05rem;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .footer-social-btn:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(30, 112, 191, 0.3);
+    }
+
+    .footer-bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.86rem;
+      color: var(--slate-500);
+      border-top: 1px solid var(--slate-200);
+      padding-top: 1.5rem;
+    }
+
+    .footer-copyright strong { color: var(--slate-800); font-weight: 700; }
+    .footer-copyright a { color: var(--primary); text-decoration: none; font-weight: 700; }
+
+    .footer-security-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: #ecfdf5;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #10b981;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.38rem 0.85rem;
+      border-radius: 999px;
+    }
+
+    @media (max-width: 900px) {
+      .nav-menu { display: none; }
+      .mobile-menu-btn { display: block; }
+      .grid-2col { grid-template-columns: 1fr; }
+      .grid-3col { grid-template-columns: 1fr; }
+      .data-flow-banner { grid-template-columns: 1fr; }
+      .about-hero { padding: 2.5rem 1.5rem; }
+      .tools-detail-grid { grid-template-columns: 1fr; }
+      .footer-bottom-bar {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation Header (Synchronized with index.html) -->
+  <header id="mainAppHeader">
+    <nav class="navbar">
+      <a href="index.html" class="brand-logo">
+        <div class="brand-badge"><i class="bi bi-layers-fill"></i></div>
+        <span><span class="brand-accent">Pixel</span>Craft</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <ul class="nav-menu">
+        <li class="nav-item"><a class="nav-link" href="index.html#compress-image">Compress</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#increase-size">Increase Size</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#resize-image">Resize</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#crop-image">Crop</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#convert-to-jpg">Convert to JPG</a></li>
+        <li class="nav-item"><a class="nav-link" href="index.html#photo-editor">Photo Editor</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-more-link">More Tools <i class="bi bi-chevron-down ms-1"></i></a>
+          <div class="mega-dropdown">
+            <div>
+              <div class="mega-col-title">Size Tools</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" href="index.html#compress-image"><i class="bi bi-file-earmark-zip"></i> Compress Image</a></li>
+                <li><a class="mega-item" href="index.html#increase-size"><i class="bi bi-file-earmark-plus"></i> Increase File Size</a></li>
+                <li><a class="mega-item" href="index.html#upscale-image"><i class="bi bi-arrows-fullscreen"></i> Upscale Resolution</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Modify</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" href="index.html#resize-image"><i class="bi bi-arrows-angle-expand"></i> Resize Image</a></li>
+                <li><a class="mega-item" href="index.html#crop-image"><i class="bi bi-crop"></i> Crop Image</a></li>
+                <li><a class="mega-item" href="index.html#rotate-image"><i class="bi bi-arrow-clockwise"></i> Rotate Image</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Convert</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" href="index.html#convert-to-jpg"><i class="bi bi-filetype-jpg"></i> Convert to JPG</a></li>
+                <li><a class="mega-item" href="index.html#convert-to-png"><i class="bi bi-filetype-png"></i> Convert to PNG</a></li>
+                <li><a class="mega-item" href="index.html#convert-to-webp"><i class="bi bi-file-earmark-code"></i> Convert to WEBP</a></li>
+              </ul>
+            </div>
+            <div>
+              <div class="mega-col-title">Edit & Protect</div>
+              <ul class="mega-menu-list">
+                <li><a class="mega-item" href="index.html#photo-editor"><i class="bi bi-palette"></i> Full Photo Editor</a></li>
+                <li><a class="mega-item" href="index.html#watermark-image"><i class="bi bi-shield-check"></i> Watermark Image</a></li>
+              </ul>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-btn" id="mobileNavToggle" aria-label="Toggle Menu">
+        <i class="bi bi-list"></i>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile Drawer Menu -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-drawer-title">Core Tools</div>
+    <a class="mobile-drawer-link" href="index.html#compress-image"><i class="bi bi-file-earmark-zip text-primary"></i> Compress Image</a>
+    <a class="mobile-drawer-link" href="index.html#increase-size"><i class="bi bi-file-earmark-plus text-primary"></i> Increase File Size</a>
+    <a class="mobile-drawer-link" href="index.html#resize-image"><i class="bi bi-arrows-angle-expand text-primary"></i> Resize Image</a>
+    <a class="mobile-drawer-link" href="index.html#crop-image"><i class="bi bi-crop text-primary"></i> Crop Image</a>
+    <a class="mobile-drawer-link" href="index.html#photo-editor"><i class="bi bi-palette text-primary"></i> Photo Editor</a>
+
+    <div class="mobile-drawer-title">Convert & Modify</div>
+    <a class="mobile-drawer-link" href="index.html#convert-to-jpg"><i class="bi bi-filetype-jpg text-primary"></i> Convert to JPG</a>
+    <a class="mobile-drawer-link" href="index.html#convert-to-png"><i class="bi bi-filetype-png text-primary"></i> Convert to PNG</a>
+    <a class="mobile-drawer-link" href="index.html#convert-to-webp"><i class="bi bi-file-earmark-code text-primary"></i> Convert to WEBP</a>
+    <a class="mobile-drawer-link" href="index.html#rotate-image"><i class="bi bi-arrow-clockwise text-primary"></i> Rotate Image</a>
+    <a class="mobile-drawer-link" href="index.html#watermark-image"><i class="bi bi-shield-check text-primary"></i> Watermark Image</a>
+    <a class="mobile-drawer-link" href="index.html#upscale-image"><i class="bi bi-arrows-fullscreen text-primary"></i> Upscale 2X/4X</a>
+
+    <div class="mobile-drawer-title">About & Legal</div>
+    <a class="mobile-drawer-link active" href="about.html"><i class="bi bi-info-circle text-primary"></i> About PixelCraft</a>
+    <a class="mobile-drawer-link" href="privacy.html"><i class="bi bi-shield-lock text-primary"></i> Privacy Policy</a>
+    <a class="mobile-drawer-link" href="terms.html"><i class="bi bi-file-earmark-text text-primary"></i> Terms of Use</a>
+    <a class="mobile-drawer-link" href="contact.html"><i class="bi bi-envelope text-primary"></i> Contact Us</a>
+  </div>
+
+  <!-- Page Content Shell -->
+  <main class="about-shell">
+    
+    <!-- Smart Back Navigation Bar -->
+    <div class="back-nav-bar">
+      <button class="btn-back-tool" onclick="history.length > 1 ? history.back() : window.location.href='index.html#compress-image'">
+        <i class="bi bi-arrow-left"></i> Go Back
+      </button>
+      <span style="font-size: 0.85rem; font-weight: 700; color: var(--slate-500);">Documentation & Overview</span>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+      <div class="about-pill-eyebrow">
+        <i class="bi bi-shield-check"></i> 100% In-Browser &bull; Zero Server Uploads
+      </div>
+      <h1 class="about-title">High-Performance Image Suite Built for Speed & Complete Privacy</h1>
+      <p class="about-lead">
+        PixelCraft is a lightweight, studio-grade image manipulation platform engineered by RajCode. It empowers creators, developers, students, and professionals to compress, convert, crop, resize, and edit visual media without cloud dependency or loss of data ownership.
+      </p>
+    </section>
+
+    <!-- Mission & Quick Stats Grid -->
+    <div class="grid-2col" id="who-we-are">
+      <article class="about-card">
+        <div class="card-header-icon"><i class="bi bi-terminal-split"></i></div>
+        <h2 class="card-title">About RajCode & The Vision</h2>
+        <p>
+          PixelCraft was created by <strong>RajCode</strong> to address a persistent problem with modern web utilities: intrusive full-page ads, slow cloud upload queues, mandatory registration paywalls, and privacy risks when processing sensitive personal files.
+        </p>
+        <p>
+          By leveraging native browser standards—HTML5 Canvas 2D API, Web Workers, Blob streams, and JSZip—PixelCraft eliminates third-party backend servers entirely. Your photos never leave your device memory, ensuring maximum execution speed and total privacy.
+        </p>
+      </article>
+
+      <aside class="about-card">
+        <div class="card-header-icon"><i class="bi bi-cpu"></i></div>
+        <h2 class="card-title">Core Architecture</h2>
+        <div class="stats-stack">
+          <div class="stat-pill-box">
+            <div class="stat-icon"><i class="bi bi-hdd-network"></i></div>
+            <div class="stat-meta">
+              <span class="stat-label">Execution Environment</span>
+              <span class="stat-value">Local Client Browser</span>
+            </div>
+          </div>
+          <div class="stat-pill-box">
+            <div class="stat-icon"><i class="bi bi-lock-fill"></i></div>
+            <div class="stat-meta">
+              <span class="stat-label">Server Telemetry</span>
+              <span class="stat-value">Zero Data Transferred</span>
+            </div>
+          </div>
+          <div class="stat-pill-box">
+            <div class="stat-icon"><i class="bi bi-lightning-charge"></i></div>
+            <div class="stat-meta">
+              <span class="stat-label">Processing Engine</span>
+              <span class="stat-value">GPU Canvas Pipeline</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- How It Works Step-by-Step -->
+    <section class="about-card" id="how-it-works">
+      <div class="card-header-icon"><i class="bi bi-gear-wide-connected"></i></div>
+      <h2 class="card-title">How It Works</h2>
+      <p>PixelCraft is designed with a frictionless 3-step pipeline requiring no account creation, no software installations, and no wait times.</p>
+      
+      <div class="grid-3col" style="margin-top: 1.5rem;">
+        <div style="background:#f8fafc; border:1px solid var(--slate-200); border-radius:14px; padding:1.5rem;">
+          <span class="step-badge">1</span>
+          <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:0.5rem; color:var(--dark);">Select or Drop Media</h3>
+          <p style="font-size:0.9rem; color:var(--slate-600); line-height:1.6;">Load single or batch images directly from your device. Files are read instantaneously as local memory pointers via secure Blob URLs.</p>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid var(--slate-200); border-radius:14px; padding:1.5rem;">
+          <span class="step-badge">2</span>
+          <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:0.5rem; color:var(--dark);">Transform with Live Preview</h3>
+          <p style="font-size:0.9rem; color:var(--slate-600); line-height:1.6;">Adjust dimensions, specify exact KB target sizes, apply studio filters, rotate, crop manually, or add draggable text and stickers with instant visual feedback.</p>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid var(--slate-200); border-radius:14px; padding:1.5rem;">
+          <span class="step-badge">3</span>
+          <h3 style="font-size:1.1rem; font-weight:800; margin-bottom:0.5rem; color:var(--dark);">Instant Local Download</h3>
+          <p style="font-size:0.9rem; color:var(--slate-600); line-height:1.6;">Export your optimized images individually or pack entire batch operations into an organized, compressed ZIP file in one click.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Flow Architecture Visual -->
+    <section class="data-flow-banner" id="data-flow">
+      <div>
+        <div style="display:inline-flex; align-items:center; gap:6px; color:var(--primary); font-weight:800; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.8rem;">
+          <i class="bi bi-shield-shaded"></i> Security by Design
+        </div>
+        <h2>Transparent Data Flow</h2>
+        <p>
+          Unlike conventional image converters that transmit sensitive photos to remote cloud servers for rendering, PixelCraft operates within a closed client-side sandbox.
+        </p>
+        <p style="margin-top:0.75rem;">
+          Whether editing government identity forms, exam documents, private photography, or proprietary creative assets, your files never leave your device.
+        </p>
+      </div>
+
+      <div class="pipeline-visual">
+        <div class="pipeline-node">
+          <i class="bi bi-laptop"></i> User Device / Browser Tab Memory
+        </div>
+        <div style="text-align:center; color:var(--primary); font-size:1rem; margin:-6px 0;"><i class="bi bi-arrow-down"></i></div>
+        <div class="pipeline-node">
+          <i class="bi bi-cpu-fill"></i> Local Canvas 2D / JSZip Compression
+        </div>
+        <div style="text-align:center; color:var(--primary); font-size:1rem; margin:-6px 0;"><i class="bi bi-arrow-down"></i></div>
+        <div class="pipeline-node" style="border-color: rgba(16, 185, 129, 0.4); color: #059669;">
+          <i class="bi bi-check-circle-fill text-success"></i> Direct Disk Export (Zero Cloud Hop)
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Individual Tool Cards Section -->
+    <section class="about-card" id="tools-overview">
+      <div class="card-header-icon"><i class="bi bi-grid-fill"></i></div>
+      <h2 class="card-title">Explore All Built-in Tools</h2>
+      <p>PixelCraft contains dedicated client-side processing engines tailored for every media manipulation requirement:</p>
+      
+      <div class="tools-detail-grid">
+        <a href="index.html#compress-image" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-file-earmark-zip"></i></div>
+            <h3>Compress Image</h3>
+          </div>
+          <p>Reduce file size in bulk while preserving peak visual fidelity or hitting exact KB size targets.</p>
+        </a>
+
+        <a href="index.html#increase-size" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-file-earmark-plus"></i></div>
+            <h3>Increase File Size</h3>
+          </div>
+          <p>Enlarge file payloads to meet strict portal submission limits (e.g., 50KB to 200KB or 1MB) without quality loss.</p>
+        </a>
+
+        <a href="index.html#resize-image" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-arrows-angle-expand"></i></div>
+            <h3>Resize Image</h3>
+          </div>
+          <p>Scale image dimensions in bulk by defining exact pixel bounds or proportionate percentage increments.</p>
+        </a>
+
+        <a href="index.html#crop-image" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-crop"></i></div>
+            <h3>Crop & Cut</h3>
+          </div>
+          <p>Trim photos using standard aspect ratios (1:1, 4:3, 16:9) or custom free-form pixel selection rectangles.</p>
+        </a>
+
+        <a href="index.html#photo-editor" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-palette"></i></div>
+            <h3>Photo Studio Editor</h3>
+          </div>
+          <p>Full suite featuring filters, light balancing, draw brushes, movable text boxes, stickers, and frames.</p>
+        </a>
+
+        <a href="index.html#convert-to-jpg" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-filetype-jpg"></i></div>
+            <h3>Convert to JPG</h3>
+          </div>
+          <p>Transform PNG, WEBP, GIF, or HEIC files into standard, widely compatible JPG images instantly.</p>
+        </a>
+
+        <a href="index.html#convert-to-png" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-filetype-png"></i></div>
+            <h3>Convert to PNG</h3>
+          </div>
+          <p>Export images to lossless PNG format with transparent alpha channel support intact.</p>
+        </a>
+
+        <a href="index.html#convert-to-webp" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-file-earmark-code"></i></div>
+            <h3>Convert to WEBP</h3>
+          </div>
+          <p>Generate next-generation lightweight Google WEBP assets for blazing-fast web page performance.</p>
+        </a>
+
+        <a href="index.html#upscale-image" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-arrows-fullscreen"></i></div>
+            <h3>2X / 4X Upscale</h3>
+          </div>
+          <p>Enlarge lower-resolution imagery using smooth local bicubic interpolation scaling.</p>
+        </a>
+
+        <a href="index.html#watermark-image" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-shield-check"></i></div>
+            <h3>Watermark Stamping</h3>
+          </div>
+          <p>Stamp customized copyright text overlays with adjustable opacity and position controls.</p>
+        </a>
+
+        <a href="index.html#rotate-image" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-arrow-clockwise"></i></div>
+            <h3>Batch Rotate</h3>
+          </div>
+          <p>Rotate multiple pictures 90°, 180°, or 270° clockwise or counter-clockwise simultaneously.</p>
+        </a>
+
+        <a href="contact.html" class="tool-detail-card">
+          <div class="tool-detail-header">
+            <div class="tool-detail-icon"><i class="bi bi-chat-dots"></i></div>
+            <h3>Request Feature</h3>
+          </div>
+          <p>Have an idea for a new tool? Get in touch with RajCode to suggest updates or improvements.</p>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ---------------- CLEAN, BALANCED FOOTER WITH SOCIAL ICONS ---------------- -->
+  <footer id="mainAppFooter">
+    <div class="footer-container">
+      
+      <a href="index.html" class="footer-brand-logo">
+        <div class="brand-badge"><i class="bi bi-layers-fill"></i></div>
+        <span><span class="brand-accent">Pixel</span>Craft</span>
+      </a>
+      <p class="footer-tagline">
+        Simple, private browser-first image processing engineered by RajCode.
+      </p>
+
+      <div class="footer-touch-section">
+        <span class="footer-touch-label">Get in touch</span>
+        <div class="footer-social-strip" aria-label="Social profiles">
+          <a href="https://www.linkedin.com/in/rajesh-patra-0b0913381" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="LinkedIn" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="https://x.com/RajeshPatraCS" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Twitter / X" title="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="https://www.facebook.com/rajesh.patra.official" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Facebook" title="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/rajcode_official" target="_blank" rel="noopener noreferrer" class="footer-social-btn" aria-label="Instagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright">
+          <strong>© 2026 PixelCraft</strong> &bull; Crafted by <a href="https://rajcode.netlify.app" target="_blank" rel="noopener">RajCode</a>. All rights reserved.
+        </div>
+        <div class="footer-security-pill">
+          <i class="bi bi-shield-lock-fill"></i> 100% In-Browser &bull; Zero Server Uploads
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Drawer Toggle with X icon switch
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const mobileNavDrawer = document.getElementById('mobileNavDrawer');
+
+    if (mobileNavToggle && mobileNavDrawer) {
+      mobileNavToggle.addEventListener('click', () => {
+        const isOpen = mobileNavDrawer.classList.toggle('open');
+        const icon = mobileNavToggle.querySelector('i');
+        if (icon) {
+          icon.className = isOpen ? 'bi bi-x-lg' : 'bi bi-list';
+        }
+      });
+
+      document.querySelectorAll('.mobile-drawer-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNavDrawer.classList.remove('open');
+          const icon = mobileNavToggle.querySelector('i');
+          if (icon) icon.className = 'bi bi-list';
+        });
+      });
+    }
+  </script>
+</body>
+</html>
